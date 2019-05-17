@@ -3,24 +3,36 @@
     ViewData["Title"] = "Eliminar Cita";
 }
 
-    <link href="~/css/global.css" rel="stylesheet" type="text/css" />
+<link href="~/css/global.css" rel="stylesheet" type="text/css" />
 
-<div class="container">
-    <section class="container-fluid">
-        <section class="row justify-content-center">
-            <section class="col-12 col-sm-6 col-md-6">
-                <form asp-route="DeleteAppointmentRoute" method="post" class="form-container">
-                    <div>
-                        <label class="form-label">Id a Eliminar:</label>
-                        <input type="text" asp-for="id" class="form-control"> 
-                        <span asp-validation-for="id"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary btn-block" value="Eliminar Cita" />
-                    </div>
-                </form>
-            </section>
-        </section>
-    </section>
-</div>
+<br />
+<br />
+<br />
+<form asp-route="DeleteAppointmentRoute" method="post" class="form-container">
+    <div class="row">
+        <div class="col-md-6 col-md-push-6">
+            <div class="col text-center">
+                <div class="form-group">
+                    <table>
+                        <tr>
+                            <td colspan="2"><label class="form-label">Cancelar Agedamiento de Cita:</label></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" asp-for="id" placeholder="Id a Eliminar" class="form-control">
+                                <span asp-validation-for="id"></span>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Eliminar Cita" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 

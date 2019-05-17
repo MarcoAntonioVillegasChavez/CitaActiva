@@ -142,6 +142,7 @@ namespace CitaActiva.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpGet]
+        [Route("/Appointment/Delete", Name = "DeleteAppointmentGetRoute")]
         public IActionResult Delete()
         {
             return View();
@@ -151,19 +152,24 @@ namespace CitaActiva.Controllers
         [Route("/Appointment/Delete", Name = "DeleteAppointmentRoute")]
         public async Task<IActionResult> DeleteAppointment([FromForm] AppointmentModel appointmentModel)
         {
-            Token token = new Token();
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
+            if (appointmentModel.id != null)
             {
-                TokenService tokenServices = new TokenService();
-                token = tokenServices.ObtenerToken();
-                HttpContext.Session.SetString(SessionKeyName, JsonConvert.SerializeObject(token));
+                Token token = new Token();
+                token = ObtenerToken();
+                AppointmentService appointmentService = new AppointmentService();
+                string resultado = await appointmentService.DeleteAppointment(token, appointmentModel.id);
+
+                _toastNotification.AddSuccessToastMessage("La cita" + appointmentModel.id + " se ha cancelado");
+
+                return RedirectToAction("Index", new RouteValueDictionary(
+                   new { controller = "Home", action = "Index" }));
             }
-            token = JsonConvert.DeserializeObject<Token>(HttpContext.Session.GetString(SessionKeyName));
-
-            AppointmentService appointmentService = new AppointmentService();
-            string resultado = await appointmentService.DeleteAppointment(token, appointmentModel.id);
-
-            return View();
+            else
+            {
+                _toastNotification.AddWarningToastMessage("El campo Id no es Opcional.");
+                return RedirectToAction("DeleteAppointment", new RouteValueDictionary(
+                   new { controller = "Appointment", action = "DeleteAppointment", appointmentModel.id }));
+            }
         }
         public Token ObtenerToken()
         {
