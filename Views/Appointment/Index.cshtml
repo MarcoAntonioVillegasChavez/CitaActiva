@@ -1,0 +1,186 @@
+﻿
+
+@model CitaActiva.ModelsViews.AppointmentModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<h1>Agenda tu Cita de Servicio. </h1>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
+
+<script src="~/js/site.js"></script>
+<link href="~/css/global.css" rel="stylesheet" type="text/css" />
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script>
+
+jQuery(function ($) {
+    $('.form-control.date').each(function () {
+        var startDate = $(this).data("initial-datetime");
+        $(this).datetimepicker({
+            timepicker: false,
+            format: 'Y-m-d',
+            minDate: new Date(),
+            onChangeDateTime: function (dp, $input) {
+                var fecha = new Date($input.val())
+                console.log(fecha.getDay());
+                var horaMinima = localStorage.getItem(fecha.getDay() + "Min")
+                var horaMaxima = localStorage.getItem(fecha.getDay() + "Max")
+                
+                $('.form-control.time').each(function () {
+                    $(this).datetimepicker({
+                        minTime: horaMinima,
+                        maxTime: horaMaxima,
+                        datepicker: false,
+                        formatTime: 'H:i',
+                        format: 'H:i'
+                    });
+                });
+            }
+        });
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#workshopId").on("change", function () {
+            var workshopId = $("#workshopId option:selected").val();
+            $.ajax({
+                type: 'GET',
+                url: '/Appointment/Receptionist/' + workshopId,
+                data: { workshopId },
+                success: function (result) {
+                    console.log(result[0].scheduleId);
+                    $(document).ready(function () {
+                        $("#receptionistId").on("change", function () {
+                            var scheduleId = result[0].scheduleId;
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Appointment/Schedule/' + scheduleId,
+                                data: { scheduleId },
+                                success: function (resultSchedule) {
+                                    
+                                    $.each(resultSchedule, function (index, value) {
+                                        localStorage.setItem(parseInt(value.weekday - 1).toString() + "Min", value.beginning)
+                                        localStorage.setItem(parseInt(value.weekday - 1).toString() + "Max", value.ending)
+                                        console.log(parseInt(value.weekday - 1).toString() + "Min" + " - " + value.beginning);
+                                        console.log(parseInt(value.weekday - 1).toString() + "Max" + " - " + value.ending );
+                                    });
+                                }
+                            });
+                        });
+                    });
+
+                    var s = '<option value ="-1"> Selecciona un Recepcionista</option>';
+                    for (var i = 0; i < result.length; i++) {
+                        s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+                    }
+                    $("#receptionistId").html(s);
+                }
+            });
+
+        });
+    });
+</script>
+
+
+
+<div class="container">
+    
+    <form asp-route="AppintmentRoute" id="AppointmentForm" method="post">
+        <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <div class="form-group">
+                    <label asp-for="workshopId">Taller de Servicio:</label>
+                    <select id="workshopId" asp-for="workshopId" class="form-control">
+                        <option value="-1" selected="selected">Selecciona un Taller</option>
+                        @foreach (var workShop in ViewBag.WorkshopList)
+                        {
+                            <option value="@workShop.id">@workShop.comercialName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+
+                    <label asp-for="plannedData.receptionistId">Recepcionista:</label>
+                    <select id="receptionistId" asp-for="plannedData.receptionistId" class="form-control">
+                        <option value="-1" selected="selected">Selecciona un Recepcionista</option>
+                        @foreach (var recetionist in ViewBag.RecepcionistList)
+                        {
+                            <option value="@recetionist.id">@recetionist.name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="plannedData.receptionistId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <div>
+                    <label asp-for="plannedData.plannedDate">Dia:</label>
+                    <input type="text" class="form-control date" id="plannedDate" asp-for="plannedData.plannedDate">
+                </div>
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <div>
+                    <label asp-for="plannedData.plannedTime">Hora:</label>
+                    <input type="text" class="form-control time" id="plannedTime" asp-for="plannedData.plannedTime">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <div class="form-group">
+                    <label asp-for="vehiclePlate">Placa del Vehiculo</label>
+                    <input asp-for="vehiclePlate" class="form-control" />
+                    <span asp-validation-for="vehiclePlate"></span>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <div class="form-group">
+                    <label asp-for="contactName">Nombre</label>
+                    <input asp-for="contactName" class="form-control" />
+                    <span asp-validation-for="contactName"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <div class="form-group">
+                    <label asp-for="contactMail">eMail</label>
+                    <input asp-for="contactMail" type="email" class="form-control" />
+                    <span asp-validation-for="contactMail"></span>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <div class="form-group">
+                    <label asp-for="contactPhone">Telefono</label>
+                    <input asp-for="contactPhone" class="form-control" />
+                    <span asp-validation-for="contactPhone"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <input type="submit" class="btn btn-success" value="Agendar Cita" />
+            </div>
+        </div>
+        <input id="Id" asp-for="id" type="hidden" />
+    </form>
+    <script>
+        $("#AppointmentForm").validate();
+    </script>
+    
+   
+</div>

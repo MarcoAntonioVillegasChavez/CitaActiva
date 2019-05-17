@@ -1,0 +1,26 @@
+﻿@model CitaActiva.ModelsViews.AppointmentModel
+@{
+    ViewData["Title"] = "Eliminar Cita";
+}
+
+    <link href="~/css/global.css" rel="stylesheet" type="text/css" />
+
+<div class="container">
+    <section class="container-fluid">
+        <section class="row justify-content-center">
+            <section class="col-12 col-sm-6 col-md-6">
+                <form asp-route="DeleteAppointmentRoute" method="post" class="form-container">
+                    <div>
+                        <label class="form-label">Id a Eliminar:</label>
+                        <input type="text" asp-for="id" class="form-control"> 
+                        <span asp-validation-for="id"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block" value="Eliminar Cita" />
+                    </div>
+                </form>
+            </section>
+        </section>
+    </section>
+</div>
+
