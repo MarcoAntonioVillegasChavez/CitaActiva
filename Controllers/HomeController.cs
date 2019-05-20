@@ -18,6 +18,7 @@ namespace CitaActiva.Controllers
         {
             _toastNotification = toastNotification;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

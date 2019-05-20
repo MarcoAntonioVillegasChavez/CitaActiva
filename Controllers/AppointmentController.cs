@@ -161,8 +161,7 @@ namespace CitaActiva.Controllers
 
                 _toastNotification.AddSuccessToastMessage("La cita" + appointmentModel.id + " se ha cancelado");
 
-                return RedirectToAction("Index", new RouteValueDictionary(
-                   new { controller = "Home", action = "Index" }));
+                return RedirectToAction("Delete", "Appointment");
             }
             else
             {
