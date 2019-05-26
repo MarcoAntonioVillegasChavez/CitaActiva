@@ -25,7 +25,7 @@ namespace CitaActiva.Controllers
         }
 
         [HttpPost]
-        [Route("/Home/Redirect", Name = "HomeGetRoute")]
+        [Route("/Home/Index", Name = "HomeGetRoute")]
         public IActionResult Index([FromForm] AppointmentModel appointmentModel)
         {
             if (appointmentModel.id == null)

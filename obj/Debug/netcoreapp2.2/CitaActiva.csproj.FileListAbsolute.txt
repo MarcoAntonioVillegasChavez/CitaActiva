@@ -5,6 +5,7 @@ C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.pdb
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.Views.dll
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.Views.pdb
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.csprojAssemblyReference.cache
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.csproj.CoreCompileInputs.cache
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cache
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cs

@@ -15,7 +15,42 @@ namespace CitaActiva.Services
         public Token ObtenerToken()
         {
             string parameters = "";
-            WebRequest webRequest = WebRequest.Create(Constants.TokenUrl);
+            WebRequest webRequest = WebRequest.Create(Constants.TokenUrlCitaActiva);
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.Method = "POST";
+            byte[] bytes = Encoding.ASCII.GetBytes(parameters);
+
+            try
+            {
+
+                webRequest.ContentLength = bytes.Length;
+                Stream stream = webRequest.GetRequestStream();
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+
+                Stream res = webRequest.GetResponse().GetResponseStream();
+                StreamReader reader = new StreamReader(res);
+                String result = reader.ReadToEnd();
+
+                res.Close();
+                reader.Close();
+
+                Token token = Newtonsoft.Json.JsonConvert.DeserializeObject<Token>(result);
+                return token;
+            }
+            catch (WebException ex)
+            {
+                Token token = new Token();
+                token.token_type = "Error";
+                token.access_token = ex.Message.ToString();
+                return token;
+            }
+        }
+
+        public Token ObtenerTokenVechicleStock()
+        {
+            string parameters = "";
+            WebRequest webRequest = WebRequest.Create(Constants.TokenUrlVehicleStock);
             webRequest.ContentType = "multipart/form-data";
             webRequest.Method = "POST";
             byte[] bytes = Encoding.ASCII.GetBytes(parameters);

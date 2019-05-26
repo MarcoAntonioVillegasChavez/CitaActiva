@@ -9,7 +9,7 @@ namespace CitaActiva.Services
 {
     public class SendEmailService
     {
-        public bool SendEmail(AppointmentModel appointmentModel, string workShopName, string address, string city, string receptionistName)
+        public bool SendEmail(AppointmentResult appointmentModel, string workShopName, string address, string city, string receptionistName)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace CitaActiva.Services
                     message.To.Add(new MailAddress(appointmentModel.contactMail, appointmentModel.contactName));
                     message.From = new MailAddress("marco.villegas@autocom.mx", "Cita Activa");
                     //message.CC.Add(new MailAddress("cc@email.com", "CC Name"));
-                    //message.Bcc.Add(new MailAddress("bcc@email.com", "BCC Name"));
+                    message.Bcc.Add(new MailAddress("marco.villegas@autocom.mx", "Cita Activa"));
                     message.Subject = "Test Cita Activa";
                     message.Body = eMailBody;
                     message.IsBodyHtml = true;

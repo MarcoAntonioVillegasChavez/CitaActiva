@@ -16,7 +16,7 @@ namespace CitaActiva.Controllers
         const string SessionKeyName = "token";
         [HttpGet("{id}")]
         [Route("/Appointment/Receptionist/{workshopId}", Name = "ReceptionistRoute")]
-        public async Task<IActionResult> Index(string workshopId, Token token)
+        public async Task<string> Index(string workshopId, Token token)
         {
             if (token.access_token == null)
             {
@@ -27,8 +27,8 @@ namespace CitaActiva.Controllers
             JObject results = JObject.Parse(result);
             JArray arrayResults = (JArray)results["receptionists"];
 
-            ViewBag.scheduleId = arrayResults[0]["scheduleId"];
-            return Json(arrayResults);
+            //ViewBag.scheduleId = arrayResults[0]["scheduleId"];
+            return JsonConvert.SerializeObject(arrayResults);
             
         }
 

@@ -8,98 +8,328 @@
 }
 
 <br />
-<h1>Agenda tu Cita de Servicio. </h1>
+<h1>Agenda tu Cita. </h1>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
 
+<script src="~/js/jquery.blockUI.js"></script>
+
 <script src="~/js/site.js"></script>
 <link href="~/css/global.css" rel="stylesheet" type="text/css" />
 
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+    $(document).ready(function () {
+    $("#workshopId").on("change", function () {
+        var workshopId = $("#workshopId option:selected").val();
 
-<script>
-
-jQuery(function ($) {
-    $('.form-control.date').each(function () {
-        var startDate = $(this).data("initial-datetime");
-        $(this).datetimepicker({
-            timepicker: false,
-            format: 'Y-m-d',
-            minDate: new Date(),
-            onChangeDateTime: function (dp, $input) {
-                var fecha = new Date($input.val())
-                console.log(fecha.getDay());
-                var horaMinima = localStorage.getItem(fecha.getDay() + "Min")
-                var horaMaxima = localStorage.getItem(fecha.getDay() + "Max")
-                
-                $('.form-control.time').each(function () {
-                    $(this).datetimepicker({
-                        minTime: horaMinima,
-                        maxTime: horaMaxima,
-                        datepicker: false,
-                        formatTime: 'H:i',
-                        format: 'H:i'
-                    });
-                });
+        $.blockUI({message:'Por favor espere un momento...', css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } });
+        $.ajax({
+            type: 'GET',
+            url: '/Appointment/Receptionist/' + workshopId,
+            data: { workshopId },
+            complete: function () {
+                $.unblockUI();
+            },
+            success: function (result) {
+                var resultSchedule = (JSON.parse(result))    
+                console.log(resultSchedule[0].scheduleId)
+                localStorage.setItem("scheduleId", resultSchedule[0].scheduleId)
             }
         });
     });
 });
-</script>
 
-<script>
-    $(document).ready(function () {
-        $("#workshopId").on("change", function () {
-            var workshopId = $("#workshopId option:selected").val();
-            $.ajax({
-                type: 'GET',
-                url: '/Appointment/Receptionist/' + workshopId,
-                data: { workshopId },
-                success: function (result) {
-                    console.log(result[0].scheduleId);
-                    $(document).ready(function () {
-                        $("#receptionistId").on("change", function () {
-                            var scheduleId = result[0].scheduleId;
-                            $.ajax({
-                                type: 'GET',
-                                url: '/Appointment/Schedule/' + scheduleId,
-                                data: { scheduleId },
-                                success: function (resultSchedule) {
-                                    
-                                    $.each(resultSchedule, function (index, value) {
-                                        localStorage.setItem(parseInt(value.weekday - 1).toString() + "Min", value.beginning)
-                                        localStorage.setItem(parseInt(value.weekday - 1).toString() + "Max", value.ending)
-                                        console.log(parseInt(value.weekday - 1).toString() + "Min" + " - " + value.beginning);
-                                        console.log(parseInt(value.weekday - 1).toString() + "Max" + " - " + value.ending );
-                                    });
-                                }
-                            });
-                        });
-                    });
+    
+        $(document).ready(function () {
+            $("#brandId").on("change", function () {
+                var brandId = $("#brandId option:selected").val();
 
-                    var s = '<option value ="-1"> Selecciona un Recepcionista</option>';
-                    for (var i = 0; i < result.length; i++) {
-                        s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+                $.blockUI({message:'Por favor espere un momento...', css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } });
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/Versions/' + brandId,
+                    data: { brandId },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (result) {
+                        var s = '<option value="-1" selected="selected">Selecciona el modelo del Vehiculo</option>';
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<option value="' + result[i].id + '">' + result[i].description + '</option>';
+                        }
+                        $('#vesionId').html(s);
                     }
-                    $("#receptionistId").html(s);
+                });
+            });
+        });
+    });
+
+</script>
+<script>
+    jQuery(function ($) {
+        $('.form-control.date').each(function () {
+            $(this).datetimepicker({
+                timepicker: false,
+                format: 'Y-m-d',
+                minDate: new Date(),
+                onShow: function (ct) {
+                   
                 }
             });
-
         });
     });
 </script>
+<script>
+    jQuery(function ($) {
+        $(document).ready(function () {
+            $("#plannedDate").on("change", function () {
+                var scheduleId = localStorage.getItem("scheduleId")
+                $.blockUI({
+                    message: 'Por favor espere un momento...', css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/Schedule/' + scheduleId,
+                    data: { scheduleId },
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (resultS) {
+                        var resultSchedule = JSON.parse(resultS);
+                        var fecha = new Date(($("#plannedDate").val()))
+                        $.each(resultSchedule, function (index, value) {
+                            if (fecha.getDay() + 1 == (value.weekday)) {
+                                var year = new Date().getFullYear()
+                                var month = (new Date().getMonth() + 1).toString()
+                                if (month < 10) {
+                                    month = "0" + month
+                                }
+                                var day = new Date().getDate()
+                                var date = year + "-" + month + "-" + day
+
+                                if ($("#plannedDate").val() == date) {
+                                    var hr = new Date();
+                                    var min = hr.getMinutes()
+                                    if (min < 10) {
+                                        min = "0" + min
+                                    }
+                                    hrHoy = hr.getHours() + ":" + min + ":" + hr.getSeconds();
+                                    localStorage.setItem("Min", hrHoy)
+                                    localStorage.setItem("Max", value.ending)
+                                } else {
+                                    localStorage.setItem("Min", value.beginning)
+                                    localStorage.setItem("Max", value.ending)
+                                }
+                            }
+                        });
+                    }
+                });
+                var horaMinima = localStorage.getItem("Min");
+                var horaMaxima = localStorage.getItem("Max");
+                var fecha = ($("#plannedDate").val())
+                console.log(horaMinima)
+                console.log(horaMaxima)
+                console.log(fecha)
+                $.blockUI({
+                    message: 'Por favor espere un momento...', css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/AllowTimes/' + horaMinima + "/" + horaMaxima + "/" + fecha + "/0",
+                    complete: function () {
+                        $.unblockUI();
+                    },
+                    success: function (resultAllowTimes) {
+                        var result = (JSON.parse(resultAllowTimes))
+                        var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<option value="' + result[i].hora + '">' + result[i].horario + '</option>';
+                        }
+                        $('#plannedTime').html(s);
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var month = new Date().getMonth()
+        var yearMax
+        if (month > 7) {
+            yearMax = new Date().getFullYear()
+            yearMax = yearMax + 1
+        } else {
+            yearMax = new Date().getFullYear()
+        }
+        var yearMin = yearMax - 15
+       
+        var vehicleYear = document.querySelector("#vehicleYear");
+        vehicleYear.setAttribute("max", yearMax);
+        vehicleYear.setAttribute("min", yearMin);
+
+        });
+</script>
+<script>
+    $(document).ready(function () {
+        var IsReadOnly = @ViewBag.IsReadOnly;
+        if (IsReadOnly == 1) {
+            $('#contactName').attr('disabled', true);
+            $('#contactMail').attr('disabled', true);
+            $('#contactPhone').attr('disabled', true);
+            $('#brandId').attr('disabled', true);
+            $('#vesionId').attr('disabled', true);
+            $('#vehicleYear').attr('disabled', true);
+            $('#vehiclePlate').attr('disabled', true);
+            $('#labours').attr('disabled', true);
+            $('#workshopId').attr('disabled', true);
+            $('#plannedDate').attr('disabled', true);
+            $('#plannedTime').attr('disabled', true);
+            
+            document.getElementById('divBtnCancelar').style.display = 'block'; 
+            document.getElementById('divBtnAgendar').style.display = 'none'; 
+        }
+        else {
+            document.getElementById('divBtnCancelar').style.display='none'; 
+            document.getElementById('divBtnAgendar').style.display = 'block'; 
+            
+        }
+    });
+    
+</script>
 
 
+<br />
 
 <div class="container">
-    
+     
+    <div id="divMessage" style="display: none;">
+        <img src="~/gif-espera.gif" />
+    </div>
+
     <form asp-route="AppintmentRoute" id="AppointmentForm" method="post">
+        <div class="row">
+            <div class="col-md-4 col-md-pull-4">
+                <div class="form-group">
+                    <label asp-for="contactName">Nombre</label>
+                    <input asp-for="contactName" id="contactName" class="form-control" />
+                    <span asp-validation-for="contactName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label asp-for="contactMail">eMail</label>
+                    <input asp-for="contactMail" id="contactMail" type="email" class="form-control" />
+                    <span asp-validation-for="contactMail"></span>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-pull-4">
+                <div class="form-group">
+                    <label asp-for="contactPhone">Telefono</label>
+                    <input asp-for="contactPhone" id="contactPhone" class="form-control" />
+                    <span asp-validation-for="contactPhone"></span>
+                </div>
+            </div>
+        </div>
+        <hr align="right" size="1" style="color:gray" width="100%" />
+
+        <br />
+        <div class="row">
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label>Marca: </label>
+                    <select id="brandId" asp-for="brandId" class="form-control">
+                        <option value="-1" selected="selected">Selecciona la Marca del Vehiculo</option>
+                        <option value="NI">NISSAN</option>
+                        <option value="IF">INFINITI</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-pull-4">
+                <div class="form-group">
+                    <label>Modelo:</label>
+                    <select id="vesionId" asp-for="versionId" class="form-control">
+                        <option value="-1" selected="selected">Selecciona un modelo</option>
+                        @foreach (var version in ViewBag.versions)
+                        {
+                            <option value="@version.id">@version.description</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-pull-4">
+                <div class="form-group">
+                    <label>Año:</label>
+                    <input type="number" asp-for="vehicleYear" class="form-control" id="vehicleYear">
+
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 col-md-push-6">
                 <div class="form-group">
-                    <label asp-for="workshopId">Taller de Servicio:</label>
+                    <label asp-for="vehiclePlate">Placa / VIN</label>
+                    <input asp-for="vehiclePlate" id="vehiclePlate" class="form-control" />
+                    <span asp-validation-for="vehiclePlate"></span>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+
+                <div class="form-group">
+                    <label asp-for="labours.id">Servicio:</label>
+                    <select id="labours" asp-for="labours.id" class="form-control">
+                        <option value="-1" selected="selected">Selecciona un Servicio.</option>
+                        @foreach (var labour in ViewBag.laboursList)
+                        {
+                            <option value="@labour.id">@labour.description</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <hr align="right" size="1" style="color:gray" width="100%" />
+        <br />
+        <div class="row">
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label asp-for="workshopId">Taller:</label>
                     <select id="workshopId" asp-for="workshopId" class="form-control">
                         <option value="-1" selected="selected">Selecciona un Taller</option>
                         @foreach (var workShop in ViewBag.WorkshopList)
@@ -109,78 +339,41 @@ jQuery(function ($) {
                     </select>
                 </div>
             </div>
-            <div class="col-md-6 col-md-pull-6">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-
-                    <label asp-for="plannedData.receptionistId">Recepcionista:</label>
-                    <select id="receptionistId" asp-for="plannedData.receptionistId" class="form-control">
-                        <option value="-1" selected="selected">Selecciona un Recepcionista</option>
-                        @foreach (var recetionist in ViewBag.RecepcionistList)
-                        {
-                            <option value="@recetionist.id">@recetionist.name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="plannedData.receptionistId" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-md-push-6">
+            <div class="col-md-4 col-md-push-4">
                 <div>
-                    <label asp-for="plannedData.plannedDate">Dia:</label>
-                    <input type="text" class="form-control date" id="plannedDate" asp-for="plannedData.plannedDate">
+                    <label asp-for="plannedData.plannedDate">Fecha:</label>
+                    <input type="text" class="form-control date" autocomplete="off" id="plannedDate" asp-for="plannedData.plannedDate">
                 </div>
             </div>
-            <div class="col-md-6 col-md-pull-6">
+            <div class="col-md-4 col-md-pull-4">
                 <div>
                     <label asp-for="plannedData.plannedTime">Hora:</label>
-                    <input type="text" class="form-control time" id="plannedTime" asp-for="plannedData.plannedTime">
+                    <select id="plannedTime" asp-for="plannedData.plannedTime" class="form-control">
+                        <option value="-1" selected="selected">Selecciona un Horario</option>
+                        @foreach (var horario in ViewBag.horarios)
+                        {
+                            <option value="@horario.hora">@horario.hora</option>
+                        }
+                    </select>
+                    @*<input type="text" class="form-control time" autocomplete="off" id="plannedTime" asp-for="plannedData.plannedTime">*@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-6 col-md-push-6">
-                <div class="form-group">
-                    <label asp-for="vehiclePlate">Placa del Vehiculo</label>
-                    <input asp-for="vehiclePlate" class="form-control" />
-                    <span asp-validation-for="vehiclePlate"></span>
+
+            <div class="col-md-6 col-md-pull-6">
+                <div id="divBtnCancelar" style="display: none">
+                    <a href="/Appointment/Delete/@ViewBag.id" class="btn btn-danger btn-block">Cancelar Cita</a>
                 </div>
             </div>
             <div class="col-md-6 col-md-pull-6">
-                <div class="form-group">
-                    <label asp-for="contactName">Nombre</label>
-                    <input asp-for="contactName" class="form-control" />
-                    <span asp-validation-for="contactName"></span>
+                <div id="divBtnAgendar" style="display: none">
+                    <input type="submit" class="btn btn-success btn-block" value="Agendar Cita" />
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-md-push-6">
-                <div class="form-group">
-                    <label asp-for="contactMail">eMail</label>
-                    <input asp-for="contactMail" type="email" class="form-control" />
-                    <span asp-validation-for="contactMail"></span>
-                </div>
-            </div>
-            <div class="col-md-6 col-md-pull-6">
-                <div class="form-group">
-                    <label asp-for="contactPhone">Telefono</label>
-                    <input asp-for="contactPhone" class="form-control" />
-                    <span asp-validation-for="contactPhone"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <input type="submit" class="btn btn-success" value="Agendar Cita" />
-            </div>
-        </div>
-        <input id="Id" asp-for="id" type="hidden" />
+
     </form>
-    <script>
-        $("#AppointmentForm").validate();
-    </script>
-    
-   
+
 </div>

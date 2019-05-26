@@ -78,6 +78,10 @@
               "target": "Package",
               "version": "[5.0.10, )"
             },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "jQuery.UI.Combined": {
               "target": "Package",
               "version": "[1.12.1, )"

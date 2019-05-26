@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CitaActiva.Models
 {
+
+    [Table("appointment")]
     public class Appointment
     {
         public string id { get; set; }
-        public int workshopId { get; set; }
-        public string comments { get; set; }
-        public string vehiclePlate { get; set; }
-        public Boolean mileage { get; set; }
         public string contactName { get; set; }
-        public string contactPhone { get; set; }
         public string contactMail { get; set; }
-        public Boolean clientReceived { get; set; }
-        public Boolean pickUpVehicle { get; set; }
-        public Boolean needReplacementCar { get; set; }
-        public string idvReplacementCar { get; set; }
-        public string initalDateReplacementCar { get; set; }
-        public string finalDateReplacementCar { get; set; }
+        public string contactPhone { get; set; }
+        public string brandId { get; set; }
+        public string versionId { get; set; }
+        public string version { get; set; }
+        public int vehicleYear { get; set; }
+        public string vehiclePlate { get; set; }
+        public string labours { get; set; }
+        public string laboursId { get; set; }
+        public int workshopId { get; set; }
+        public string plannedDate { get; set; }
+        public string plannedTime { get; set; }       
     }
 }
