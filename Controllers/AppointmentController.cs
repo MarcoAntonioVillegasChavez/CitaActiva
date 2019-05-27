@@ -246,7 +246,7 @@ namespace CitaActiva.Controllers
                     ReceptionistController receptionistController = new ReceptionistController();
                     receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
 
-                    ViewData["cuerpoResultado"] = "Estimado " + appointmentModel.contactName + " Se ha generado una Cita con el Id. " + appointmentModel.id;
+                    ViewData["cuerpoResultado"] = "Estimado " + appointmentModel.contactName + " Se ha generado una Cita con el Id. " + resultado.id;
                     ViewData["cuerpoResultado1"] = "En la Agencia: " + workshop.comercialName;
                     ViewData["cuerpoResultado2"] = "Ubicada en: " + workshop.address + ", " + workshop.city;
                     ViewData["cuerpoResultado3"] = "El dia: " + appointmentModel.plannedData.plannedDate;
