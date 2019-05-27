@@ -4,6 +4,7 @@ using CitaActiva.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NToastNotify;
@@ -62,7 +63,7 @@ namespace CitaActiva.Controllers
                 appointmentModel.workshopId = appointmentResult.workshopId;
                 appointmentModel.plannedData = appointmentResult.plannedData;
 
-                ViewBag.IsReadOnly = 1;
+                ViewBag.IsReadOnly = 0;
                 ViewBag.id = id;
 
                 Appointment appointment = new Appointment();
@@ -76,7 +77,6 @@ namespace CitaActiva.Controllers
                     appointmentModel.brandId = appointment.brandId;
                     appointmentModel.versionId = appointment.versionId;
                     appointmentModel.vehicleYear = appointment.vehicleYear.ToString();
-                    //appointmentModel.labours.id = appointment.laboursId;
                     appointmentModel.labours = labours;
 
                     _toastNotification.AddInfoToastMessage("Se cargaron los datos de la Cita Agendada con el Id. " + id);
@@ -99,8 +99,9 @@ namespace CitaActiva.Controllers
                 var scheadule = await scheduleController.Index(scheduleId, token);
                 List<Days> scheduleList = JsonConvert.DeserializeObject<List<Days>>(scheadule);
 
-                string[] fecha = appointment.plannedDate.Split("-");
 
+                string[] fecha = appointmentModel.plannedData.plannedDate.Split("-");
+                
                 int dayOfWeek = Convert.ToInt32(new DateTime(Convert.ToInt32(fecha[0]), Convert.ToInt32(fecha[1]), Convert.ToInt32(fecha[2])).DayOfWeek);
                 //int numDayOfWeek = (int)day.DayOfWeek;
                 if(dayOfWeek == 0)
@@ -117,7 +118,7 @@ namespace CitaActiva.Controllers
                     }
                 }
 
-                var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(days.beginning, days.ending, appointment.plannedDate, "1"));
+                var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
                 ViewBag.horarios = horarios;
 
 
@@ -131,6 +132,7 @@ namespace CitaActiva.Controllers
             }
             else
             {
+                appointmentModel.id = "";
                 string result = "{'receptionists':[]}";
                 JObject results = JObject.Parse(result);
                 JArray arrayResults = (JArray)results["receptionists"];
@@ -173,6 +175,9 @@ namespace CitaActiva.Controllers
 
                 Labours labours = new Labours();
                 labours = db.Labours.Find(appointmentModel.labours.id);
+                labours.operatorId = "";
+                labours.plannedHours = 0;
+                labours.teamId = "";
                 appointmentModel.labours = labours; 
 
                 //Si es nuevo agendamiento.
@@ -188,34 +193,17 @@ namespace CitaActiva.Controllers
                     string resultCreate = await appointmentService.CreateAppointment(token, appointmentModel);
                     resultado = JsonConvert.DeserializeObject<AppointmentResult>(resultCreate);
 
-                    if (resultado.id != null)
-                    {
-                        Appointment appointment = new Appointment();
-                        appointment.id = resultado.id;
-                        appointment.contactName = resultado.contactName;
-                        appointment.contactMail = resultado.contactMail;
-                        appointment.contactPhone = resultado.contactPhone;
-                        appointment.brandId = appointmentModel.brandId;
-                        appointment.versionId = appointmentModel.versionId;
-                        appointment.version = appointmentModel.versionId;
-                        appointment.vehicleYear = Convert.ToInt32(appointmentModel.vehicleYear);
-                        appointment.vehiclePlate = resultado.vehiclePlate;
-                        appointment.labours = appointmentModel.labours.description;
-                        appointment.laboursId = appointmentModel.labours.id;
-                        appointment.workshopId = appointmentModel.workshopId;
-                        appointment.plannedDate = resultado.plannedData.plannedDate;
-                        appointment.plannedTime = resultado.plannedData.plannedTime;
-
-                        db.Appointment.Add(appointment);
-                        db.SaveChanges();
-                    }
+                    
                 }
                 //Si es un agendamiento que se va a modificar.
                 else
                 {
                     appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
                     resultado = JsonConvert.DeserializeObject<AppointmentResult>(await appointmentService.UpdateAppointment(token, appointmentModel));
+                }
 
+                if (resultado.id != null)
+                {
                     Appointment appointment = new Appointment();
                     appointment.id = resultado.id;
                     appointment.contactName = resultado.contactName;
@@ -232,12 +220,21 @@ namespace CitaActiva.Controllers
                     appointment.plannedDate = resultado.plannedData.plannedDate;
                     appointment.plannedTime = resultado.plannedData.plannedTime;
 
-                    db.Appointment.Update(appointment);
-                    db.SaveChanges();
-                }
+                    var appointmentVerifica = db.Appointment.Find(appointment.id);
+                    if (appointmentVerifica == null) {
+                        db.Appointment.Add(appointment);
+                        db.SaveChanges();
+                    }
+                    else {
+                        using (DataContext ctx = new DataContext())
+                        {
+                            ctx.Entry(appointment).State = EntityState.Modified;
+                            ctx.SaveChanges();
+                        }
+                    }
+                    
 
-                if (resultado.id != null)
-                {
+
                     Workshop workshop = new Workshop();
                     WorkshopController workshopController = new WorkshopController();
                     workshop = JsonConvert.DeserializeObject<Workshop>(await workshopController.GetWorkShop(token, resultado.workshopId.ToString()));
@@ -246,15 +243,19 @@ namespace CitaActiva.Controllers
                     ReceptionistController receptionistController = new ReceptionistController();
                     receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
 
-                    ViewData["cuerpoResultado"] = "Estimado " + appointmentModel.contactName + " Se ha generado una Cita con el Id. " + resultado.id;
+                    ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + " se ha agendado una Cita con el Id. " + resultado.id;
                     ViewData["cuerpoResultado1"] = "En la Agencia: " + workshop.comercialName;
                     ViewData["cuerpoResultado2"] = "Ubicada en: " + workshop.address + ", " + workshop.city;
                     ViewData["cuerpoResultado3"] = "El dia: " + appointmentModel.plannedData.plannedDate;
                     ViewData["cuerpoResultado4"] = "A las: " + appointmentModel.plannedData.plannedTime;
-                    ViewData["cuerpoResultado5"] = "Datos del Vehículo: " + appointmentModel.vehiclePlate;
-                   
+                    ViewData["cuerpoResultado5"] = "Datos del Vehículo: ";
+                    ViewData["cuerpoResultado6"] = "Placa: " + appointmentModel.vehiclePlate;
+                    ViewData["cuerpoResultado7"] = "Marca: " + appointment.brandId;
+                    ViewData["cuerpoResultado8"] = "Modelo: " + appointment.version;
+                    ViewData["cuerpoResultado9"] = "Año: " + appointment.vehicleYear;
 
-                   
+
+
                     SendEmailService sendEmailService = new SendEmailService();
                     sendEmailService.SendEmail(resultado, workshop.comercialName, workshop.address, workshop.city, receptionist.name);
 
