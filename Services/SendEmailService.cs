@@ -1,5 +1,6 @@
 ﻿
 
+using CitaActiva.Models;
 using CitaActiva.ModelsViews;
 using System;
 using System.Net;
@@ -9,10 +10,20 @@ namespace CitaActiva.Services
 {
     public class SendEmailService
     {
-        public bool SendEmail(AppointmentResult appointmentModel, string workShopName, string address, string city, string receptionistName)
+        public bool SendEmail(AppointmentResult appointmentModel, string workShopName, string address, string city, Appointment appointment)
         {
             try
             {
+                string brand = "";
+                if(appointment.brandId == "NI")
+                {
+                    brand = "NISSAN";
+                }
+                else if(appointment.brandId == "IF")
+                {
+                    brand = "INFINITI";
+                }
+
                 string eMailBody = ""
                     + "<p>Estimado " + appointmentModel.contactName +" Se ha generado una Cita con el Id. " + appointmentModel.id + "</p>"
                     + "<table>"
@@ -29,10 +40,19 @@ namespace CitaActiva.Services
                     + "     <td> A las: </td><td>" + appointmentModel.plannedData.plannedTime + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "     <td> Será atendido por: </td><td>" + receptionistName + "</td>"
+                    + "     <td> Datos del Vehículo: </td><td></td>"
                     + "</tr>"
                     + "<tr>"
-                    + "     <td> Datos del Vehículo: </td><td>" + appointmentModel.vehiclePlate + "</td>"
+                    + "     <td> Placa: </td><td>" + appointmentModel.vehiclePlate + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "     <td> Marca: </td><td>" + brand + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "     <td> Modelo: </td><td>" + appointment.versionId + "</td>"
+                    + "</tr>"
+                    + "<tr>"
+                    + "     <td> Año: </td><td>" + appointment.vehicleYear + "</td>"
                     + "</tr>"
                     + "</table>";
 

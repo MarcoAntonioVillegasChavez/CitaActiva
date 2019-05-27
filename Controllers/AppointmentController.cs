@@ -63,7 +63,7 @@ namespace CitaActiva.Controllers
                 appointmentModel.workshopId = appointmentResult.workshopId;
                 appointmentModel.plannedData = appointmentResult.plannedData;
 
-                ViewBag.IsReadOnly = 0;
+                ViewBag.IsReadOnly = 1;
                 ViewBag.id = id;
 
                 Appointment appointment = new Appointment();
@@ -184,7 +184,7 @@ namespace CitaActiva.Controllers
                 if (appointmentModel.id == null)
                 {
                     appointmentModel.id = "";
-                    appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
+                    //appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
 
                     if(appointmentModel.vehiclePlate == null)
                     {
@@ -198,7 +198,7 @@ namespace CitaActiva.Controllers
                 //Si es un agendamiento que se va a modificar.
                 else
                 {
-                    appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
+                    //appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
                     resultado = JsonConvert.DeserializeObject<AppointmentResult>(await appointmentService.UpdateAppointment(token, appointmentModel));
                 }
 
@@ -250,14 +250,21 @@ namespace CitaActiva.Controllers
                     ViewData["cuerpoResultado4"] = "A las: " + appointmentModel.plannedData.plannedTime;
                     ViewData["cuerpoResultado5"] = "Datos del Vehículo: ";
                     ViewData["cuerpoResultado6"] = "Placa: " + appointmentModel.vehiclePlate;
-                    ViewData["cuerpoResultado7"] = "Marca: " + appointment.brandId;
+
+                    if(appointment.brandId == "NI")
+                    {
+                        ViewData["cuerpoResultado7"] = "Marca: NISSAN";
+                    }else if(appointment.brandId == "IF")
+                    {
+                        ViewData["cuerpoResultado7"] = "Marca: INFINITI";
+                    }
                     ViewData["cuerpoResultado8"] = "Modelo: " + appointment.version;
                     ViewData["cuerpoResultado9"] = "Año: " + appointment.vehicleYear;
 
 
 
                     SendEmailService sendEmailService = new SendEmailService();
-                    sendEmailService.SendEmail(resultado, workshop.comercialName, workshop.address, workshop.city, receptionist.name);
+                    sendEmailService.SendEmail(resultado, workshop.comercialName, workshop.address, workshop.city, appointment);
 
                     _toastNotification.AddSuccessToastMessage("Se enviaron los datos del Agendamiento de la Cita al correo " + resultado.contactMail);
                 }

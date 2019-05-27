@@ -2,10 +2,15 @@
 @{
     ViewData["Title"] = "CreateAppointment";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="~/js/jquery.blockUI.js"></script>
+
+<script src="~/js/site.js"></script>
+
 <div class="container">
-    <section class="container-fluid">
-        <section class="row justify-content-center">
-            <section class="col-sm-6 col-md-6">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 col-md-6">
                 <p>
                     <table width="100%">
                         <tr>
@@ -41,7 +46,13 @@
                     </table>
 
                 </p>
-            </section>
-        </section>
-    </section>
+            </div>
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-6 col-md-6">
+                <a href="/Home/Index/" class="btn btn-success btn-block">Confirmar Agendamiento</a>
+            </div>
+        </div>
+    </div>
 </div>

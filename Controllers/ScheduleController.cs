@@ -92,7 +92,7 @@ namespace CitaActiva.Controllers
 
                         Horarios horaAgregada = new Horarios();
                         horaAgregada.hora = horas + ":" + minutos + ":00";
-                        horaAgregada.horario = horas + ":" + minutos + ":00";
+                        horaAgregada.horario = horas + ":" + minutos;
 
                         horariosList.Add(horaAgregada);
                     }

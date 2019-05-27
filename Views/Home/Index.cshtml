@@ -1,44 +1,50 @@
 ﻿@model CitaActiva.ModelsViews.AppointmentModel
 
-    <form asp-route="HomeGetRoute" id="HomeForm" method="post">
-<br />
-<br />
-<br />
-        <div class="row">
-            <div class="col-md-6 col-md-push-6">
-                <div class="col text-right">
-                    <div class="form-group">
-                        
-                        <table>
-                            <tr>
-                                <td colspan="2"><label>¿Ya tienes una Cita generada y deseas modificarla?</label></td><td></td>
-                            </tr>
-                            <tr>
-                                <td><input asp-for="id" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
-                                <td><input type="submit" asp-for="id" class="btn btn-info" value="Buscar Cita" /></td>
-                            </tr>
-                        </table>                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-md-pull-6">
-                <div class="col text-center">
-                    <div class="form-group">
-                        <table width="100%">
-                            <tr>
-                                <td><label></label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="/Appointment/Index/" class="btn btn-success btn-block">Agendar nueva Cita</a>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="~/js/jquery.blockUI.js"></script>
+
+<script src="~/js/site.js"></script>
+
+<form asp-route="HomeGetRoute" id="HomeForm" method="post">
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-6 col-md-push-6">
+            <div class="col text-right">
+                <div class="form-group">
+
+                    <table>
+                        <tr>
+                            <td colspan="2"><label>¿Ya tienes una Cita generada y deseas modificarla?</label></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input asp-for="id" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
+                            <td><input type="submit" asp-for="id" class="btn btn-info" value="Buscar Cita" /></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
-    </form>
+        <div class="col-md-6 col-md-pull-6">
+            <div class="col text-center">
+                <div class="form-group">
+                    <table width="100%">
+                        <tr>
+                            <td><label></label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/Appointment/Index/" class="btn btn-success btn-block">Agendar nueva Cita</a>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 
