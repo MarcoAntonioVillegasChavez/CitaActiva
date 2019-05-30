@@ -3,47 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CitaActiva.Models;
+using CitaActiva.ModelsViews;
 using CitaActiva.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CitaActiva.Controllers
 {
     public class VersionsController : Controller
     {
+        DataContext db = new DataContext();
         [HttpGet]
         [Route("/Appointment/Versions/{brandId}", Name = "VersionsRoute")]
-        public async Task<IActionResult> Versions(string brandId)
+        public string Versions(string brandId)
         {
-            Token token = ObtenerToken();
-            VersionsService versionsService = new VersionsService();
-            string result = await versionsService.GetVersions(token, brandId);
-            JObject results = JObject.Parse(result);
-            JArray arrayResults = (JArray)results["versions"];
-            
+           
 
-            return Json(QuitarCamposSobrantes(arrayResults));
-        }
-
-        public Token ObtenerToken()
-        {
-
-            Token token = new Token();
-            TokenService tokenService = new TokenService();
-
-            if (Request.Cookies["tokenVehicle"] == null)
-            {
-                CookieOptions tokenCookie = new CookieOptions();
-                tokenCookie.Expires = DateTime.Now.AddSeconds(600);
-                token = tokenService.ObtenerTokenVechicleStock();
-                Response.Cookies.Append("tokenVehicle", token.access_token, tokenCookie);
-            }
-            else
-            {
-                token.access_token = Request.Cookies["tokenVehicle"];
-            }
-            return token;
+            var list = db.Versions.Where(v => v.brandId == brandId).OrderBy(v => v.description);
+            string versions =JsonConvert.SerializeObject(list.ToArray());
+            return versions;
         }
 
         JArray QuitarCamposSobrantes(JArray arrayResults)

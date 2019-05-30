@@ -18,6 +18,7 @@ namespace CitaActiva.ModelsViews
         }
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<Labours> Labours { get; set; }
-       
+        public DbSet<Versions> Versions { get; set; }
+
     }
 }

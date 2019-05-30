@@ -48,7 +48,7 @@ namespace CitaActiva.Controllers
             List<Labours> laboursList = new List<Labours>();
             laboursList = db.Labours.ToList();
             ViewBag.laboursList = laboursList;
-
+                        
             AppointmentModel appointmentModel = new AppointmentModel();
             if (id != null)
             {
@@ -90,8 +90,7 @@ namespace CitaActiva.Controllers
                 ReceptionistController receptionistController = new ReceptionistController();
                 var receptionistListResult = await receptionistController.Index(appointmentModel.workshopId.ToString(), token);
                 List<Receptionist> receptionistsList = JsonConvert.DeserializeObject<List<Receptionist>>(receptionistListResult);
-                // JObject receptionisObject = JObject.Parse(await receptionistController.Index(appointmentModel.workshopId.ToString(), token));
-                //JArray scheduleArray = (JArray)receptionisObject["days"];
+              
 
                 string scheduleId = receptionistsList[0].scheduleId.ToString(); 
 
@@ -103,7 +102,7 @@ namespace CitaActiva.Controllers
                 string[] fecha = appointmentModel.plannedData.plannedDate.Split("-");
                 
                 int dayOfWeek = Convert.ToInt32(new DateTime(Convert.ToInt32(fecha[0]), Convert.ToInt32(fecha[1]), Convert.ToInt32(fecha[2])).DayOfWeek);
-                //int numDayOfWeek = (int)day.DayOfWeek;
+                
                 if(dayOfWeek == 0)
                 {
                     dayOfWeek = 7;
@@ -121,14 +120,12 @@ namespace CitaActiva.Controllers
                 var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
                 ViewBag.horarios = horarios;
 
+                VersionsController versionsController = new VersionsController();
+                var resultVersion = JsonConvert.DeserializeObject<List<Versions>>(versionsController.Versions(appointmentModel.brandId));
+                //JObject results = JObject.Parse(resultVersion);
+                //JArray arrayResults = (JArray)results["versions"];
 
-                Token tokenVehicle = ObtenerTokenVehicle();
-                VersionsService versionsService = new VersionsService();
-                string resultVersion = await versionsService.GetVersions(tokenVehicle, appointmentModel.brandId);
-                JObject results = JObject.Parse(resultVersion);
-                JArray arrayResults = (JArray)results["versions"];
-
-                ViewBag.versions = arrayResults;               
+                ViewBag.versions = resultVersion;               
             }
             else
             {
@@ -204,6 +201,9 @@ namespace CitaActiva.Controllers
 
                 if (resultado.id != null)
                 {
+
+                  
+
                     Appointment appointment = new Appointment();
                     appointment.id = resultado.id;
                     appointment.contactName = resultado.contactName;
@@ -211,7 +211,11 @@ namespace CitaActiva.Controllers
                     appointment.contactPhone = resultado.contactPhone;
                     appointment.brandId = appointmentModel.brandId;
                     appointment.versionId = appointmentModel.versionId;
-                    appointment.version = appointmentModel.versionId;
+
+                    Versions versions = new Versions();
+                    versions = db.Versions.Find(appointmentModel.versionId);
+
+                    appointment.version = versions.description;
                     appointment.vehicleYear = Convert.ToInt32(appointmentModel.vehicleYear);
                     appointment.vehiclePlate = resultado.vehiclePlate;
                     appointment.labours = appointmentModel.labours.description;

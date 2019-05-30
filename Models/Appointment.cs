@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CitaActiva.Models
 {
 
-    [Table("appointment")]
+    [Table("Appointment")]
     public class Appointment
     {
         public string id { get; set; }

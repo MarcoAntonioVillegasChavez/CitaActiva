@@ -49,7 +49,7 @@ namespace CitaActiva.Services
                     + "     <td> Marca: </td><td>" + brand + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "     <td> Modelo: </td><td>" + appointment.versionId + "</td>"
+                    + "     <td> Modelo: </td><td>" + appointment.version + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "     <td> Año: </td><td>" + appointment.vehicleYear + "</td>"

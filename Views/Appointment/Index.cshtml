@@ -83,9 +83,10 @@
                         $.unblockUI();
                     },
                     success: function (result) {
+                        resultVersion = JSON.parse(result)
                         var s = '<option value="-1" selected="selected">Selecciona el modelo del Vehiculo</option>';
-                        for (var i = 0; i < result.length; i++) {
-                            s += '<option value="' + result[i].id + '">' + result[i].description + '</option>';
+                        for (var i = 0; i < resultVersion.length; i++) {
+                            s += '<option value="' + resultVersion[i].id + '">' + resultVersion[i].description + '</option>';
                         }
                         $('#versionId').html(s);
                     }

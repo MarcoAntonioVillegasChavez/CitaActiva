@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CitaActiva.Models
 {
-    [Table("labours")]
+    [Table("Labours")]
     public class Labours
     {
         public string description { get; set; }

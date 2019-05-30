@@ -14,22 +14,7 @@
             <div class="col text-right">
                 <div class="form-group">
 
-                    <table>
-                        <tr>
-                            <td colspan="2"><label>¿Ya tienes una Cita generada y deseas modificarla?</label></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input asp-for="id" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
-                            <td><input type="submit" asp-for="id" class="btn btn-info" value="Buscar Cita" /></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-md-pull-6">
-            <div class="col text-center">
-                <div class="form-group">
+
                     <table width="100%">
                         <tr>
                             <td><label></label></td>
@@ -38,6 +23,23 @@
                             <td>
                                 <a href="/Appointment/Index/" class="btn btn-success btn-block">Agendar nueva Cita</a>
                             </td>
+                        </tr>
+                    </table>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-pull-6">
+            <div class="col text-center">
+                <div class="form-group">
+                    <table>
+                        <tr>
+                            <td colspan="2"><label>¿Ya tienes una Cita generada y deseas modificarla?</label></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input asp-for="id" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
+                            <td><input type="submit" asp-for="id" class="btn btn-info" value="Buscar Cita" /></td>
                         </tr>
                     </table>
 
