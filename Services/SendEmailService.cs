@@ -24,6 +24,9 @@ namespace CitaActiva.Services
                     brand = "INFINITI";
                 }
 
+                string[] hr = appointmentModel.plannedData.plannedTime.Split(':');
+                string plannedTime= "A las: " + hr[0] + ":" + hr[1];
+
                 string eMailBody = ""
                     + "<p>Estimado " + appointmentModel.contactName +" Se ha generado una Cita con el Id. " + appointmentModel.id + "</p>"
                     + "<table>"
@@ -37,7 +40,7 @@ namespace CitaActiva.Services
                     + "     <td> El dia: </td><td>" + appointmentModel.plannedData.plannedDate + "</td>"
                     + "</tr>"
                     + "<tr>"
-                    + "     <td> A las: </td><td>" + appointmentModel.plannedData.plannedTime + "</td>"
+                    + "     <td> A las: </td><td>" + plannedTime + "</td>"
                     + "</tr>"
                     + "<tr>"
                     + "     <td> Datos del Vehículo: </td><td></td>"

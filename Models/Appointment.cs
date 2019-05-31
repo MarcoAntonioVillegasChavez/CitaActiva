@@ -22,6 +22,7 @@ namespace CitaActiva.Models
         public string labours { get; set; }
         public string laboursId { get; set; }
         public int workshopId { get; set; }
+        public int deletedInd { get; set; }
         public string plannedDate { get; set; }
         public string plannedTime { get; set; }       
     }

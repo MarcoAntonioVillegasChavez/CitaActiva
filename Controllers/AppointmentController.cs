@@ -79,6 +79,8 @@ namespace CitaActiva.Controllers
                     appointmentModel.vehicleYear = appointment.vehicleYear.ToString();
                     appointmentModel.labours = labours;
 
+                    ViewBag.DeleteInd = appointment.deletedInd;
+
                     _toastNotification.AddInfoToastMessage("Se cargaron los datos de la Cita Agendada con el Id. " + id);
                 }
                 else
@@ -122,8 +124,6 @@ namespace CitaActiva.Controllers
 
                 VersionsController versionsController = new VersionsController();
                 var resultVersion = JsonConvert.DeserializeObject<List<Versions>>(versionsController.Versions(appointmentModel.brandId));
-                //JObject results = JObject.Parse(resultVersion);
-                //JArray arrayResults = (JArray)results["versions"];
 
                 ViewBag.versions = resultVersion;               
             }
@@ -139,6 +139,7 @@ namespace CitaActiva.Controllers
                 ViewBag.id = "";
                 ViewBag.versions = "";
                 ViewBag.RecepcionistList = arrayResults;
+                ViewBag.DeleteInd = 0;
             }
 
             //ViewData["allowTimes"] = "12:15";
@@ -195,14 +196,11 @@ namespace CitaActiva.Controllers
                 //Si es un agendamiento que se va a modificar.
                 else
                 {
-                    //appointmentModel.plannedData.plannedTime = appointmentModel.plannedData.plannedTime + ":00";
                     resultado = JsonConvert.DeserializeObject<AppointmentResult>(await appointmentService.UpdateAppointment(token, appointmentModel));
                 }
 
                 if (resultado.id != null)
                 {
-
-                  
 
                     Appointment appointment = new Appointment();
                     appointment.id = resultado.id;
@@ -236,8 +234,8 @@ namespace CitaActiva.Controllers
                             ctx.SaveChanges();
                         }
                     }
-                    
 
+                    
 
                     Workshop workshop = new Workshop();
                     WorkshopController workshopController = new WorkshopController();
@@ -247,23 +245,27 @@ namespace CitaActiva.Controllers
                     ReceptionistController receptionistController = new ReceptionistController();
                     receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
 
-                    ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + " se ha agendado una Cita con el Id. " + resultado.id;
-                    ViewData["cuerpoResultado1"] = "En la Agencia: " + workshop.comercialName;
-                    ViewData["cuerpoResultado2"] = "Ubicada en: " + workshop.address + ", " + workshop.city;
-                    ViewData["cuerpoResultado3"] = "El dia: " + appointmentModel.plannedData.plannedDate;
-                    ViewData["cuerpoResultado4"] = "A las: " + appointmentModel.plannedData.plannedTime;
-                    ViewData["cuerpoResultado5"] = "Datos del Vehículo: ";
-                    ViewData["cuerpoResultado6"] = "Placa: " + appointmentModel.vehiclePlate;
+                    ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + ".";
+                    ViewData["cuerpoResultado1"]  = " Se ha agendado una Cita con el Id. " + resultado.id;
+                    ViewData["cuerpoResultado2"] = "En la Agencia: " + workshop.comercialName;
+                    ViewData["cuerpoResultado3"] = "Ubicada en: " + workshop.address + ", " + workshop.city;
+                    ViewData["cuerpoResultado4"] = "El dia: " + appointmentModel.plannedData.plannedDate;
+
+                    string[] hr = appointmentModel.plannedData.plannedTime.Split(':'); 
+                    ViewData["cuerpoResultado5"] = "A las: " + hr[0] + ":" + hr[1];
+
+                    ViewData["cuerpoResultado6"] = "Datos del Vehículo: ";
+                    ViewData["cuerpoResultado7"] = "Placa: " + appointmentModel.vehiclePlate;
 
                     if(appointment.brandId == "NI")
                     {
-                        ViewData["cuerpoResultado7"] = "Marca: NISSAN";
+                        ViewData["cuerpoResultado8"] = "Marca: NISSAN";
                     }else if(appointment.brandId == "IF")
                     {
-                        ViewData["cuerpoResultado7"] = "Marca: INFINITI";
+                        ViewData["cuerpoResultado8"] = "Marca: INFINITI";
                     }
-                    ViewData["cuerpoResultado8"] = "Modelo: " + appointment.version;
-                    ViewData["cuerpoResultado9"] = "Año: " + appointment.vehicleYear;
+                    ViewData["cuerpoResultado9"] = "Modelo: " + appointment.version;
+                    ViewData["cuerpoResultado10"] = "Año: " + appointment.vehicleYear;
 
 
 
@@ -306,6 +308,12 @@ namespace CitaActiva.Controllers
                 token = ObtenerToken();
                 AppointmentService appointmentService = new AppointmentService();
                 string resultado = await appointmentService.DeleteAppointment(token, id);
+
+                using (DataContext ctx = new DataContext())
+                {
+                    ctx.Entry(id).State = EntityState.Modified;
+                    ctx.SaveChanges();
+                }
 
                 _toastNotification.AddSuccessToastMessage("La cita" + id + " se ha cancelado");
 

@@ -8,7 +8,11 @@
 }
 
 <br />
-<h1>Agenda tu Cita. </h1>
+<div>
+    <h1>Agenda tu cita. </h1>
+    
+</div>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -112,7 +116,6 @@
         $(document).ready(function () {
             $("#plannedDate").on("change", function () {
 
-               
                 var scheduleId = localStorage.getItem("scheduleId")
 
                 $.blockUI({
@@ -132,6 +135,32 @@
                     url: '/Appointment/Schedule/' + scheduleId,
                     data: { scheduleId },
                     complete: function () {
+
+                        if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
+                            var fecha = ($("#plannedDate").val())
+                            $.ajax({
+                                type: 'GET',
+
+                                url: '/Appointment/AllowTimes/' + localStorage.getItem("Min") + "/" + localStorage.getItem("Max") + "/" + fecha + "/0",
+                                complete: function () {
+
+                                    localStorage.removeItem("Min");
+                                    localStorage.removeItem("Max");
+                                },
+                                success: function (resultAllowTimes) {
+                                    var result = (JSON.parse(resultAllowTimes))
+                                    
+                                    var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
+                                    for (var i = 0; i < result.length; i++) {
+                                        s += '<option value="' + result[i].hora + '">' + result[i].horario + '</option>';
+                                    } $('#plannedTime').html(s);
+
+                                }
+                            });
+                        } else {
+                             toastr.warning("Ya no se puede elegir un horario de servicio en el dia seleccionado");
+                        }
+
                         $.unblockUI();
                         DesbloquearPlannedTime()
                     },
@@ -149,14 +178,30 @@
                                 var date = year + "-" + month + "-" + day
 
                                 if ($("#plannedDate").val() == date) {
+
                                     var hr = new Date();
                                     var min = hr.getMinutes()
                                     if (min < 10) {
                                         min = "0" + min
                                     }
-                                    hrHoy = hr.getHours() + ":" + min + ":" + hr.getSeconds();
-                                    localStorage.setItem("Min", hrHoy)
-                                    localStorage.setItem("Max", value.ending)
+
+                                    hrHoy = (hr.getHours() + 2) + ":" + min + ":" + hr.getSeconds();
+
+                                    var hrHoySplit = hrHoy.split(":")
+                                    var valueEnding = value.ending.split(":")
+
+                                    var valoraHr = new Date(year, month - 1, day, hrHoySplit[0], hrHoySplit[1]);
+                                    var valorEnding = new Date(year, month - 1, day, valueEnding[0], valueEnding[1]);
+
+
+                                    if (valoraHr >= valorEnding) {
+                                        localStorage.setItem("Min", "")
+                                        localStorage.setItem("Max", "")
+
+                                    } else {
+                                        localStorage.setItem("Min", hrHoy)
+                                        localStorage.setItem("Max", value.ending)
+                                    }
                                 } else {
                                     localStorage.setItem("Min", value.beginning)
                                     localStorage.setItem("Max", value.ending)
@@ -165,37 +210,6 @@
                         });
                     }
                 });
-                var horaMinima = localStorage.getItem("Min");
-                var horaMaxima = localStorage.getItem("Max");
-                var fecha = ($("#plannedDate").val())
-
-                $.blockUI({
-                    message: 'Por favor espere un momento...', css: {
-                        border: 'none',
-                        padding: '15px',
-                        backgroundColor: '#000',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: .5,
-                        color: '#fff'
-                    }
-                });
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/AllowTimes/' + horaMinima + "/" + horaMaxima + "/" + fecha + "/0",
-                    complete: function () {
-                        $.unblockUI();
-                    },
-                    success: function (resultAllowTimes) {
-                        var result = (JSON.parse(resultAllowTimes))
-                        var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
-                        for (var i = 0; i < result.length; i++) {
-                            s += '<option value="' + result[i].hora + '">' + result[i].horario + '</option>';
-                        }
-                        $('#plannedTime').html(s);
-                    }
-                });
-
             });
         });
     });
@@ -242,6 +256,19 @@
     
 </script>
 <script>
+    $(document).ready(function () {
+        var DeleteInd = @ViewBag.DeleteInd;
+        if (DeleteInd == 1) {
+            document.getElementById('DeleteInd').style.display = 'block';
+             document.getElementById('divBtnCancelar').style.display='none'; 
+            document.getElementById('divBtnAgendar').style.display = 'none'; 
+        }
+        else {
+            document.getElementById('DeleteInd').style.display = 'none';
+        }
+    });
+</script>
+<script>
     function DesbloquearPlannedData() {
         var workshopId = document.getElementById("workshopId").value;
        
@@ -278,24 +305,33 @@
 
     <form asp-route="AppintmentRoute" id="AppointmentForm" onSubmit="return Validar('contactName','contactMail', 'contactPhone', 'brandId', 'versionId', 'vehicleYear', 'vehiclePlate', 'labours', 'workshopId', 'plannedDate', 'plannedTime')" method="post">
         <div class="row">
+            <div class="col-md-12 col-md-pull-12">
+                <div class="justify-content-center">
+                    <div id="DeleteInd" style="display: none; background-color: #FF0000; padding: 6px; color: #ffffff; border-radius: 5px 5px 5px 5px; }">
+                        <label>     Cita Cancelada</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-4 col-md-pull-4">
                 <div class="form-group">
-                    <label asp-for="contactName">Nombre</label>
-                    <input asp-for="contactName" id="contactName" class="form-control" />
+                    <label asp-for="contactName">Nombre: *</label>
+                    <input asp-for="contactName" id="contactName" placeholder="Ingresa tu Nombre" class="form-control" />
                     <span asp-validation-for="contactName"></span>
                 </div>
             </div>
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
-                    <label asp-for="contactMail">eMail</label>
-                    <input asp-for="contactMail" id="contactMail" type="email" class="form-control" />
+                    <label asp-for="contactMail">eMail: *</label>
+                    <input asp-for="contactMail" id="contactMail" placeholder="Ingresa tu eMail" type="email" class="form-control" />
                     <span asp-validation-for="contactMail"></span>
                 </div>
             </div>
             <div class="col-md-4 col-md-pull-4">
                 <div class="form-group">
-                    <label asp-for="contactPhone">Telefono</label>
-                    <input asp-for="contactPhone" id="contactPhone" class="form-control" />
+                    <label asp-for="contactPhone">Telefono: *</label>
+                    <input asp-for="contactPhone" id="contactPhone" placeholder="Ingresa tu número telefonico" class="form-control" />
                     <span asp-validation-for="contactPhone"></span>
                 </div>
             </div>
@@ -306,9 +342,9 @@
         <div class="row">
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
-                    <label>Marca: </label>
+                    <label>Marca: *</label>
                     <select id="brandId" asp-for="brandId" class="form-control">
-                        <option value="-1" selected="selected">Selecciona la Marca del Vehiculo</option>
+                        <option value="-1" selected="selected">Selecciona la Marca de tu auto.</option>
                         <option value="NI">NISSAN</option>
                         <option value="IF">INFINITI</option>
                     </select>
@@ -316,9 +352,9 @@
             </div>
             <div class="col-md-4 col-md-pull-4">
                 <div class="form-group">
-                    <label>Modelo:</label>
+                    <label>Modelo: *</label>
                     <select id="versionId" asp-for="versionId" class="form-control">
-                        <option value="-1" selected="selected">Selecciona un modelo</option>
+                        <option value="-1" selected="selected">Selecciona el modelo de tu auto</option>
                         @foreach (var version in ViewBag.versions)
                         {
                             <option value="@version.id">@version.description</option>
@@ -328,8 +364,8 @@
             </div>
             <div class="col-md-4 col-md-pull-4">
                 <div class="form-group">
-                    <label>Año:</label>
-                    <input type="number" asp-for="vehicleYear" class="form-control" id="vehicleYear">
+                    <label>Año: *</label>
+                    <input type="number" asp-for="vehicleYear" placeholder="Selecciona el Año de tu auto." class="form-control" id="vehicleYear">
 
                 </div>
             </div>
@@ -338,7 +374,7 @@
             <div class="col-md-6 col-md-push-6">
                 <div class="form-group">
                     <label asp-for="vehiclePlate">Placa / VIN</label>
-                    <input asp-for="vehiclePlate" id="vehiclePlate" class="form-control" />
+                    <input asp-for="vehiclePlate" id="vehiclePlate" placeholder="Ingresa la placa/VIN de tu auto" class="form-control" />
                     <span asp-validation-for="vehiclePlate"></span>
                 </div>
 
@@ -346,7 +382,7 @@
             <div class="col-md-6 col-md-pull-6">
 
                 <div class="form-group">
-                    <label asp-for="labours.id">Servicio:</label>
+                    <label asp-for="labours.id">Servicio: *</label>
                     <select id="labours" asp-for="labours.id" class="form-control">
                         <option value="-1" selected="selected">Selecciona un Servicio.</option>
                         @foreach (var labour in ViewBag.laboursList)
@@ -363,7 +399,7 @@
         <div class="row">
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
-                    <label asp-for="workshopId">Taller:</label>
+                    <label asp-for="workshopId">Taller: *</label>
                     <select id="workshopId" asp-for="workshopId" class="form-control">
                         <option value="-1" selected="selected">Selecciona un Taller</option>
                         @foreach (var workShop in ViewBag.WorkshopList)
@@ -375,13 +411,13 @@
             </div>
             <div class="col-md-4 col-md-push-4">
                 <div>
-                    <label asp-for="plannedData.plannedDate">Fecha:</label>
-                    <input type="text" class="form-control date" autocomplete="off" id="plannedDate" asp-for="plannedData.plannedDate">
+                    <label asp-for="plannedData.plannedDate">Fecha: *</label>
+                    <input type="text" class="form-control date" autocomplete="off" id="plannedDate" placeholder="Selecciona una Fecha" asp-for="plannedData.plannedDate">
                 </div>
             </div>
             <div class="col-md-4 col-md-pull-4">
                 <div>
-                    <label asp-for="plannedData.plannedTime">Hora:</label>
+                    <label asp-for="plannedData.plannedTime">Hora: *</label>
                     <select id="plannedTime" asp-for="plannedData.plannedTime" class="form-control">
                         <option value="-1" selected="selected">Selecciona un Horario</option>
                         @foreach (var horario in ViewBag.horarios)
@@ -389,7 +425,7 @@
                             <option value="@horario.hora">@horario.horario</option>
                         }
                     </select>
-                    @*<input type="text" class="form-control time" autocomplete="off" id="plannedTime" asp-for="plannedData.plannedTime">*@
+                    
                 </div>
             </div>
         </div>
