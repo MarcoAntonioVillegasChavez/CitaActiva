@@ -270,7 +270,7 @@ namespace CitaActiva.Controllers
 
 
                     SendEmailService sendEmailService = new SendEmailService();
-                    sendEmailService.SendEmail(resultado, workshop.comercialName, workshop.address, workshop.city, appointment);
+                    sendEmailService.SendEmail(workshop.comercialName, workshop.address, workshop.city, appointment);
 
                     _toastNotification.AddSuccessToastMessage("Se enviaron los datos del Agendamiento de la Cita al correo " + resultado.contactMail);
                 }
@@ -309,11 +309,24 @@ namespace CitaActiva.Controllers
                 AppointmentService appointmentService = new AppointmentService();
                 string resultado = await appointmentService.DeleteAppointment(token, id);
 
+                Appointment appointment = new Appointment() { id = id, deletedInd = 1 };
+
                 using (DataContext ctx = new DataContext())
                 {
-                    ctx.Entry(id).State = EntityState.Modified;
+                    ctx.Appointment.Attach(appointment);
+
+                    ctx.Entry(appointment).Property(x => x.deletedInd).IsModified = true;
                     ctx.SaveChanges();
                 }
+
+                using (DataContext db = new DataContext())
+                {
+                    appointment = db.Appointment.Find(id);
+                }
+
+                    SendEmailService sendEmailService = new SendEmailService();
+                sendEmailService.SendEmail("","","", appointment);
+
 
                 _toastNotification.AddSuccessToastMessage("La cita" + id + " se ha cancelado");
 

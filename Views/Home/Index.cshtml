@@ -1,9 +1,11 @@
 ﻿@model CitaActiva.ModelsViews.AppointmentModel
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="~/js/jquery.blockUI.js"></script>
 
 <script src="~/js/site.js"></script>
+<link href="~/css/global.css" rel="stylesheet" type="text/css" />
+
 
 <form asp-route="HomeGetRoute" id="HomeForm" method="post">
     <br />
@@ -25,7 +27,7 @@
                             </td>
                         </tr>
                     </table>
-                   
+
                 </div>
             </div>
         </div>
@@ -38,7 +40,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><input asp-for="id" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
+                            <td><input asp-for="id" type="number" id="idHome" class="form-control" placeholder="Ingresa el Id de tu cita." /></td>
                             <td><input type="submit" asp-for="id" class="btn btn-info" value="Buscar Cita" /></td>
                         </tr>
                     </table>
