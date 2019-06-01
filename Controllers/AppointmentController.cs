@@ -63,6 +63,7 @@ namespace CitaActiva.Controllers
                 appointmentModel.workshopId = appointmentResult.workshopId;
                 appointmentModel.plannedData = appointmentResult.plannedData;
 
+                ViewBag.Referencia = id;
                 ViewBag.IsReadOnly = 1;
                 ViewBag.id = id;
 
@@ -80,6 +81,10 @@ namespace CitaActiva.Controllers
                     appointmentModel.labours = labours;
 
                     ViewBag.DeleteInd = appointment.deletedInd;
+                    if (appointment.deletedInd == 1)
+                    {
+                        ViewBag.Referencia = id + " - Cita Cancelada.";
+                    }
 
                     _toastNotification.AddInfoToastMessage("Se cargaron los datos de la Cita Agendada con el Id. " + id);
                 }
@@ -140,6 +145,7 @@ namespace CitaActiva.Controllers
                 ViewBag.versions = "";
                 ViewBag.RecepcionistList = arrayResults;
                 ViewBag.DeleteInd = 0;
+                ViewBag.Referencia = "---";
             }
 
             //ViewData["allowTimes"] = "12:15";

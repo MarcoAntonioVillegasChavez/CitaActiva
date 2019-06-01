@@ -259,12 +259,14 @@
     $(document).ready(function () {
         var DeleteInd = @ViewBag.DeleteInd;
         if (DeleteInd == 1) {
-            document.getElementById('DeleteInd').style.display = 'block';
-             document.getElementById('divBtnCancelar').style.display='none'; 
+            
+            document.getElementById('divBtnCancelar').style.display='none'; 
             document.getElementById('divBtnAgendar').style.display = 'none'; 
+            document.getElementById('divBtnRegresar').style.display = 'block'; 
         }
         else {
-            document.getElementById('DeleteInd').style.display = 'none';
+            document.getElementById('divBtnRegresar').style.display = 'none'; 
+            
         }
     });
 </script>
@@ -306,11 +308,7 @@
     <form asp-route="AppintmentRoute" id="AppointmentForm" onSubmit="return Validar('contactName','contactMail', 'contactPhone', 'brandId', 'versionId', 'vehicleYear', 'vehiclePlate', 'labours', 'workshopId', 'plannedDate', 'plannedTime')" method="post">
         <div class="row">
             <div class="col-md-12 col-md-pull-12">
-                <div class="justify-content-center">
-                    <div id="DeleteInd" style="display: none; background-color: #FF0000; padding: 6px; color: #ffffff; border-radius: 5px 5px 5px 5px; }">
-                        <label>     Cita Cancelada</label>
-                    </div>
-                </div>
+                <h3> Referencia: @ViewBag.Referencia </h3>
             </div>
         </div>
         <div class="row">
@@ -432,12 +430,17 @@
 
         <div class="row">
 
-            <div class="col-md-6 col-md-pull-6">
+            <div class="col-md-4 col-md-pull-4">
                 <div id="divBtnCancelar" style="display: none">
-                    <a href="/Appointment/Delete/@ViewBag.id"  id="btnCancelar" class="btn btn-danger btn-block">Cancelar Cita</a>
+                    <a href="/Appointment/Delete/@ViewBag.id" id="btnCancelar" class="btn btn-danger btn-block">Cancelar Cita</a>
                 </div>
             </div>
-            <div class="col-md-6 col-md-pull-6">
+            <div class="col-md-4 col-md-pull-4">
+                <div id="divBtnRegresar" style="display: none">
+                    <a href="/Home/Index" id="btnRegresar" class="btn btn-info btn-block">Regresar</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-pull-4">
                 <div id="divBtnAgendar" style="display: none">
                     <input type="submit" id="btnAgendar" class="btn btn-success btn-block" value="Agendar Cita" />
                 </div>
