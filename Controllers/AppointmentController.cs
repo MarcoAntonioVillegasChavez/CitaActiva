@@ -65,6 +65,7 @@ namespace CitaActiva.Controllers
 
                 ViewBag.Referencia = id;
                 ViewBag.IsReadOnly = 1;
+                ViewBag.ReferenciaInd = 1;
                 ViewBag.id = id;
 
                 Appointment appointment = new Appointment();
@@ -145,7 +146,8 @@ namespace CitaActiva.Controllers
                 ViewBag.versions = "";
                 ViewBag.RecepcionistList = arrayResults;
                 ViewBag.DeleteInd = 0;
-                ViewBag.Referencia = "---";
+                ViewBag.Referencia = "";
+                ViewBag.ReferenciaInd = 0;
             }
 
             //ViewData["allowTimes"] = "12:15";

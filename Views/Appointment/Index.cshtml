@@ -215,7 +215,7 @@
     });
 </script>
 <script>
-    $(document).ready(function () {
+/**    $(document).ready(function () {
         var year = new Date().getFullYear()
         var yearMax = year + 1
         var yearMin = yearMax - 15
@@ -224,7 +224,7 @@
         vehicleYear.setAttribute("max", yearMax);
         vehicleYear.setAttribute("min", yearMin);
 
-        });
+        });  **/
 </script>
 <script>
     $(document).ready(function () {
@@ -259,15 +259,17 @@
     $(document).ready(function () {
         var DeleteInd = @ViewBag.DeleteInd;
         if (DeleteInd == 1) {
-            
-            document.getElementById('divBtnCancelar').style.display='none'; 
-            document.getElementById('divBtnAgendar').style.display = 'none'; 
-            document.getElementById('divBtnRegresar').style.display = 'block'; 
+            document.getElementById('divBtnCancelar').style.display='none';
+            document.getElementById('divBtnAgendar').style.display = 'none';            
         }
-        else {
-            document.getElementById('divBtnRegresar').style.display = 'none'; 
-            
-        }
+
+        var ReferenciaInd = @ViewBag.ReferenciaInd;
+
+        if (ReferenciaInd == 0) {
+            document.getElementById('divReferencia').style.display = 'none';
+        } else {
+            document.getElementById('divReferencia').style.display = 'block';
+        }        
     });
 </script>
 <script>
@@ -306,9 +308,11 @@
     </div>
 
     <form asp-route="AppintmentRoute" id="AppointmentForm" onSubmit="return Validar('contactName','contactMail', 'contactPhone', 'brandId', 'versionId', 'vehicleYear', 'vehiclePlate', 'labours', 'workshopId', 'plannedDate', 'plannedTime')" method="post">
-        <div class="row">
+        <div class="row" >
             <div class="col-md-12 col-md-pull-12">
-                <h3> Referencia: @ViewBag.Referencia </h3>
+                <div id="divReferencia" style="display: none">
+                    <h3> Referencia: @ViewBag.Referencia </h3>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -322,7 +326,7 @@
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
                     <label asp-for="contactMail">eMail: *</label>
-                    <input asp-for="contactMail" id="contactMail" placeholder="Ingresa tu eMail" type="email" class="form-control" />
+                    <input asp-for="contactMail" id="contactMail" placeholder="Ingresa tu eMail"  class="form-control" />
                     <span asp-validation-for="contactMail"></span>
                 </div>
             </div>
@@ -436,7 +440,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-md-pull-4">
-                <div id="divBtnRegresar" style="display: none">
+                <div id="divBtnRegresar" >
                     <a href="/Home/Index" id="btnRegresar" class="btn btn-info btn-block">Regresar</a>
                 </div>
             </div>
