@@ -4,7 +4,7 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "AUTOCOM | Grupo Automotríz: Nissan e Infiniti";
 }
 
 <br />
@@ -103,10 +103,21 @@
 <script>
     jQuery(function ($) {
         $('.form-control.date').each(function () {
+
+            var year = @ViewBag.Year;            
+            var month = @ViewBag.Month;
+            if (month < 10) {
+                month = "0" + month
+            }
+            var day = @ViewBag.Day;
+            if (day < 10) {
+                day = "0" + day
+            }
+            var date = year + "-" + month + "-" + day
             $(this).datetimepicker({
                 timepicker: false,
                 format: 'Y-m-d',
-                minDate: new Date()
+                minDate: date
             });
         });
     });
@@ -136,11 +147,13 @@
                     data: { scheduleId },
                     complete: function () {
 
-                        if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
+                     
+
+                        if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {                            
+
                             var fecha = ($("#plannedDate").val())
                             $.ajax({
                                 type: 'GET',
-
                                 url: '/Appointment/AllowTimes/' + localStorage.getItem("Min") + "/" + localStorage.getItem("Max") + "/" + fecha + "/0",
                                 complete: function () {
 
@@ -158,7 +171,9 @@
                                 }
                             });
                         } else {
-                             toastr.warning("Ya no se puede elegir un horario de servicio en el dia seleccionado");
+                            toastr.warning("Ya no se puede elegir un horario de servicio en el dia seleccionado");
+                             var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
+                                     $('#plannedTime').html(s);
                         }
 
                         $.unblockUI();
@@ -169,12 +184,16 @@
                         var fecha = new Date(($("#plannedDate").val()))
                         $.each(resultSchedule, function (index, value) {
                             if (fecha.getDay() + 1 == (value.weekday)) {
-                                var year = new Date().getFullYear();
-                                var month = (new Date().getMonth() + 1).toString();
+                                var year = @ViewBag.Year;
+                                var month = @ViewBag.Month;
                                 if (month < 10) {
                                     month = "0" + month
                                 }
-                                var day = new Date().getDate()
+                                var day = @ViewBag.Day;
+                                if (day < 10) {
+                                    day = "0" + day
+                                }
+
                                 var date = year + "-" + month + "-" + day
 
                                 if ($("#plannedDate").val() == date) {
@@ -185,21 +204,31 @@
                                         min = "0" + min
                                     }
 
-                                    hrHoy = (hr.getHours() + 2) + ":" + min + ":" + hr.getSeconds();
-
+                                    var hrHoy = '@ViewBag.Hora';// (hr.getHours() + 2) + ":" + min + ":" + hr.getSeconds();
+                                   
                                     var hrHoySplit = hrHoy.split(":")
+                                    var valueBeginning = value.beginning.split(":")
                                     var valueEnding = value.ending.split(":")
 
                                     var valoraHr = new Date(year, month - 1, day, hrHoySplit[0], hrHoySplit[1]);
+
+                                    var valorBeginning = new Date(year, month - 1, day, valueBeginning[0], valueBeginning[1]);
                                     var valorEnding = new Date(year, month - 1, day, valueEnding[0], valueEnding[1]);
 
-
+                                    console.log(valoraHr)
+                                    console.log(valorBeginning)
+                                    console.log(valorEnding)
+                                                                                                                                                                                
                                     if (valoraHr >= valorEnding) {
                                         localStorage.setItem("Min", "")
                                         localStorage.setItem("Max", "")
 
                                     } else {
-                                        localStorage.setItem("Min", hrHoy)
+                                        if (valoraHr < valorBeginning) {
+                                            localStorage.setItem("Min", value.beginning)
+                                        } else {
+                                            localStorage.setItem("Min", hrHoy)
+                                        }
                                         localStorage.setItem("Max", value.ending)
                                     }
                                 } else {

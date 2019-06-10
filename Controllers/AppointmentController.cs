@@ -37,6 +37,12 @@ namespace CitaActiva.Controllers
         {
             Token token = new Token();
             token = ObtenerToken();
+            
+            DateTime thisDay = DateTime.Today;
+            ViewBag.Year = thisDay.Year.ToString();
+            ViewBag.Month = thisDay.Month.ToString();
+            ViewBag.Day = thisDay.Day.ToString();
+            ViewBag.Hora = DateTime.Now.AddHours(2).ToString("HH:mm:ss"); //thisDay.Hour.ToString();
 
             WorkshopController workshopController = new WorkshopController();
             var workShopResult = await workshopController.Index(token, "");

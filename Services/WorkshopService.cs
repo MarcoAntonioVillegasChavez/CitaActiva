@@ -28,6 +28,11 @@ namespace CitaActiva.Services
                     return reader.ReadToEnd();
                 }
             }
+            catch (WebException we)
+            {
+                var reader = new StreamReader(we.Response.GetResponseStream());
+                return reader.ReadToEnd().ToString();
+            }
             catch (Exception ex)
             {
                 return ex.Message.ToString();
