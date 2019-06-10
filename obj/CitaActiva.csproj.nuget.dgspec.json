@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {}
+    "C:\\Users\\marco.villegas\\source\\repositorio autocom\\citaactiva\\CitaActiva\\CitaActiva.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {
+    "C:\\Users\\marco.villegas\\source\\repositorio autocom\\citaactiva\\CitaActiva\\CitaActiva.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repositorio autocom\\citaactiva\\CitaActiva\\CitaActiva.csproj",
         "projectName": "CitaActiva",
-        "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectPath": "C:\\Users\\marco.villegas\\source\\repositorio autocom\\citaactiva\\CitaActiva\\CitaActiva.csproj",
         "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\obj\\",
+        "outputPath": "C:\\Users\\marco.villegas\\source\\repositorio autocom\\citaactiva\\CitaActiva\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
