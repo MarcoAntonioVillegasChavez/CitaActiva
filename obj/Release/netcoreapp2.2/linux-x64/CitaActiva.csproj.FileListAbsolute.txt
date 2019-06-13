@@ -32,3 +32,4 @@ C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Release\netcoreap
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Release\netcoreapp2.2\linux-x64\CitaActiva.dll
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Release\netcoreapp2.2\linux-x64\CitaActiva.pdb
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Release\netcoreapp2.2\linux-x64\CitaActiva.csproj.CopyComplete
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Release\netcoreapp2.2\linux-x64\wwwroot\img\3B8.png

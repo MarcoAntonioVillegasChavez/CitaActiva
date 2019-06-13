@@ -1,33 +1,4 @@
-﻿/*'#contactMail').click(function () {
-
-    var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-
-    if (regex.test($('#contactMail').val().trim())) {
-        
-    } else {
-        alert('La direccón de correo no es válida');
-    }
-});*/
-///////////////////////////////////////////////////////////////////////////////////////////
-/*
-jQuery(function ($) {
-    $(".btn").click(function () {
-
-        $.blockUI({
-            message: 'Por favor espere un momento...', css: {
-                border: 'none',
-                padding: '15px',
-                backgroundColor: '#000',
-                '-webkit-border-radius': '10px',
-                '-moz-border-radius': '10px',
-                opacity: .5,
-                color: '#fff'
-            }
-        })
-
-    });
-});
-*/
+﻿
 
 function Validar(contactName, contactMail, contactPhone, brandId, versionId, vehicleYear, vehiclePlate, labours, workshopId, plannedDate, plannedTime) {
     contactName = document.getElementById(contactName);    
@@ -138,9 +109,15 @@ function Validar(contactName, contactMail, contactPhone, brandId, versionId, veh
         plannedTime.focus();
         return false;
     }
-
-
-
-    
-
+         
 }
+function ValidarHome(idHome) {
+    idHome = document.getElementById(idHome);
+    if (idHome.value == "") {
+        toastr.warning("Por favor agregue el id de su cita agendada con anterioridad.");
+        idHome.focus();
+        return false;
+    }
+}
+
+

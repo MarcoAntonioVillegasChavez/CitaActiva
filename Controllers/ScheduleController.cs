@@ -39,8 +39,8 @@ namespace CitaActiva.Controllers
             return JsonConvert.SerializeObject(scheduleArray);
         }
         [HttpGet]
-        [Route("/Appointment/AllowTimes/{hrMin}/{hrMax}/{fecha}/{editInd}", Name = "AllowTimesRoute")]
-        public string GetAllowTimes(string hrMin, string hrMax, string fecha, string editInd)
+        [Route("/Appointment/AllowTimes/{workshopId}/{hrMin}/{hrMax}/{fecha}/{editInd}", Name = "AllowTimesRoute")]
+        public string GetAllowTimes(int workshopId, string hrMin, string hrMax, string fecha, string editInd)
         {
             List<Horarios> horariosList = new List<Horarios>();
                         
@@ -99,7 +99,7 @@ namespace CitaActiva.Controllers
                 }
 
 
-                var list = db.Appointment.Where(pt => pt.plannedDate == fecha).Select(pt => pt.plannedTime);
+                var list = db.Appointment.Where(pt => pt.plannedDate == fecha && pt.workshopId == workshopId).Select(pt => pt.plannedTime);
                 var horariosOcupados = list.ToList();
                 //for de validacion
 

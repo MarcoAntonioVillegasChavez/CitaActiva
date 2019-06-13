@@ -7,11 +7,13 @@
     ViewData["Title"] = "AUTOCOM | Grupo Automotríz: Nissan e Infiniti";
 }
 
+@*
+
 <br />
-<div>
-    <h1>Agenda tu cita. </h1>
+    <div  id="header" >
     
-</div>
+</div>*@
+    <h1>Agenda tu cita. </h1>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
@@ -20,7 +22,7 @@
 <script src="~/js/jquery.blockUI.js"></script>
 
 <script src="~/js/site.js"></script>
-<link href="~/css/global.css" rel="stylesheet" type="text/css" />
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -147,14 +149,17 @@
                     data: { scheduleId },
                     complete: function () {
 
-                     
+                        console.log(localStorage.getItem("Min"))
+                        console.log(localStorage.getItem("Max"))
 
                         if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {                            
 
                             var fecha = ($("#plannedDate").val())
+                            var workshopId = $("#workshopId option:selected").val();
+
                             $.ajax({
                                 type: 'GET',
-                                url: '/Appointment/AllowTimes/' + localStorage.getItem("Min") + "/" + localStorage.getItem("Max") + "/" + fecha + "/0",
+                                url: '/Appointment/AllowTimes/'+ workshopId +'/'+ localStorage.getItem("Min") + "/" + localStorage.getItem("Max") + "/" + fecha + "/0",
                                 complete: function () {
 
                                     localStorage.removeItem("Min");
@@ -218,7 +223,7 @@
                                     console.log(valoraHr)
                                     console.log(valorBeginning)
                                     console.log(valorEnding)
-                                                                                                                                                                                
+                                    
                                     if (valoraHr >= valorEnding) {
                                         localStorage.setItem("Min", "")
                                         localStorage.setItem("Max", "")
@@ -318,6 +323,10 @@
 
 
 <br />
+
+<div>
+
+</div>
 
 <div class="container">
      

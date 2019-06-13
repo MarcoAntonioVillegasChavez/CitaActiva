@@ -46,10 +46,12 @@ namespace CitaActiva.Controllers
 
             WorkshopController workshopController = new WorkshopController();
             var workShopResult = await workshopController.Index(token, "");
-            JObject workshopObject = JObject.Parse(workShopResult);
-            JArray workshopArray = (JArray)workshopObject["workshops"];
+            //JObject workshopObject = JObject.Parse(workShopResult);
+            //JArray workshopArray = (JArray)workshopObject["workshops"];
 
-            ViewBag.WorkshopList = workshopArray;
+            //ViewBag.WorkshopList = workshopArray;
+
+            ViewBag.WorkshopList = JsonConvert.DeserializeObject<List<Workshop>>(workShopResult); 
 
             List<Labours> laboursList = new List<Labours>();
             laboursList = db.Labours.ToList();
@@ -131,7 +133,7 @@ namespace CitaActiva.Controllers
                     }
                 }
 
-                var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
+                var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(appointment.workshopId, days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
                 ViewBag.horarios = horarios;
 
                 VersionsController versionsController = new VersionsController();
@@ -261,25 +263,35 @@ namespace CitaActiva.Controllers
 
                     ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + ".";
                     ViewData["cuerpoResultado1"]  = " Se ha agendado una Cita con el Id. " + resultado.id;
-                    ViewData["cuerpoResultado2"] = "En la Agencia: " + workshop.comercialName;
-                    ViewData["cuerpoResultado3"] = "Ubicada en: " + workshop.address + ", " + workshop.city;
-                    ViewData["cuerpoResultado4"] = "El dia: " + appointmentModel.plannedData.plannedDate;
+                    ViewData["cuerpoResultado2"] = "En la Agencia: " ;
+                    ViewData["cuerpoResultado2-2"] = workshop.comercialName;
+                    ViewData["cuerpoResultado3"] = "Ubicada en: ";
+                    ViewData["cuerpoResultado3-3"] = workshop.address + ", " + workshop.city;
+                    ViewData["cuerpoResultado4"] = "El dia: ";
+                    ViewData["cuerpoResultado4-4"] = appointmentModel.plannedData.plannedDate;
 
-                    string[] hr = appointmentModel.plannedData.plannedTime.Split(':'); 
-                    ViewData["cuerpoResultado5"] = "A las: " + hr[0] + ":" + hr[1];
+                    string[] hr = appointmentModel.plannedData.plannedTime.Split(':');
+                    ViewData["cuerpoResultado5"] = "A las: ";
+                    ViewData["cuerpoResultado5-5"] = hr[0] + ":" + hr[1];
 
                     ViewData["cuerpoResultado6"] = "Datos del Vehículo: ";
-                    ViewData["cuerpoResultado7"] = "Placa: " + appointmentModel.vehiclePlate;
+                    ViewData["cuerpoResultado7"] = "Placa: ";
+                    ViewData["cuerpoResultado7-7"] =  appointmentModel.vehiclePlate;
 
-                    if(appointment.brandId == "NI")
+                    if (appointment.brandId == "NI")
                     {
-                        ViewData["cuerpoResultado8"] = "Marca: NISSAN";
-                    }else if(appointment.brandId == "IF")
-                    {
-                        ViewData["cuerpoResultado8"] = "Marca: INFINITI";
+                        ViewData["cuerpoResultado8"] = "Marca:";
+                        ViewData["cuerpoResultado8-8"] = "NISSAN";
                     }
-                    ViewData["cuerpoResultado9"] = "Modelo: " + appointment.version;
-                    ViewData["cuerpoResultado10"] = "Año: " + appointment.vehicleYear;
+                    else if(appointment.brandId == "IF")
+                    {
+                        ViewData["cuerpoResultado8"] = "Marca:";
+                        ViewData["cuerpoResultado8-8"] = "INFINITI";
+                    }
+                    ViewData["cuerpoResultado9"] = "Modelo: ";
+                    ViewData["cuerpoResultado9-9"] = appointment.version;
+                    ViewData["cuerpoResultado10"] = "Año: " ;
+                    ViewData["cuerpoResultado10-10"] =  appointment.vehicleYear;
 
 
 

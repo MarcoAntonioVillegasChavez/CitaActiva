@@ -39,7 +39,7 @@ namespace CitaActiva
             services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
             {
                 ProgressBar = true,
-                PositionClass = ToastPositions.TopRight               
+                PositionClass = ToastPositions.BottomRight            
             });
 
             services.AddDistributedMemoryCache();

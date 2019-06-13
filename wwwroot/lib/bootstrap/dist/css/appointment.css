@@ -1,0 +1,94 @@
+﻿body {
+}
+
+
+#btn-success {
+    color: #821814
+}
+
+#header {
+
+    background-position: center center;    
+    background-repeat: no-repeat;
+    background-image: url('../../../../img/3B8.png');
+    height: 188px;
+    width:100%   
+}
+@media only screen and (max-width: 1200px) {
+    #header {
+        background-image: url('../../../../img/3B14.png');
+    }
+}
+@media only screen and (max-width: 1024px) {
+    #header {
+        background-image: url('../../../../img/3B2.png');
+    }
+}
+@media only screen and (max-width: 800px) {
+    #header {
+        background-image: url('../../../../img/3B2.png');
+    }
+}
+@media only screen and (max-width: 380px) {
+    #header {
+        background-image: url('../../../../img/3B2-iphone2.png');
+        height: 97px;
+    }
+}
+
+.button {
+    border-radius: 4px;
+    background-color: #c52222;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    /*
+    width: 300px;
+
+    */
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/*
+
+#divModificarPadre {
+   
+}
+
+#divModificar {
+    display: none;
+}
+
+#divModificarPadre:hover > #divModificar {
+    display: block;
+}
+
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+
+}
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+
+}
+.button:hover span {
+    padding-right: 25px;
+}
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+*/

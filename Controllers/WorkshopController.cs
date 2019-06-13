@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CitaActiva.Models;
+using CitaActiva.ModelsViews;
 using CitaActiva.Services;
 using CitaActiva.Util;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +17,19 @@ namespace CitaActiva.Controllers
     
     public class WorkshopController : Controller
     {
+        private DataContext db = new DataContext();
         // GET: api/Workshop
         [HttpGet]
         [Route("/Appointment/WorkShop", Name = "WorkShopsRoute")]
         public async Task<string> Index(Token token, string postalCode)
         {
-            WorkshopService workshopService = new WorkshopService();
-            return await workshopService.GetWorkshops(token, postalCode);
+            //WorkshopService workshopService = new WorkshopService();
+            //return await workshopService.GetWorkshops(token, postalCode);
+
+            var list = db.Workshops.Where(w => w.activeInd == 1).OrderBy(w => w.id);
+            string sorkshops = JsonConvert.SerializeObject(list.ToArray());
+            
+            return sorkshops;
         }
 
         [HttpGet("{id}")]
