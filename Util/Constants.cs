@@ -16,5 +16,6 @@ namespace CitaActiva.Util
         public const string ScheduleUrl = "https://qis.quiter.com/qis/api/appointments/v1/schedules/";
         public const string BrandsUrl = "https://qis.quiter.com/qis/api/vehiclestock/v1:dev/brands";
         public const string VesionsUrl = "https://qis.quiter.com/qis/api/vehiclestock/v1:dev/versions";
+        public const string CustomerUrl = "https://qis.quiter.com/qis/api/customers/v1/customers";
     }
 }

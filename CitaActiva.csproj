@@ -5,6 +5,10 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\Clientes.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
