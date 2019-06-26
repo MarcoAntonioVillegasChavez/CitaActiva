@@ -20,7 +20,6 @@ namespace CitaActiva.Controllers
     [ApiController]
     public class AppointmentController : Controller
     {
-        const string SessionKeyName = "token";
         private readonly IToastNotification _toastNotification;
         private DataContext db = new DataContext();
 
@@ -36,21 +35,19 @@ namespace CitaActiva.Controllers
         public async Task<IActionResult> Index(string id)//(AppointmentModel appointmentModel)
         {
             Token token = new Token();
-            token = ObtenerToken();
+
+            TokenController tokenController = new TokenController();
+            token = tokenController.ObtenerToken();
             
-            DateTime thisDay = DateTime.Today;
+            DateTime thisDay =DateTime.Today;
             ViewBag.Year = thisDay.Year.ToString();
             ViewBag.Month = thisDay.Month.ToString();
             ViewBag.Day = thisDay.Day.ToString();
-            ViewBag.Hora = DateTime.Now.AddHours(2).ToString("HH:mm:ss"); //thisDay.Hour.ToString();
+            ViewBag.Hora = DateTime.Now.AddHours(2).ToString("HH:mm:ss"); 
 
             WorkshopController workshopController = new WorkshopController();
             var workShopResult = await workshopController.Index(token, "");
-            //JObject workshopObject = JObject.Parse(workShopResult);
-            //JArray workshopArray = (JArray)workshopObject["workshops"];
-
-            //ViewBag.WorkshopList = workshopArray;
-
+           
             ViewBag.WorkshopList = JsonConvert.DeserializeObject<List<Workshop>>(workShopResult); 
 
             List<Labours> laboursList = new List<Labours>();
@@ -75,6 +72,7 @@ namespace CitaActiva.Controllers
                 ViewBag.IsReadOnly = 1;
                 ViewBag.ReferenciaInd = 1;
                 ViewBag.id = id;
+                ViewBag.Footer = " * Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886";
 
                 Appointment appointment = new Appointment();
                 appointment = db.Appointment.Find(id);
@@ -88,6 +86,17 @@ namespace CitaActiva.Controllers
                     appointmentModel.versionId = appointment.versionId;
                     appointmentModel.vehicleYear = appointment.vehicleYear.ToString();
                     appointmentModel.labours = labours;
+
+                    DateTime today = Convert.ToDateTime( DateTime.Now.ToString("G"));
+                    DateTime planneDate = Convert.ToDateTime(appointmentModel.plannedData.plannedDate + " " + appointmentModel.plannedData.plannedTime);
+                    if(planneDate.AddHours(-24) <= today)
+                    {
+                       
+                        ViewBag.IsReadOnly = 2;
+                        ViewBag.DeleteInd = 2;
+                        ViewBag.Footer = " * La cita ya no se puede reagendar."; 
+
+                    }
 
                     ViewBag.DeleteInd = appointment.deletedInd;
                     if (appointment.deletedInd == 1)
@@ -106,9 +115,9 @@ namespace CitaActiva.Controllers
                 ReceptionistController receptionistController = new ReceptionistController();
                 var receptionistListResult = await receptionistController.Index(appointmentModel.workshopId.ToString(), token);
                 List<Receptionist> receptionistsList = JsonConvert.DeserializeObject<List<Receptionist>>(receptionistListResult);
-              
 
-                string scheduleId = receptionistsList[0].scheduleId.ToString(); 
+
+                string scheduleId = receptionistsList[0].scheduleId.ToString();
 
                 ScheduleController scheduleController = new ScheduleController();
                 var scheadule = await scheduleController.Index(scheduleId, token);
@@ -116,10 +125,10 @@ namespace CitaActiva.Controllers
 
 
                 string[] fecha = appointmentModel.plannedData.plannedDate.Split("-");
-                
+
                 int dayOfWeek = Convert.ToInt32(new DateTime(Convert.ToInt32(fecha[0]), Convert.ToInt32(fecha[1]), Convert.ToInt32(fecha[2])).DayOfWeek);
-                
-                if(dayOfWeek == 0)
+
+                if (dayOfWeek == 0)
                 {
                     dayOfWeek = 7;
                 }
@@ -133,29 +142,32 @@ namespace CitaActiva.Controllers
                     }
                 }
 
-                var horarios = JsonConvert.DeserializeObject<List<Horarios>> (scheduleController.GetAllowTimes(appointment.workshopId, days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
+                var horarios = JsonConvert.DeserializeObject<List<Horarios>>(scheduleController.GetAllowTimes(appointment.workshopId, days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
                 ViewBag.horarios = horarios;
 
                 VersionsController versionsController = new VersionsController();
                 var resultVersion = JsonConvert.DeserializeObject<List<Versions>>(versionsController.Versions(appointmentModel.brandId));
 
-                ViewBag.versions = resultVersion;               
+                ViewBag.versions = resultVersion;            
+               
             }
             else
             {
                 appointmentModel.id = "";
-                string result = "{'receptionists':[]}";
+                /*string result = "{'receptionists':[]}";
                 JObject results = JObject.Parse(result);
-                JArray arrayResults = (JArray)results["receptionists"];
+                JArray arrayResults = (JArray)results["receptionists"];*/
 
                 ViewBag.horarios = "";
                 ViewBag.IsReadOnly = 0;
                 ViewBag.id = "";
                 ViewBag.versions = "";
-                ViewBag.RecepcionistList = arrayResults;
+                //ViewBag.RecepcionistList = arrayResults;
                 ViewBag.DeleteInd = 0;
                 ViewBag.Referencia = "";
                 ViewBag.ReferenciaInd = 0;
+                ViewBag.Footer = " * Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886";
+
             }
 
             //ViewData["allowTimes"] = "12:15";
@@ -174,7 +186,8 @@ namespace CitaActiva.Controllers
         {
 
             Token token = new Token();
-            token = ObtenerToken();            
+            TokenController tokenController = new TokenController();
+            token = tokenController.ObtenerToken();            
 
             if (!ValidarAppointment(appointmentModel))
             {
@@ -238,10 +251,13 @@ namespace CitaActiva.Controllers
                     appointment.plannedDate = resultado.plannedData.plannedDate;
                     appointment.plannedTime = resultado.plannedData.plannedTime;
 
+                    //se declara bandera, para verificar si es actualizacion o creacion de nueva cita.
+                    int actionInd;
                     var appointmentVerifica = db.Appointment.Find(appointment.id);
                     if (appointmentVerifica == null) {
                         db.Appointment.Add(appointment);
                         db.SaveChanges();
+                        actionInd = 0;
                     }
                     else {
                         using (DataContext ctx = new DataContext())
@@ -249,6 +265,7 @@ namespace CitaActiva.Controllers
                             ctx.Entry(appointment).State = EntityState.Modified;
                             ctx.SaveChanges();
                         }
+                        actionInd = 1;
                     }
 
                     
@@ -262,10 +279,17 @@ namespace CitaActiva.Controllers
                     receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
 
                     ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + ".";
-                    ViewData["cuerpoResultado1"]  = " Se ha agendado una Cita con el Id. " + resultado.id;
+                    if (actionInd ==  0)
+                    {
+                        ViewData["cuerpoResultado1"] = " Se ha agendado una Cita con el Id. " + resultado.id;
+                    }
+                    else
+                    {
+                        ViewData["cuerpoResultado1"] = " Se ha re agendado la Cita: " + resultado.id;
+                    }
                     ViewData["cuerpoResultado2"] = "En la Agencia: " ;
                     ViewData["cuerpoResultado2-2"] = workshop.comercialName;
-                    ViewData["cuerpoResultado3"] = "Ubicada en: ";
+                    ViewData["cuerpoResultado3"] = "Ubicación: ";
                     ViewData["cuerpoResultado3-3"] = workshop.address + ", " + workshop.city;
                     ViewData["cuerpoResultado4"] = "El dia: ";
                     ViewData["cuerpoResultado4-4"] = appointmentModel.plannedData.plannedDate;
@@ -296,7 +320,7 @@ namespace CitaActiva.Controllers
 
 
                     SendEmailService sendEmailService = new SendEmailService();
-                    sendEmailService.SendEmail(workshop.comercialName, workshop.address, workshop.city, appointment);
+                    sendEmailService.SendEmail(workshop.comercialName, workshop.address, workshop.city, appointment, actionInd);
 
                     _toastNotification.AddSuccessToastMessage("Se enviaron los datos del Agendamiento de la Cita al correo " + resultado.contactMail);
                 }
@@ -331,7 +355,8 @@ namespace CitaActiva.Controllers
             if (id != null)
             {
                 Token token = new Token();
-                token = ObtenerToken();
+                TokenController tokenController = new TokenController();
+                token = tokenController.ObtenerToken();
                 AppointmentService appointmentService = new AppointmentService();
                 string resultado = await appointmentService.DeleteAppointment(token, id);
 
@@ -351,10 +376,10 @@ namespace CitaActiva.Controllers
                 }
 
                     SendEmailService sendEmailService = new SendEmailService();
-                sendEmailService.SendEmail("","","", appointment);
+                sendEmailService.SendEmail("","","", appointment, 0);
 
 
-                _toastNotification.AddSuccessToastMessage("La cita" + id + " se ha cancelado");
+                _toastNotification.AddSuccessToastMessage("La cita " + id + " se ha cancelado");
 
                 return RedirectToAction("Index", "Home");
             }
@@ -365,6 +390,8 @@ namespace CitaActiva.Controllers
                    new { controller = "Index", action = "Appointment", id }));
             }
         }
+
+        /*
         public Token ObtenerToken()
         {
 
@@ -403,7 +430,7 @@ namespace CitaActiva.Controllers
             }
             return token;
         }
-
+        */
         public bool ValidarAppointment(AppointmentModel appointmentModel)
         {
             if (appointmentModel.workshopId == -1)

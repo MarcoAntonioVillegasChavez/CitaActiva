@@ -1,8 +1,3 @@
-C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.csproj.CoreCompileInputs.cache
-C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cache
-C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cs
-C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.AssemblyInfoInputs.cache
-C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.AssemblyInfo.cs
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\wwwroot\img\3B8.png
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.deps.json
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.runtimeconfig.json
@@ -11,6 +6,12 @@ C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.pdb
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.Views.dll
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\bin\Debug\netcoreapp2.2\CitaActiva.Views.pdb
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.csprojAssemblyReference.cache
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.csproj.CoreCompileInputs.cache
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cache
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorAssemblyInfo.cs
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.AssemblyInfoInputs.cache
+C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.AssemblyInfo.cs
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.TagHelpers.input.cache
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.TagHelpers.output.cache
 C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\obj\Debug\netcoreapp2.2\CitaActiva.RazorCoreGenerate.cache

@@ -13,7 +13,7 @@ namespace CitaActiva.Services
 {
     public class SendEmailService
     {
-        public bool SendEmail(string workShopName, string address, string city, Appointment appointment)
+        public bool SendEmail(string workShopName, string address, string city, Appointment appointment, int actionInd)
         {
             try
             {
@@ -37,9 +37,11 @@ namespace CitaActiva.Services
 
                 if (appointment.deletedInd == 0)
                 {
-                    eMailBody = ""
+                    if (actionInd == 0)
+                    {
+                        eMailBody = ""
                         + "<img src='cid:imagen' />"
-                        + "<table style='width: 100 %'>"
+                        + "<table style='width: 100 %' cellpadding='5'>"
                          + "<tr valign = 'center'>"
                         + "     <td  colspan='2' align='center' valign = 'center'> Estimado <b>" + appointment.contactName + ".</b></td>"
                         + "</tr>"
@@ -50,7 +52,7 @@ namespace CitaActiva.Services
                         + "     <td  width='50 %' align='rigth' ><b> En la Agencia: </b></td><td align='left' width='50 %' >" + workShopName + "</td>"
                         + "</tr>"
                         + "<tr valign = 'center'>"
-                        + "     <td  width='50 %' align='rigth' > <b>Ubicada en: </b></td><td align='left' width='50 %' >" + address + ", <br>" + city + "</td>"
+                        + "     <td  width='50 %' align='rigth' > <b>Ubicación: </b></td><td align='left' width='50 %' >" + address + ", <br>" + city + "</td>"
                         + "</tr>"
                         + "<tr  valign = 'center'>"
                         + "     <td  width='50 %'  align='rigth' > <b>El dia: </b></td><td align='left' width='50 %'>" + appointment.plannedDate + "</td>"
@@ -74,15 +76,61 @@ namespace CitaActiva.Services
                         + "     <td  width='50 %' align='rigth' > <b>Año: </b></td><td align='left' width='50 %'>" + appointment.vehicleYear + "</td>"
                         + "</tr>"
                         + "</table>";
+                    
+                        subject = "Agendamiento de cita. Id " + appointment.id;
+                        imgRoute = "wwwroot/img/3B12-iphone.png";
+               
+                    }
+                    else
+                    {
 
-                    subject = "Agendamiento de cita. Id " + appointment.id;
-                    imgRoute = "wwwroot/img/3B12-iphone.png";//imgRoute = @"C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\wwwroot\img\3B12-iphone.png";
+                        eMailBody = ""
+                      + "<img src='cid:imagen' />"
+                      + "<table style='width: 100 %' cellpadding='5'>"
+                       + "<tr valign = 'center'>"
+                      + "     <td  colspan='2' align='center' valign = 'center'> Estimado <b>" + appointment.contactName + ".</b></td>"
+                      + "</tr>"
+                      + "<tr valign = 'center'>"
+                      + "     <td colspan='2' align='center' valign = 'center'> Se ha re agendado la cita con el ID <b>" + appointment.id + "</b>.</td>"
+                      + "</tr>"
+                      + "<tr valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' ><b> En la Agencia: </b></td><td align='left' width='50 %' >" + workShopName + "</td>"
+                      + "</tr>"
+                      + "<tr valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' > <b>Ubicación: </b></td><td align='left' width='50 %' >" + address + ", <br>" + city + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %'  align='rigth' > <b>El dia: </b></td><td align='left' width='50 %'>" + appointment.plannedDate + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %'  align='rigth' > <b>A las: </b></td><td align='left' width='50 %'>" + plannedTime + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td colspan='2' > <b>Datos del Vehículo: </b></td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' > <b>Placa: </b></td><td align='left' width='50 %'>" + appointment.vehiclePlate + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' > <b>Marca: </b></td><td align='left' width='50 %'>" + brand + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' > <b>Modelo: </b></td><td align='left' width='50 %'>" + appointment.version + "</td>"
+                      + "</tr>"
+                      + "<tr  valign = 'center'>"
+                      + "     <td  width='50 %' align='rigth' > <b>Año: </b></td><td align='left' width='50 %'>" + appointment.vehicleYear + "</td>"
+                      + "</tr>"
+                      + "</table>";
+
+                        subject = "Re Agendamiento de cita. Id " + appointment.id;
+                        imgRoute = "wwwroot/img/3B12-iphone.png";
+                    }
                 }
                 else if (appointment.deletedInd == 1)
                 {
                     eMailBody = ""
                         + "<img src='cid:imagen' />"
-                        + "<table style='width: 100 %' >"
+                        + "<table style='width: 100 %'  cellpadding='5' >"
                          + "<tr  align='center' valign = 'center' > "
                         + "     <td colspan='2' align='center' valign = 'center' > Estimado <b>" + appointment.contactName + "</b>.</td>"
                         + "</tr>"
@@ -113,12 +161,12 @@ namespace CitaActiva.Services
                         + "</table>";
 
                     subject = "Cancelacion de cita. Id " + appointment.id;
-                    imgRoute = "wwwroot/img/3B12-iphone.png";//@"C:\Users\marco.villegas\source\repos\CitaActiva\CitaActiva\wwwroot\img\3B12-iphone.png";
+                    imgRoute = "wwwroot/img/cancelada-iphone.png";
                 }
 
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(eMailBody, Encoding.UTF8, MediaTypeNames.Text.Html);
 
-                LinkedResource img;//= new LinkedResource(imgRoute, MediaTypeNames.Image.Jpeg);
+                LinkedResource img;
 
                 using (WebClient webClient = new WebClient())
                 {

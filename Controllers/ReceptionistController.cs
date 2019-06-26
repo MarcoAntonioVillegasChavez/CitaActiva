@@ -20,7 +20,8 @@ namespace CitaActiva.Controllers
         {
             if (token.access_token == null)
             {
-             token = ObtenerToken();
+                TokenController tokenController = new TokenController();
+                token = tokenController.ObtenerToken();
             }
             ReceptionistService receptionistService = new ReceptionistService();
             string result = await receptionistService.GetReceptionistByWorkShop(token, workshopId);
@@ -38,7 +39,8 @@ namespace CitaActiva.Controllers
         {
             if (token.access_token == null)
             {
-                token = ObtenerToken();
+                TokenController tokenController = new TokenController();
+                token = tokenController.ObtenerToken();
             }
 
             ReceptionistService receptionistService = new ReceptionistService();
@@ -47,6 +49,8 @@ namespace CitaActiva.Controllers
             return receptionist;
 
         }
+
+        /*
         public Token ObtenerToken()
         {
             Token token = new Token();
@@ -64,6 +68,6 @@ namespace CitaActiva.Controllers
                 token.access_token = Request.Cookies["token"];
             }
             return token;
-        }
+        }*/
     }
 }

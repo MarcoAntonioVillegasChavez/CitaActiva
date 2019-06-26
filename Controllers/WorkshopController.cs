@@ -38,12 +38,14 @@ namespace CitaActiva.Controllers
         {
             if (token.access_token == null)
             {
-                token = ObtenerToken();
+                TokenController tokenController = new TokenController();
+                token = tokenController.ObtenerToken();
             }
             WorkshopService workshopService = new WorkshopService();
             return await workshopService.GetWorkshop(token, workshopId);
         }
 
+        /*
         public Token ObtenerToken()
         {
 
@@ -62,6 +64,6 @@ namespace CitaActiva.Controllers
                 token.access_token = Request.Cookies["token"];
             }
             return token;
-        }
+        } */
     }
 }

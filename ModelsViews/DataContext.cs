@@ -20,6 +20,7 @@ namespace CitaActiva.ModelsViews
         public DbSet<Labours> Labours { get; set; }
         public DbSet<Versions> Versions { get; set; }
         public DbSet<Workshop> Workshops { get; set; }
+        public DbSet<Token> Token { get; set; }
 
     }
 }

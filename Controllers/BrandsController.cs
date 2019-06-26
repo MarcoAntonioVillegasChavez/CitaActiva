@@ -15,12 +15,14 @@ namespace CitaActiva.Controllers
         [Route("/Appointment/Brands", Name = "BrandsRoute")]
         public async Task<IActionResult> Index()
         {
-            Token token = ObtenerToken();
+            TokenController tokenController = new TokenController();
+            Token token = tokenController.ObtenerToken();
             BrandsService brandsService = new BrandsService();
             string result = await brandsService.GetBrands(token);
             return Json(result);
         }
        
+        /*
         public Token ObtenerToken()
         {
 
@@ -39,7 +41,7 @@ namespace CitaActiva.Controllers
                 token.access_token = Request.Cookies["tokenVehicle"];
             }
             return token;
-        }
+        }*/
 
     }
 }

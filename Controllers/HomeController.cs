@@ -8,6 +8,9 @@ using CitaActiva.Models;
 using NToastNotify;
 using CitaActiva.ModelsViews;
 using Microsoft.AspNetCore.Routing;
+using CitaActiva.Services;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace CitaActiva.Controllers
 {
@@ -26,7 +29,7 @@ namespace CitaActiva.Controllers
 
         [HttpPost]
         [Route("/Home/Index", Name = "HomeGetRoute")]
-        public IActionResult Index([FromForm] AppointmentModel appointmentModel)
+        public async Task< IActionResult> Index([FromForm] AppointmentModel appointmentModel)
         {
             if (appointmentModel.id == null)
             {
@@ -36,8 +39,32 @@ namespace CitaActiva.Controllers
             }
             else
             {
-                return RedirectToAction("Index", new RouteValueDictionary(
-                    new { controller = "Appointment", action = "Index", appointmentModel.id }));
+                Token token = new Token();
+                TokenController tokenController = new TokenController();
+
+                token = tokenController.ObtenerToken();
+
+               try
+                {
+                    AppointmentService appointmentService = new AppointmentService();
+                    var result = await appointmentService.GetAppointment(token, appointmentModel.id);
+                    AppointmentResult appointmentResult = JsonConvert.DeserializeObject<AppointmentResult>(result);
+                    
+                    if(appointmentResult.id != null)
+                    {
+                        return RedirectToAction("Index", new RouteValueDictionary(
+                            new { controller = "Appointment", action = "Index", appointmentModel.id }));
+                    }
+                    else
+                    {
+                        _toastNotification.AddErrorToastMessage("La cita que desea consultar, se ha cancelado.");
+                        return View();
+                    }
+                }catch(Exception ex)
+                {
+                    _toastNotification.AddErrorToastMessage("La cita que desea consultar, se ha cancelado.");
+                    return View();
+                }
             }
         }
 

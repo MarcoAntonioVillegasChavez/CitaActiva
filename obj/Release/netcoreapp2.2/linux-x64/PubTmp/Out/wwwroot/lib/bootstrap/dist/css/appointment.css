@@ -2,36 +2,89 @@
 }
 
 
+
 #btn-success {
     color: #821814
 }
 
 #header {
-
-    background-position: center center;    
+    background-position: center center;
     background-repeat: no-repeat;
-    background-image: url('../../../../img/3B8.png');
+    background-image: url('../../../../img/3B8-2.png');
     height: 188px;
-    width:100%   
+    width: 100%
 }
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1854px) {
+    #header {
+        background-image: url('../../../../img/3B8.png');
+        height: 180px;
+    }
+}
+@media only screen and (max-width: 1220px) {
     #header {
         background-image: url('../../../../img/3B14.png');
+        height: 150px;
+    }   
+}
+@media only screen and (max-width: 1120px) {
+    #header {
+        background-image: url('../../../../img/3B14-2.png');
+        height: 97px;
     }
 }
 @media only screen and (max-width: 1024px) {
     #header {
-        background-image: url('../../../../img/3B2.png');
+        background-image: url('../../../../img/3B14-3.png');
+        height: 97px;
     }
+}
+
+@media only screen and (max-width: 927px) {
+    #header {
+        background-image: url('../../../../img/3B13.png');
+        height: 97px;
+    }
+    
 }
 @media only screen and (max-width: 800px) {
     #header {
-        background-image: url('../../../../img/3B2.png');
+        background-image: url('../../../../img/3B2-2.png');
+        height: 97px;
+    }
+}
+@media only screen and (max-width: 700px) {
+    #header {
+        background-image: url('../../../../img/3B2-2-1.png');
+        height: 97px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    #header {
+        background-image: url('../../../../img/3B2-3.png');
+        height: 97px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #header {
+        background-image: url('../../../../img/3B2-3-1.png');
+        height: 97px;
+    }
+}
+@media only screen and (max-width: 420px) {
+    #header {
+        background-image: url('../../../../img/3B2-iphone2.png');
+        height: 97px;
     }
 }
 @media only screen and (max-width: 380px) {
     #header {
         background-image: url('../../../../img/3B2-iphone2.png');
+        height: 97px;
+    }
+}
+@media only screen and (max-width: 340px) {
+    #header {
+        background-image: url('../../../../img/3B2-iphone.png');
         height: 97px;
     }
 }
@@ -53,42 +106,3 @@
     margin: 5px;
 }
 
-/*
-
-#divModificarPadre {
-   
-}
-
-#divModificar {
-    display: none;
-}
-
-#divModificarPadre:hover > #divModificar {
-    display: block;
-}
-
-
-.button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-
-}
-.button span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-
-}
-.button:hover span {
-    padding-right: 25px;
-}
-.button:hover span:after {
-    opacity: 1;
-    right: 0;
-}
-*/

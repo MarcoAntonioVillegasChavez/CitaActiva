@@ -25,7 +25,8 @@ namespace CitaActiva.Controllers
             //Token token = new Token();
             if (token.access_token == null)
             {
-                token = ObtenerToken();
+                TokenController tokenController = new TokenController();
+                token = tokenController.ObtenerToken();
             }
 
             ScheduleService scheduleService = new ScheduleService();
@@ -42,94 +43,95 @@ namespace CitaActiva.Controllers
         [Route("/Appointment/AllowTimes/{workshopId}/{hrMin}/{hrMax}/{fecha}/{editInd}", Name = "AllowTimesRoute")]
         public string GetAllowTimes(int workshopId, string hrMin, string hrMax, string fecha, string editInd)
         {
-            List<Horarios> horariosList = new List<Horarios>();
-                        
-            string[] hrMinSplit = hrMin.Split(':');
-            string[] hrMaxSplit = hrMax.Split(':');
 
-            int hrMinima = Convert.ToInt32(hrMinSplit[0]);
-            int hrMaxima = Convert.ToInt32(hrMaxSplit[0]);
+                List<Horarios> horariosList = new List<Horarios>();
 
-            if (hrMinima < hrMaxima)
-            {
+                string[] hrMinSplit = hrMin.Split(':');
+                string[] hrMaxSplit = hrMax.Split(':');
 
-                //for de las horas
-                for (int i = hrMinima; i <= hrMaxima - 1; i++)
+                int hrMinima = Convert.ToInt32(hrMinSplit[0]);
+                int hrMaxima = Convert.ToInt32(hrMaxSplit[0]);
+
+                if (hrMinima < hrMaxima)
                 {
-                    string horas = "";
-                    string minutos = "";
 
-                    if (i < 10)
+                    //for de las horas
+                    for (int i = hrMinima; i <= hrMaxima - 1; i++)
                     {
-                        horas = "0" + i.ToString();
-                    }
-                    else
-                    {
-                        horas = i.ToString();
-                    }
+                        string horas = "";
+                        string minutos = "";
 
-                    //horas = i.ToString();
-
-                    //for de los minutos
-                    for (int x = 0; x <= 3; x++)
-                    {
-                        if (x == 0)
+                        if (i < 10)
                         {
-                            minutos = "00";
+                            horas = "0" + i.ToString();
                         }
-                        if (x == 1)
+                        else
                         {
-                            minutos = "15";
-                        }
-                        if (x == 2)
-                        {
-                            minutos = "30";
-                        }
-                        if (x == 3)
-                        {
-                            minutos = "45";
+                            horas = i.ToString();
                         }
 
-                        Horarios horaAgregada = new Horarios();
-                        horaAgregada.hora = horas + ":" + minutos + ":00";
-                        horaAgregada.horario = horas + ":" + minutos;
+                        //horas = i.ToString();
 
-                        horariosList.Add(horaAgregada);
-                    }
-                }
-
-
-                var list = db.Appointment.Where(pt => pt.plannedDate == fecha && pt.workshopId == workshopId).Select(pt => pt.plannedTime);
-                var horariosOcupados = list.ToList();
-                //for de validacion
-
-                if (horariosOcupados.Count != 0)
-                {
-                    for (int i = 0; i < horariosList.Count; i++)
-                    {
-                        for (int x = 0; x < horariosOcupados.Count; x++)
+                        //for de los minutos
+                        for (int x = 0; x <= 3; x++)
                         {
-                            if (horariosList[i].hora == horariosOcupados[x])
+                            if (x == 0)
                             {
-                                if (editInd != "1")
+                                minutos = "00";
+                            }
+                            if (x == 1)
+                            {
+                                minutos = "15";
+                            }
+                            if (x == 2)
+                            {
+                                minutos = "30";
+                            }
+                            if (x == 3)
+                            {
+                                minutos = "45";
+                            }
+
+                            Horarios horaAgregada = new Horarios();
+                            horaAgregada.hora = horas + ":" + minutos + ":00";
+                            horaAgregada.horario = horas + ":" + minutos;
+
+                            horariosList.Add(horaAgregada);
+                        }
+                    }
+
+
+                    var list = db.Appointment.Where(pt => pt.plannedDate == fecha && pt.workshopId == workshopId && pt.deletedInd != 1).Select(pt => pt.plannedTime);
+                    var horariosOcupados = list.ToList();
+                    //for de validacion
+
+                    if (horariosOcupados.Count != 0)
+                    {
+                        for (int i = 0; i < horariosList.Count; i++)
+                        {
+                            for (int x = 0; x < horariosOcupados.Count; x++)
+                            {
+                                if (horariosList[i].hora == horariosOcupados[x])
                                 {
-                                    horariosList.Remove(horariosList[i]);
+                                    if (editInd != "1")
+                                    {
+                                        horariosList.Remove(horariosList[i]);
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                string allowTimes = JsonConvert.SerializeObject(horariosList.ToArray());
-                return allowTimes;
-            }
-            else
-            {
-                return null;
-            }
-            
+                    string allowTimes = JsonConvert.SerializeObject(horariosList.ToArray());
+                    return allowTimes;
+                }
+                else
+                {
+                    return null;
+                }
         }
 
+        /*
         [HttpGet]
         [Route("/Appointment/Schedule/", Name = "GetScheduleRoute")]
         public async Task<IActionResult> GetSchedule(string scheduleId)
@@ -148,8 +150,8 @@ namespace CitaActiva.Controllers
 
             return Json(scheduleArray);
         }
-
-
+        */
+        /*
         public Token ObtenerToken()
         {
             Token token = new Token();
@@ -168,7 +170,7 @@ namespace CitaActiva.Controllers
                 token.access_token = Request.Cookies["token"];
             }
             return token;
-        }
+        }*/
     }
     public class Horarios
     {

@@ -7,14 +7,9 @@
     ViewData["Title"] = "AUTOCOM | Grupo Automotríz: Nissan e Infiniti";
 }
 
-@*
+<h1>Agenda tu cita. </h1>
 
-<br />
-    <div  id="header" >
-    
-</div>*@
-    <h1>Agenda tu cita. </h1>
-
+<link href="~/lib/bootstrap/dist/css/index.css" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -27,16 +22,62 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-<script> 
-    
+<script>
+
 </script>
 
 <script type="text/javascript">
     jQuery(function ($) {
-    $(document).ready(function () {
-        $("#workshopId").on("change", function () {
-            var workshopId = $("#workshopId option:selected").val();
-            if (workshopId != "-1") {
+        $(document).ready(function () {
+            $("#workshopId").on("change", function () {
+                var workshopId = $("#workshopId option:selected").val();
+                if (workshopId != "-1") {
+                    $.blockUI({
+                        message: 'Por favor espere un momento...', css: {
+                            border: 'none',
+                            padding: '15px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: .5,
+                            color: '#fff'
+                        }
+                    });
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Appointment/Receptionist/' + workshopId,
+                        data: { workshopId },
+                        complete: function () {
+                            $.unblockUI();
+                            BloquearPlannedTime();
+                        },
+                        success: function (result) {
+                            var resultSchedule = (JSON.parse(result))
+                            if (resultSchedule != null) {
+                                localStorage.setItem("scheduleId", resultSchedule[0].scheduleId)
+                                DesbloquearPlannedData();
+                                
+                            }
+                            else {
+                                BloquearPlannedData();
+                                BloquearPlannedTime();
+
+                                toastr.warning("No se encontraron horarios para esta agencia.");
+                            }
+                        }
+                    });
+                } else {
+                    BloquearPlannedData();
+                    BloquearPlannedTime();
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#brandId").on("change", function () {
+                var brandId = $("#brandId option:selected").val();
+
                 $.blockUI({
                     message: 'Por favor espere un momento...', css: {
                         border: 'none',
@@ -48,39 +89,6 @@
                         color: '#fff'
                     }
                 });
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/Receptionist/' + workshopId,
-                    data: { workshopId },
-                    complete: function () {
-                        $.unblockUI();
-                        DesbloquearPlannedData();
-                    },
-                    success: function (result) {
-                        var resultSchedule = (JSON.parse(result))
-                        localStorage.setItem("scheduleId", resultSchedule[0].scheduleId)
-                    }
-                });
-            } else {
-                 DesbloquearPlannedData();
-            }
-    });
-});
-
-    
-        $(document).ready(function () {
-            $("#brandId").on("change", function () {
-                var brandId = $("#brandId option:selected").val();
-
-                $.blockUI({message:'Por favor espere un momento...', css: { 
-            border: 'none', 
-            padding: '15px', 
-            backgroundColor: '#000', 
-            '-webkit-border-radius': '10px', 
-            '-moz-border-radius': '10px', 
-            opacity: .5, 
-            color: '#fff' 
-        } });
                 $.ajax({
                     type: 'GET',
                     url: '/Appointment/Versions/' + brandId,
@@ -106,7 +114,7 @@
     jQuery(function ($) {
         $('.form-control.date').each(function () {
 
-            var year = @ViewBag.Year;            
+            var year = @ViewBag.Year;
             var month = @ViewBag.Month;
             if (month < 10) {
                 month = "0" + month
@@ -152,7 +160,7 @@
                         console.log(localStorage.getItem("Min"))
                         console.log(localStorage.getItem("Max"))
 
-                        if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {                            
+                        if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
 
                             var fecha = ($("#plannedDate").val())
                             var workshopId = $("#workshopId option:selected").val();
@@ -167,7 +175,7 @@
                                 },
                                 success: function (resultAllowTimes) {
                                     var result = (JSON.parse(resultAllowTimes))
-                                    
+
                                     var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
                                     for (var i = 0; i < result.length; i++) {
                                         s += '<option value="' + result[i].hora + '">' + result[i].horario + '</option>';
@@ -210,7 +218,7 @@
                                     }
 
                                     var hrHoy = '@ViewBag.Hora';// (hr.getHours() + 2) + ":" + min + ":" + hr.getSeconds();
-                                   
+
                                     var hrHoySplit = hrHoy.split(":")
                                     var valueBeginning = value.beginning.split(":")
                                     var valueEnding = value.ending.split(":")
@@ -223,7 +231,7 @@
                                     console.log(valoraHr)
                                     console.log(valorBeginning)
                                     console.log(valorEnding)
-                                    
+
                                     if (valoraHr >= valorEnding) {
                                         localStorage.setItem("Min", "")
                                         localStorage.setItem("Max", "")
@@ -262,28 +270,60 @@
             $('#vehiclePlate').attr('disabled', true);
             $('#labours').attr('disabled', true);
             $('#workshopId').attr('disabled', true);
+            $('#plannedDate').attr('disabled', false);
+            $('#plannedTime').attr('disabled', false);
+
+            document.getElementById('divBtnCancelar').style.display = 'block';
+            document.getElementById('divBtnAgendar').style.display = 'none';
+            document.getElementById('divBtnReAgendar').style.display = 'block';
+
+        } else if (IsReadOnly == 2) {
+            $('#contactName').attr('disabled', true);
+            $('#contactMail').attr('disabled', true);
+            $('#contactPhone').attr('disabled', true);
+            $('#brandId').attr('disabled', true);
+            $('#versionId').attr('disabled', true);
+            $('#vehicleYear').attr('disabled', true);
+            $('#vehiclePlate').attr('disabled', true);
+            $('#labours').attr('disabled', true);
+            $('#workshopId').attr('disabled', true);
             $('#plannedDate').attr('disabled', true);
             $('#plannedTime').attr('disabled', true);
-            
-            document.getElementById('divBtnCancelar').style.display = 'block'; 
-            document.getElementById('divBtnAgendar').style.display = 'none'; 
-        }
-        else {
-            document.getElementById('divBtnCancelar').style.display='none'; 
-            document.getElementById('divBtnAgendar').style.display = 'block'; 
 
-            DesbloquearPlannedData();
-            DesbloquearPlannedTime();
+            document.getElementById('divBtnCancelar').style.display = 'block';
+            document.getElementById('divBtnAgendar').style.display = 'none';
+            document.getElementById('divBtnReAgendar').style.display = 'none';
+
+        } else {
+            $('#contactName').attr('disabled', false);
+            $('#contactMail').attr('disabled', false);
+            $('#contactPhone').attr('disabled', false);
+            $('#brandId').attr('disabled', false);
+            $('#versionId').attr('disabled', false);
+            $('#vehicleYear').attr('disabled', false);
+            $('#vehiclePlate').attr('disabled', false);
+            $('#labours').attr('disabled', false);
+            $('#workshopId').attr('disabled', false);
+            $('#plannedDate').attr('disabled', false);
+            $('#plannedTime').attr('disabled', false);
+
+            document.getElementById('divBtnCancelar').style.display='none';
+            document.getElementById('divBtnAgendar').style.display = 'block';
+            document.getElementById('divBtnReAgendar').style.display = 'none';
+
+            BloquearPlannedData();
+            BloquearPlannedTime();
         }
     });
-    
+
 </script>
 <script>
     $(document).ready(function () {
         var DeleteInd = @ViewBag.DeleteInd;
-        if (DeleteInd == 1) {
+        if (DeleteInd == 1 || DeleteInd == 2) {
             document.getElementById('divBtnCancelar').style.display='none';
-            document.getElementById('divBtnAgendar').style.display = 'none';            
+            document.getElementById('divBtnAgendar').style.display = 'none';
+            document.getElementById('divBtnReAgendar').style.display = 'none';
         }
 
         var ReferenciaInd = @ViewBag.ReferenciaInd;
@@ -292,33 +332,25 @@
             document.getElementById('divReferencia').style.display = 'none';
         } else {
             document.getElementById('divReferencia').style.display = 'block';
-        }        
+        }
     });
 </script>
 <script>
     function DesbloquearPlannedData() {
-        var workshopId = document.getElementById("workshopId").value;
-       
-        if (workshopId == "-1") {
-            $('#plannedDate').attr('disabled', true);
-            document.getElementById("plannedDate").value = "";
-        }
-        else {
-            $('#plannedDate').attr('disabled', false);
-        }      
+        $('#plannedDate').attr('disabled', false);
     }
     function DesbloquearPlannedTime() {
-        var plannedDate = document.getElementById("plannedDate").value;
-        
-        if (plannedDate == "") {
-            $('#plannedTime').attr('disabled', true);
-            document.getElementById("plannedTime").value = "-1";
-        }
-        else {
-            $('#plannedTime').attr('disabled', false);
-        }      
+        $('#plannedTime').attr('disabled', false);
     }
-   
+    function BloquearPlannedData() {
+        $('#plannedDate').attr('disabled', true);
+        document.getElementById("plannedDate").value = "";
+    }
+    function BloquearPlannedTime() {
+        $('#plannedTime').attr('disabled', true);
+        document.getElementById("plannedTime").value = "-1";       
+    }
+
 </script>
 
 
@@ -329,20 +361,22 @@
 </div>
 
 <div class="container">
-     
+
     <div id="divMessage" style="display: none;">
         <img src="~/gif-espera.gif" />
     </div>
 
     <form asp-route="AppintmentRoute" id="AppointmentForm" onSubmit="return Validar('contactName','contactMail', 'contactPhone', 'brandId', 'versionId', 'vehicleYear', 'vehiclePlate', 'labours', 'workshopId', 'plannedDate', 'plannedTime')" method="post">
-        <div class="row" >
+        <div class="row">
             <div class="col-md-12 col-md-pull-12">
                 <div id="divReferencia" style="display: none">
                     <h3> Referencia: @ViewBag.Referencia </h3>
                 </div>
             </div>
         </div>
+
         <div class="row">
+
             <div class="col-md-4 col-md-pull-4">
                 <div class="form-group">
                     <label asp-for="contactName">Nombre: *</label>
@@ -353,7 +387,7 @@
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
                     <label asp-for="contactMail">eMail: *</label>
-                    <input asp-for="contactMail" id="contactMail" placeholder="Ingresa tu eMail"  class="form-control" />
+                    <input asp-for="contactMail" id="contactMail" placeholder="Ingresa tu eMail" class="form-control" />
                     <span asp-validation-for="contactMail"></span>
                 </div>
             </div>
@@ -365,9 +399,12 @@
                 </div>
             </div>
         </div>
+
         <hr align="right" size="1" style="color:gray" width="100%" />
 
         <br />
+
+
         <div class="row">
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
@@ -399,6 +436,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 col-md-push-6">
                 <div class="form-group">
@@ -423,8 +461,14 @@
 
             </div>
         </div>
+
+
+
         <hr align="right" size="1" style="color:gray" width="100%" />
         <br />
+
+
+
         <div class="row">
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
@@ -447,14 +491,38 @@
             <div class="col-md-4 col-md-pull-4">
                 <div>
                     <label asp-for="plannedData.plannedTime">Hora: *</label>
-                    <select id="plannedTime" asp-for="plannedData.plannedTime" class="form-control">
+                    <select id="plannedTime" asp-for="plannedData.plannedTime" class="form-control mb-2">
                         <option value="-1" selected="selected">Selecciona un Horario</option>
                         @foreach (var horario in ViewBag.horarios)
                         {
                             <option value="@horario.hora">@horario.horario</option>
                         }
                     </select>
-                    
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-pull-12">
+                <div class="modal fade bootstrapmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title"> Cita Activa </div>
+                                <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+
+                                ¿Desea reagendar su cita?
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" id="btnDivReAgendar" onclick="DeshabilitarControles();" class="btn btn-success" value="Ok" />
+                                <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -463,21 +531,28 @@
 
             <div class="col-md-4 col-md-pull-4">
                 <div id="divBtnCancelar" style="display: none">
-                    <a href="/Appointment/Delete/@ViewBag.id" id="btnCancelar" class="btn btn-danger btn-block">Cancelar Cita</a>
+                    <a href="/Appointment/Delete/@ViewBag.id" id="btnCancelar" class="btn btn-danger btn-block mt-2">Cancelar Cita</a>
                 </div>
             </div>
             <div class="col-md-4 col-md-pull-4">
-                <div id="divBtnRegresar" >
-                    <a href="/Home/Index" id="btnRegresar" class="btn btn-info btn-block">Regresar</a>
+                <div id="divBtnRegresar">
+                    <a href="/Home/Index" id="btnRegresar" class="btn btn-info btn-block mt-2">Regresar</a>
                 </div>
             </div>
             <div class="col-md-4 col-md-pull-4">
                 <div id="divBtnAgendar" style="display: none">
-                    <input type="submit" id="btnAgendar" class="btn btn-success btn-block" value="Agendar Cita" />
+                    <input type="submit" id="btnAgendar" class="btn btn-success btn-block mt-2" value="Agendar Cita" />
+                </div>
+                <div id="divBtnReAgendar" style="display: none">
+                    <input type="button" id="btnReAgendar" class="btn btn-success btn-block mt-2" data-toggle="modal" data-target=".bootstrapmodal" value="Reagendar Cita" />
                 </div>
             </div>
         </div>
         <input type="hidden" asp-for="id" />
     </form>
-
+   
+    <br />
+    <footer>
+        <p>@ViewBag.Footer</p>
+    </footer>
 </div>

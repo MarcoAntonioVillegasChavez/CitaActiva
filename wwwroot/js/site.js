@@ -121,3 +121,19 @@ function ValidarHome(idHome) {
 }
 
 
+
+////////////////////////////////////////////////////////////////////
+
+function DeshabilitarControles() {
+    $('#contactName').attr('disabled', false);
+    $('#contactMail').attr('disabled', false);
+    $('#contactPhone').attr('disabled', false);
+    $('#brandId').attr('disabled', false);
+    $('#versionId').attr('disabled', false);
+    $('#vehicleYear').attr('disabled', false);
+    $('#vehiclePlate').attr('disabled', false);
+    $('#labours').attr('disabled', false);
+    $('#workshopId').attr('disabled', false);
+}
+
+
