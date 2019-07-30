@@ -1,0 +1,610 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link href="~/css/agendamiento.css" rel="stylesheet" />
+
+<link href="~/lib/bootstrap/dist/css/citas.css" rel="stylesheet" />
+
+<div class="container">
+    @*<form asp-action="Index" onsubmit="return ValidarAgendamiento('nombre_cliente')" method="post">*@
+    @*<form asp-action="Index" method="post">*@
+
+    <div id="divPrincipal">
+        <div class="row">
+            <div class="col-2" onclick="ClickAgencias()">
+                <div id="divAgenciasNormal" class="normal">
+                    <div id="divAgenciasIcon0" style="display: none">
+                        <img src="~/img/imgInterfaz/Distribuidor_Circulo.png" />
+                    </div>
+                </div>
+                <div id="divAgenciasMovil" class="movil">
+                    <div id="divAgenciasIconMovil0" style="display: none">
+                        <img src="~/img/imgInterfazMovil/Distribuidor_Movil.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" onclick="ClickVehiculos()">
+                <div id="divVehiculoNormal" class="normal">
+                    <div id="divVehiculoIcon0" style="display: none">
+                        <img src="~/img/imgInterfaz/Vehículo.png" />
+                    </div>
+                    <div id="divVehiculoIcon1" style="display: none">
+                        <img src="~/img/imgInterfaz/Vehículo_Circulo.png" />
+                    </div>
+                </div>
+                <div id="divVehiculoMovil" class="movil">
+                    <div id="divVehiculoIconMovil0" style="display: none">
+                        <img src="~/img/imgInterfazMovil/Vehículo_Movil.png" />
+                    </div>
+                    <div id="divVehiculoIconMovil1" style="display: none">
+                        @*<img src="~/img/imgInterfazMovil/Vehículo_Movil.png" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" onclick="ClickServicios()">
+                <div id="divServicioNormal" class="normal">
+                    <div id="divServicioIcon0" style="display: none">
+                        <img src="~/img/imgInterfaz/Servicio.png" />
+                    </div>
+                    <div id="divServicioIcon1" style="display: none">
+                        <img src="~/img/imgInterfaz/Servicio_Circulo.png" />
+                    </div>
+                </div>
+                <div id="divServicioMovil" class="movil">
+                    <div id="divServicioIconMovil0" style="display: none">
+                        <img src="~/img/imgInterfazMovil/Servicio_Movil.png" />
+                    </div>
+                    <div id="divServicioIconMovil1" style="display: none">
+                        @*<img src="~/img/imgInterfazMovil/Servicio_Movil.png" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" onclick="ClikCitas()">
+                <div id="divCitaNormal" class="normal">
+                    <div id="divCitaIcon0" style="display: none">
+                        <img src="~/img/imgInterfaz/Cita.png" />
+                    </div>
+                    <div id="divCitaIcon1" style="display: none">
+                        <img src="~/img/imgInterfaz/Cita_Circulo.png" />
+                    </div>
+                </div>
+                <div id="divCitaMovil" class="movil">
+                    <div id="divCitaIconMovil0" style="display: none">
+                        <img src="~/img/imgInterfazMovil/Cita_Movil.png" />
+                    </div>
+                    <div id="divCitaIconMovil1" style="display: none">
+                        @*<img src="~/img/imgInterfazMovil/Cita_Movil.png" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" onclick="ClickConfirmar()">
+                <div id="divConfirmarNormal" class="normal">
+                    <div id="divConfirmarIcon0" style="display: none">
+                        <img src="~/img/imgInterfaz/Confirmar.png" />
+                    </div>
+                    <div id="divConfirmarIcon1" style="display: none">
+                        <img src="~/img/imgInterfaz/Confirmar_Circulo.png" />
+                    </div>
+                </div>
+                <div id="divConfirmarMovil" class="movil">
+                    <div id="divConfirmarIconMovil0" style="display: none">
+                        <img src="~/img/imgInterfazMovil/Confirmar_Movil.png" />
+                    </div>
+                    <div id="divConfirmarIconMovil1" style="display: none">
+                        @*<img src="~/img/imgInterfazMovil/Confirmar_Movil.png" />*@
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div id="divAgencias" style="display: none">
+        <h6>Busca tu concesionario.</h6>
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                <div class="row">
+                    <div class="col-md-4 col-md-push-4">
+                        <div class="form-group">
+                            <label>Marca: *</label>
+                            <select id="marcaVehiculo" name="marcaVehiculo" class="form-control">
+                                <option value="-1" selected="selected">Selecciona la Marca de tu auto.</option>
+                                @foreach (var marcaVehiculo in ViewBag.marcasVehiculo)
+                                {
+                                    <option value="@marcaVehiculo.id_marcavehiculo">@marcaVehiculo.descripcion</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-push-4">
+                        <div class="form-group">
+                            <label>Taller: *</label>
+                            <input type="text" id="places" class="form-control" placeholder="Escribe tu ciudad o estado" />
+                            <br />
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6  col-md-push-6">
+                        <div id="listing">
+                            <table id="resultsTable" class="table">
+                                <tbody id="results"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                @*<input type="button" id="btnSigAgencias" class="btn btn-primary float-md-right" onclick="SiguienteAgencias()" value="Siguiente" />*@
+            </div>
+        </div>
+    </div>
+    <div id="divVehiculo" style="display: none">
+       
+        <div class="row">
+            <div class="col-md-5 col-md-pull-5">
+                <h3> Datos del vehiculo </h3>
+            </div>
+            <div class="col-md-1 col-md-pull-1">
+                <div id="vertical-bar">
+
+            </div>
+
+            </div>
+            <div class="col-md-6 col-md-pull-6">
+                <label id="lblGeneral"></label>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-pull-4">
+                    <div class="form-group">
+                        <label>Modelo: *</label>
+                        <select id="id_familiavehiculo" name="id_familiavehiculo" class="form-control">
+                            <option value="-1" selected="selected">Selecciona el modelo de tu auto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-pull-4">
+                    <div class="form-group">
+                        <label>Año: *</label>
+                        <input type="number" id="anho_vehiculo" name="anho_vehiculo" placeholder="Escribe el año de tu auto." class="form-control">
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-pull-4">
+                    <label name="tipo_combustible">Combustible: *</label>
+                    <select id="tipo_combustible" name="tipo_combustible" class="form-control">
+                        <option value="-1" selected="selected">Selecciona el combustible.</option>
+                        @foreach (var tipoCombustible in ViewBag.tipoCombustibleList)
+                        {
+                            <option value="@tipoCombustible.id_tipocombustible">@tipoCombustible.descripcion</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label name="servicios">Servicio: *</label>
+                        <select id="servicios" name="servicios" class="form-control">
+                            <option value="-1" selected="selected">Selecciona un Servicio.</option>
+                            @*@foreach (var servicio in ViewBag.serviciosList)
+                    {
+                        <option value="@servicio.id">@servicio.description</option>
+                    }*@
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-push-6">
+                    <div class="row">
+                        <div class="col-md-12 col-md-push-12">
+                            <div class="form-group">
+                                <label name="Paca">Placa / VIN</label>
+                                <input name="PlacaVehiculo" id="PlacaVehiculo" placeholder="Ingresa la placa/VIN de tu auto" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-push-12">
+                            <div class="form-group">
+                                Agiliza tu recepción, ingresa de número de placa o VIN
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-push-12">
+                    <input type="button" id="btnSigVehiculos" class="btn btn-primary float-md-right" onclick="SiguienteVehiculo()" value="Siguiente" />
+                    <input type="button" id="btnAtrasVehiculos" class="btn btn-light float-md-right" onclick="AtrasVehiculo()" value="Atras" />
+                </div>
+            </div>
+        </div>
+  
+    <div id="divServicio" style="display: none">
+        Paquetes de Servicio
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                <!-- Collapse -->
+
+                <label id="lblKm"></label>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" style="background-color:#221a16" id="headingLux">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLux" aria-expanded="true" aria-controls="collapseLux">
+                                    Luxury
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseLux" class="collapse show" aria-labelledby="headingLux" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-push-4">
+
+                                        <input type="image" src="~/img/impPaquetes/Inspeccion_Luxury.png" data-toggle="modal" data-target="#exampleModalLong" />
+                                    </div>
+                                    <div class="col-md-4 col-md-push-4">
+
+                                        <input type="image" src="~/img/impPaquetes/Servicios_Luxury.png" data-toggle="modal" data-target="#exampleModalLong" />
+                                    </div>
+                                    <div class="col-md-4 col-md-push-4">
+
+                                        <img src="~/img/impPaquetes/Revision_Luxury.png" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-md-push-4">
+                                        <img src="~/img/impPaquetes/Detallado_Luxury.png" />
+                                    </div>
+                                    <div class="col-md-4 col-md-push-4">
+                                        <img src="~/img/impPaquetes/Actividades_Luxury.png" />
+                                    </div>
+                                    <div class="col-md-4 col-md-push-4">
+                                        <img src="~/img/impPaquetes/Cortesia_Luxury.png" />
+                                    </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-light">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color:#5e1648" id="headingPre">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsePre" aria-expanded="false" aria-controls="collapsePre">
+                                    Premium
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapsePre" class="collapse" aria-labelledby="headingPre" data-parent="#accordion">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color:#7cac39" id="headingSma">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSma" aria-expanded="false" aria-controls="collapseSma">
+                                    Smart
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseSma" class="collapse" aria-labelledby="headingSma" data-parent="#accordion">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color:#3a61a6" id="headingCon">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseCon" aria-expanded="false" aria-controls="collapseCon">
+                                    Confort
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseCon" class="collapse" aria-labelledby="headingCon" data-parent="#accordion">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color:#a4d0f0" id="headingCle">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseCle" aria-expanded="false" aria-controls="collapseCle">
+                                    Clear
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseCle" class="collapse" aria-labelledby="headingCle" data-parent="#accordion">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Collapse -->
+
+                <div id="carrousel">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="card-header" style="background-color:#221a16">
+                                    Luxury
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-md-push-12">
+                                        <input type="image" src="~/img/impPaquetes/Inspeccion_Luxury.png" data-toggle="modal" data-target="#exampleModalLong" />
+                                    </div>
+                                    <div class="col-md-12 col-md-push-12">
+                                        <input type="image" src="~/img/impPaquetes/Servicios_Luxury.png" data-toggle="modal" data-target="#exampleModalLong" />
+                                    </div>
+                                    <div class="col-md-12 col-md-push-12">
+                                        <img src="~/img/impPaquetes/Revision_Luxury.png" />
+                                    </div>
+                                    <div class="col-md-12 col-md-push-12">
+                                        <img src="~/img/impPaquetes/Detallado_Luxury.png" />
+                                    </div>
+                                    <div class="col-md-12 col-md-push-12">
+                                        <img src="~/img/impPaquetes/Actividades_Luxury.png" />
+                                    </div>
+                                    <div class="col-md-12 col-md-push-12">
+                                        <img src="~/img/impPaquetes/Cortesia_Luxury.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card-header" style="background-color:#5e1648">
+                                    Premium
+                                </div>
+                                Segundo slide
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card-header" style="background-color:#7cac39">
+                                    Smart
+                                </div>
+                                Tercer slide
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card-header" style="background-color:#3a61a6">
+                                    Confort
+                                </div>
+                                Cuarto slide
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card-header" style="background-color:#a4d0f0">
+                                    Clear
+                                </div>
+                                Quinto slide
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" style="background-color:#221a16"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1" style="background-color:#5e1648"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2" style="background-color:#7cac39"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3" style="background-color:#3a61a6"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="4" style="background-color:#a4d0f0"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                <input type="button" id="btnSigServicios" class="btn btn-primary  float-md-right" onclick="SiguienteServicio()" value="Siguiente" />
+                <input type="button" id="btnAtrasServicios" class="btn btn-light  float-md-right" onclick="AtrasServicio()" value="Atras" />
+            </div>
+        </div>
+    </div>
+    <div id="divCita" style="display: none">
+        <div class="row">
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label>Nombres: *</label>
+                    <input name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu Nombre" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label>Apellido Paterno: *</label>
+                    <input name="apePat_cliente" id="apePat_cliente" placeholder="Ingresa tu Apellido Paterno" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4 col-md-push-4">
+                <div class="form-group">
+                    <label>Apellido Materno: *</label>
+                    <input type="text" name="apeMat_cliente" id="apeMat_cliente" placeholder="Ingresa tu Apellido Materno" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-md-push-3">
+                <label>Telefono: *</label>
+                <input name="tel_cliente" id="tel_cliente" placeholder="Ingresa tu número telefonico" class="form-control" />
+            </div>
+            <div class="col-md-3 col-md-push-3">
+                <div class="form-group">
+                    <label>eMail: *</label>
+                    <input name="email_cliente" id="email_cliente" placeholder="Ingresa tu eMail" class="form-control" />
+                </div>
+            </div>
+            @*<div class="col-md-6 col-md-push-6">
+                <label>¿Deseas asegurar tu facturacion? compartenos tu RFC: (Opcional)</label>
+                <input name="rfc" id="rfc" placeholder="Ingresa tu número telefonico" class="form-control" />
+            </div>*@
+            <div class="col-md-3 col-md-push-3">
+                <div>
+                    <label name="Fecha">Fecha: *</label>
+                    <div class="form-group">
+                        <div class="start_date input-group mb-4">
+                            @Html.TextBox("fechaAgendamiento", "{0:dd-MM-yyyy}", new { @class = "form-control", @readonly = true, placeholder="Selecciona la fecha de agendamiento de tu cita" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-push-3">
+                <div>
+                    <label name="Hora">Hora: *</label>
+                    <select id="horaAgendamiento" name="HoraAgendamiento" class="form-control mb-2">
+                        <option value="-1" selected="selected">Selecciona un Horario</option>
+                        @*@foreach (var horario in ViewBag.horarios)
+                            {
+                                <option value="@horario.hora">@horario.horario</option>
+                            }*@
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                <input type="button" id="btnSigCita" class="btn btn-primary float-md-right" value="Confirmar" />
+                @*<button id="btnSigCita" class="btn btn-primary float-md-right" > Confirmar</button>*@
+                <input type="button" id="btnAtrasCita" class="btn btn-light float-md-right" onclick="AtrasCita()" value="Atras" />
+            </div>
+        </div>
+    </div>
+    <div id="divConfirmar" style="display: none">
+        <br />
+        <div class="row">
+            <div class="col-md-12 col-md-push-12">
+                <div class="row">
+                    <div class="col-md-6 col-md-push-6">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td align="right"><label id="lblNoCitaTxt">No. Cita</label></td>
+                                    <td align="left"><label id="lblNoCita"></label></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-push-6 text-right" >
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-header bg-primary">
+                                <label id="lblConfirmMes"></label>
+                            </div>
+                            <div class="card-body">
+                                <label id="lblConfirmNomDia"></label>
+                                <label id="lblConfirmDia"></label>
+                                <br />
+                                A las: <label id="lblPreConfrHr"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-push-6 text-left">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><label id="lblPreConfrAgenciaTxt">Agencia</label></td>
+                                    <td><label id="lblPreConfrAgencia"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="lblPreConfrVehiTxt">Datos del Vehiculo</label></td>
+                                    <td><label id="lblPreConfrVehi"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="lblPreConfrServTxt">Servicios de</label></td>
+                                    <td><label id="lblPreConfrServ"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="lblPreConfrCostoTxt">Costo total</label></td>
+                                    <td><label id="lblPreConfCosto"></label></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12 col-md-push-12">
+                <input type="button" id="btnConfirmar" class="btn btn-primary float-md-right" value="Regresar al Menú principal" />
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="idAgencia" name="id_agencia" />
+    @*</form>*@
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //$('#carousel').carousel({
+    //    interval: 10
+    //})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+<script src="~/js/site.js"></script>
+<script src="~/js/jquery.blockUI.js"></script>
+<script src="~/js/citas.js"></script>
+<script src="~/lib/moment/Scripts/moment-with-locales.js"></script>
+
+<script src="~/js/knockout.js"></script>
+<script>
+    var viewBagYear = @(ViewBag.Year);
+    var viewBagMonth = @(ViewBag.Month);
+    var viewBagDay = @(ViewBag.Day);
+    var viewBagHora = '@(ViewBag.Hora)';
+</script>
+<script src="~/js/agendamiento.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDpiR1qDLtWRG3NVz3jmzl4tAHmCImQx7c&libraries=places&callback=ActivarPlacesSearch"
+        async defer></script>

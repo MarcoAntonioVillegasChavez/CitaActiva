@@ -157,8 +157,8 @@
                     data: { scheduleId },
                     complete: function () {
 
-                        console.log(localStorage.getItem("Min"))
-                        console.log(localStorage.getItem("Max"))
+                        //console.log(localStorage.getItem("Min"))
+                        //console.log(localStorage.getItem("Max"))
 
                         if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
 
@@ -228,9 +228,9 @@
                                     var valorBeginning = new Date(year, month - 1, day, valueBeginning[0], valueBeginning[1]);
                                     var valorEnding = new Date(year, month - 1, day, valueEnding[0], valueEnding[1]);
 
-                                    console.log(valoraHr)
-                                    console.log(valorBeginning)
-                                    console.log(valorEnding)
+                                    //console.log(valoraHr)
+                                    //console.log(valorBeginning)
+                                    //console.log(valorEnding)
 
                                     if (valoraHr >= valorEnding) {
                                         localStorage.setItem("Min", "")
@@ -409,7 +409,7 @@
             <div class="col-md-4 col-md-push-4">
                 <div class="form-group">
                     <label>Marca: *</label>
-                    <select id="brandId" asp-for="brandId" class="form-control">
+                    <select id="brandId" name="id_marcavehiculo" class="form-control">
                         <option value="-1" selected="selected">Selecciona la Marca de tu auto.</option>
                         <option value="NI">NISSAN</option>
                         <option value="IF">INFINITI</option>
@@ -475,9 +475,9 @@
                     <label asp-for="workshopId">Taller: *</label>
                     <select id="workshopId" asp-for="workshopId" class="form-control">
                         <option value="-1" selected="selected">Selecciona un Taller</option>
-                        @foreach (var workShop in ViewBag.WorkshopList)
+                        @foreach (var agencia in ViewBag.agenciasList)
                         {
-                            <option value="@workShop.id">@workShop.comercialName</option>
+                            <option value="@agencia.id_agencia">@agencia.nombre_agencia</option>
                         }
                     </select>
                 </div>
@@ -554,5 +554,6 @@
     <br />
     <footer>
         <p>@ViewBag.Footer</p>
+       
     </footer>
 </div>

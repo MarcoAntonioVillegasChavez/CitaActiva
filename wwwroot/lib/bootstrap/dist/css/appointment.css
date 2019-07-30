@@ -73,19 +73,19 @@
 @media only screen and (max-width: 420px) {
     #header {
         background-image: url('../../../../img/3B2-iphone2.png');
-        height: 97px;
+        height: 50px;
     }
 }
 @media only screen and (max-width: 380px) {
     #header {
         background-image: url('../../../../img/3B2-iphone2.png');
-        height: 97px;
+        height: 50px;
     }
 }
 @media only screen and (max-width: 340px) {
     #header {
         background-image: url('../../../../img/3B2-iphone.png');
-        height: 97px;
+        height: 50px;
     }
 }
 

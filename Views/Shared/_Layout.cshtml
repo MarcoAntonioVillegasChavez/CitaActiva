@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/bootstrap.datepicker/1.8.0.1/content/Content/bootstrap-datepicker.css" />
+               
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -18,20 +19,204 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
+    <link href="~/lib/bootstrap/dist/css/simple-sidebar.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/appointment.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
-<body>   
-    <div id="header">
+<body>
+    @*<div id="header">
+
+    </div>*@
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Menu   </div>
+            <div class="list-group list-group-flush">
+                <a href="/Citas/Index" class="list-group-item list-group-item-action bg-light">Agendamiento de citas</a>
+                <div id="divHistorial" style="display:none">
+                    <a href="/Citas/Historial" class="list-group-item list-group-item-action bg-light">Historial de citas</a>
+                </div>
+                
+                <a href="/Clientes/Create" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+                <a href="/Clientes/Index" class="list-group-item list-group-item-action bg-light" data-toggle="modal" data-target=".bootstrapmodal" id="lnkCerrarSesion">
+                    <i class="fas fa-sign-out-alt"> Cerrar Sesión </i>
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light  bg-light  border-bottom">
+                <button id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+
+                @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        </div>*@
+
+
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="dropdown open">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-fw fa-user"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right" style="padding: 20px; padding-bottom: 20px;">
+                            <li>
+                                <div id="divBienvenido" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                <label> Bienvenido:</label>  <label id="nombreCliente" style="margin-bottom: 15px; margin-top: 10px;"></label>
+                                            </p>
+                                            <a class="dropdown-item" href="/Clientes/Index" data-toggle="modal" data-target=".bootstrapmodal" id="lnkCerrarSesion">
+                                                <i class="fas fa-sign-out-alt"> Cerrar Sesión </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="divRegistrarse" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form asp-route="LoginRoute" id="LoginForm" method="post">
+                                                <label style="margin-bottom: 15px; margin-top: 10px;">Autenticacion de Usuario.</label>
+                                                <input name="email_cliente" style="margin-bottom: 15px; margin-top: 10px" size="50" placeholder="Correo electronico" id="email_clienteL">
+                                                <input type="password" name="password" style="margin-bottom: 15px; margin-top: 10px" size="50" placeholder="Contraseña" id="passwordL">
+                                                <input type="submit" value="Entrar" class="btn btn-block button" />
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a href="#">Cambiar contraseña. </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a href="/Clientes/Create/">Registrate </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+
+            <div class="row">
+                <div class="col-md-12 col-md-pull-12">
+                    <div class="modal fade bootstrapmodal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-title"> Cita activa </div>
+                                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    ¿Deseas abandonar el sitio?
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <input type="submit" id="btnDivReAgendar" class="btn btn-success" onclick="eliminarCoockie();" value="Ok" />
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <br />
+                <div class="container">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
 
     </div>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- /#wrapper -->
+
+    <!-- Menu Toggle Script -->
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    $(function () {
+        // Setup drop down menu
+        $('.dropdown-toggle').dropdown();
+        // Fix input element click problem
+        $('.dropdown input, .dropdown label').click(function (e) {
+            e.stopPropagation();
+        });
+});
+
+    function eliminarCoockie() {
+        var name = "cliente";       
+        //document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        //console.log(name);
+
+        window.location.href = "/Home/CerrarSesion/";
+
+    };
+     
+    $(document).ready(function checkCookie() {
+
+        console.log(document.cookie);
+        var cliente = readCookie("cliente");
+        var username = readCookie("nombreCliente");
+        //console.log(username);
+        if (cliente != null) {
+            
+            document.getElementById('nombreCliente').innerHTML = username;
+            document.getElementById('divBienvenido').style.display = 'block';
+            document.getElementById('divRegistrarse').style.display = 'none';
+            document.getElementById('divHistorial').style.display = 'block';
+
+        } else {
+            document.getElementById('divBienvenido').style.display = 'none';
+            document.getElementById('divRegistrarse').style.display = 'block';
+            document.getElementById('divHistorial').style.display = 'none';
+        }
+    });
+
+    function readCookie(name) {
+
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+
+        for (var i = 0; i < ca.length; i++) {
+
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) {
+                return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+        }
+  return null;
+
+}
+
+    </script>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -55,6 +240,8 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+
 
     @RenderSection("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {}
+    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {
+    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj",
         "projectName": "CitaActiva",
-        "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj",
         "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\obj\\",
+        "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -78,9 +78,9 @@
               "target": "Package",
               "version": "[5.0.10, )"
             },
-            "Pomelo.EntityFrameworkCore.MySql": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[2.2.4, )"
             },
             "jQuery.UI.Combined": {
               "target": "Package",

@@ -15,8 +15,8 @@ namespace CitaActiva.Controllers
     {
         const string SessionKeyName = "token";
         [HttpGet("{id}")]
-        [Route("/Appointment/Receptionist/{workshopId}", Name = "ReceptionistRoute")]
-        public async Task<string> Index(string workshopId, Token token)
+        [Route("/Appointment/Receptionist/{agenciaId}", Name = "ReceptionistRoute")]
+        public async Task<string> Index(string agenciaId, Token token)
         {
             if (token.access_token == null)
             {
@@ -24,7 +24,7 @@ namespace CitaActiva.Controllers
                 token = tokenController.ObtenerToken();
             }
             ReceptionistService receptionistService = new ReceptionistService();
-            string result = await receptionistService.GetReceptionistByWorkShop(token, workshopId);
+            string result = await receptionistService.GetReceptionistByWorkShop(token, agenciaId);
             JObject results = JObject.Parse(result);
             JArray arrayResults = (JArray)results["receptionists"];
 
@@ -33,22 +33,22 @@ namespace CitaActiva.Controllers
             
         }
 
-        [HttpGet("{id}")]
-        [Route("/Appointment/ReceptionistById/{receptionistId}", Name = "ReceptionistIdRoute")]
-        public async Task<Receptionist> GetReceptionist(Token token, string receptionistId)
-        {
-            if (token.access_token == null)
-            {
-                TokenController tokenController = new TokenController();
-                token = tokenController.ObtenerToken();
-            }
+        //[HttpGet("{id}")]
+        //[Route("/Appointment/ReceptionistById/{receptionistId}", Name = "ReceptionistIdRoute")]
+        //public async Task<Receptionist> GetReceptionist(Token token, string receptionistId)
+        //{
+        //    if (token.access_token == null)
+        //    {
+        //        TokenController tokenController = new TokenController();
+        //        token = tokenController.ObtenerToken();
+        //    }
 
-            ReceptionistService receptionistService = new ReceptionistService();
-            string result = await receptionistService.GetReceptionistById(token, receptionistId);
-            Receptionist receptionist = JsonConvert.DeserializeObject<Receptionist>(result);
-            return receptionist;
+        //    ReceptionistService receptionistService = new ReceptionistService();
+        //    string result = await receptionistService.GetReceptionistById(token, receptionistId);
+        //    Receptionist receptionist = JsonConvert.DeserializeObject<Receptionist>(result);
+        //    return receptionist;
 
-        }
+        //}
 
         /*
         public Token ObtenerToken()

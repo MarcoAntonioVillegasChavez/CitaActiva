@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CitaActiva.Models
 {
-    [Table("Token")]
+    [Table("token")]
     public class Token
     {
         [Key]
@@ -15,6 +15,6 @@ namespace CitaActiva.Models
         public string token_type { get; set; }
         public string access_token { get; set; }
         public string expires_in { get; set; }    
-        public DateTime createdAt { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

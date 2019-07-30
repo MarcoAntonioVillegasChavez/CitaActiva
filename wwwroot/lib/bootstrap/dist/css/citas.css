@@ -1,0 +1,33 @@
+﻿body {
+}
+
+.normal {
+    display: block;
+}
+.movil {
+    display: none;
+}
+#accordion {
+    display: block;
+}
+
+#carrousel {
+    display: none;
+}
+
+@media only screen and (max-width: 380px) {
+    .normal {
+        display: none;
+    }
+    .movil {
+        display: block;
+    }
+
+    #accordion {
+        display:none;
+    }
+    #carrousel {
+        display: block;
+    }
+}
+

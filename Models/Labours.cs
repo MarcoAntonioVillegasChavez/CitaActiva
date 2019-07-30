@@ -9,8 +9,8 @@ namespace CitaActiva.Models
     [Table("Labours")]
     public class Labours
     {
-        public string description { get; set; }
         public string id { get; set; }
+        public string description { get; set; }
         public int? plannedHours { get; set; }
         public string operatorId { get; set; }
         public string teamId { get; set; }

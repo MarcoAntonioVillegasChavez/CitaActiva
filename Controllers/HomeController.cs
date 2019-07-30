@@ -24,6 +24,18 @@ namespace CitaActiva.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (Request.Cookies["cliente"] != null)
+            {
+                Clientes clientes = new Clientes();
+                CustomerService customerService = new CustomerService();
+                clientes = customerService.DatosCliente(Request.Cookies["cliente"]);
+            }
+            //else
+            //{
+            //    return RedirectToAction("Index", new RouteValueDictionary(
+            //        new { controller = "Clientes", action = "Index" }));
+            //}
+
             return View();
         }
 
@@ -77,6 +89,17 @@ namespace CitaActiva.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult CerrarSesion()
+        {
+            Response.Cookies.Delete("cliente");
+            Response.Cookies.Delete("nombreCliente");
+            
+
+            return RedirectToAction("Index", new RouteValueDictionary(
+                   new { controller = "Home", action = "Index" }));
         }
     }
 }

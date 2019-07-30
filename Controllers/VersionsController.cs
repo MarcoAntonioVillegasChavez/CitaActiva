@@ -19,11 +19,10 @@ namespace CitaActiva.Controllers
         [Route("/Appointment/Versions/{brandId}", Name = "VersionsRoute")]
         public string Versions(string brandId)
         {
-           
-
-            var list = db.Versions.Where(v => v.brandId == brandId).OrderBy(v => v.description);
-            string versions =JsonConvert.SerializeObject(list.ToArray());
-            return versions;
+            //var list = db.Versions.Where(v => v.brandId == brandId).OrderBy(v => v.description);
+            //string versions =JsonConvert.SerializeObject(list.ToArray());
+            //return versions;
+            return "";
         }
 
         JArray QuitarCamposSobrantes(JArray arrayResults)

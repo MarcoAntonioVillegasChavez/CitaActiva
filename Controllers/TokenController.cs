@@ -19,14 +19,14 @@ namespace CitaActiva.Controllers
             try
             {
                 var tokens = from t in db.Token
-                        orderby t.createdAt descending
+                        orderby t.created_at descending
                         select new
                         {
                             t.id,
                             t.token_type,
                             t.access_token,
                             t.expires_in,
-                            t.createdAt
+                            t.created_at
                         };
                 var tokenList = tokens.ToList();
 
@@ -34,10 +34,10 @@ namespace CitaActiva.Controllers
                 token.token_type = tokenList[0].token_type;
                 token.access_token = tokenList[0].access_token;
                 token.expires_in = tokenList[0].expires_in;
-                token.createdAt = tokenList[0].createdAt;
+                token.created_at = tokenList[0].created_at;
 
                 DateTime today = Convert.ToDateTime(DateTime.Now.ToString("G"));
-                DateTime fechaToken = token.createdAt;
+                DateTime fechaToken = token.created_at;
 
                 TimeSpan result = today.Subtract(fechaToken);
                 TimeSpan tokenTime = TimeSpan.FromMinutes(Convert.ToInt32(token.expires_in) / 60);
@@ -45,7 +45,7 @@ namespace CitaActiva.Controllers
                 if (result >= tokenTime)
                 {
                     token = tokenService.ObtenerToken();
-                    token.createdAt = Convert.ToDateTime(DateTime.Now.ToString("G"));
+                    token.created_at = Convert.ToDateTime(DateTime.Now.ToString("G"));
 
                     db.Token.Add(token);
                     db.SaveChanges();
@@ -56,7 +56,7 @@ namespace CitaActiva.Controllers
             }catch(Exception ex)
             {
                 token = tokenService.ObtenerToken();
-                token.createdAt = Convert.ToDateTime(DateTime.Now.ToString("G"));
+                token.created_at = Convert.ToDateTime(DateTime.Now.ToString("G"));
 
                 db.Token.Add(token);
                 db.SaveChanges();

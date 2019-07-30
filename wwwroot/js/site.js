@@ -136,4 +136,119 @@ function DeshabilitarControles() {
     $('#workshopId').attr('disabled', false);
 }
 
+function ValidarLogin(email_cliente, password) {
+    email_cliente = document.getElementById(email_cliente);
+    if (email_cliente.value == "") {
+        toastr.warning("Por favor escribe tu correo electrónico.");
+        email_cliente.focus();
+        return false;
+    } else {
+        var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+        if (!regex.test($('#email_cliente').val().trim())) {
+            toastr.warning('La direccón de correo no es válida.');
+            email_cliente.focus();
+            return false;
+        }
+    }
+
+    password = document.getElementById(password);
+    if (password.value == "") {
+        toastr.warning("Por favor escribe tu contraseña.");
+        password.focus();
+        return false;
+    }
+}
+function ValidarCreateCliente(nombre_cliente, apellido_paterno, apellido_materno, email_cliente, telefono, fecha_nacimiento, rfc, password, passwordConfirm) {
+    nombre_cliente = document.getElementById(nombre_cliente);
+    if (nombre_cliente.value == "") {
+        toastr.warning("Por favor escribe tu nombre.");
+        nombre_cliente.focus();
+        return false;
+    }
+    apellido_paterno = document.getElementById(apellido_paterno);
+    if (apellido_paterno.value == "") {
+        toastr.warning("Por favor escribe tu apeliido paterno.");
+        apellido_paterno.focus();
+        return false;
+    }
+    apellido_materno = document.getElementById(apellido_materno);
+    if (apellido_materno.value == "") {
+        toastr.warning("Por favor escribe tu apeliido materno.");
+        apellido_materno.focus();
+        return false;
+    }
+
+    fecha_nacimiento = document.getElementById(fecha_nacimiento);
+    if (fecha_nacimiento.value == "") {
+        toastr.warning("Por favor escribe tu fecha de nacimiento.");
+        fecha_nacimiento.focus();
+        return false;
+    }
+
+    rfc = document.getElementById(rfc);
+    if (rfc.value == "") {
+        toastr.warning("Por favor escribe tu RFC.");
+        rfc.focus();
+        return false;
+    }
+
+    email_cliente = document.getElementById(email_cliente);
+    if (email_cliente.value == "") {
+        toastr.warning("Por favor escribe tu correo electrónico.");
+        email_cliente.focus();
+        return false;
+    } else {
+        var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+        if (!regex.test($('#email_cliente').val().trim())) {
+            toastr.warning('La direccón de correo no es válida.');
+            email_cliente.focus();
+            return false;
+        }
+    }
+   
+    telefono = document.getElementById(telefono);
+    if (telefono == "") {
+        toastr.warning("Por favor escribe tu número de telefono.");
+        telefono.focus();
+        return false;
+    } else {
+        var expresionRegular1 = /^([0-9]+){9}$/;
+        var expresionRegular2 = /\s/;
+
+        if (expresionRegular2.test(telefono.value)) {
+            toastr.warning('Error. Existen espacios en blanco en el campo Telefono Movil');
+            telefono.focus();
+            return false;
+        }
+        else if (!expresionRegular1.test(telefono.value)) {
+            toastr.warning('Numero de telefono incorrecto');
+            telefono.focus();
+            return false;
+        }
+    }
+
+    
+    password = document.getElementById(password);
+    if (password.value == "") {
+        toastr.warning("Por favor escribe tu contraseña.");
+        password.focus();
+        return false;
+    }
+
+    passwordConfirm = document.getElementById(passwordConfirm);
+    if (passwordConfirm.value == "") {
+        toastr.warning("Por favor escribe nuevamente tu contraseña.");
+        passwordConfirm.focus();
+        return false;
+    }
+
+    if (password.value != passwordConfirm.value) {
+        toastr.warning("Las contraseñas deben de coincidir.");
+        passwordConfirm.focus();
+       
+
+        return false;
+    }
+}
+
 

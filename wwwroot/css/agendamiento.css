@@ -1,0 +1,8 @@
+﻿body {
+}
+
+#vertical-bar {
+    border-left: 1px solid #ccc;
+    width: 1px;
+    height: 50px;
+}

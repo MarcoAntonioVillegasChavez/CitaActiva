@@ -41,7 +41,7 @@ namespace CitaActiva.Controllers
         }
         [HttpGet]
         [Route("/Appointment/AllowTimes/{workshopId}/{hrMin}/{hrMax}/{fecha}/{editInd}", Name = "AllowTimesRoute")]
-        public string GetAllowTimes(int workshopId, string hrMin, string hrMax, string fecha, string editInd)
+        public string GetAllowTimes(int idAgencia, string hrMin, string hrMax, string fecha, string editInd)
         {
 
                 List<Horarios> horariosList = new List<Horarios>();
@@ -101,7 +101,9 @@ namespace CitaActiva.Controllers
                     }
 
 
-                    var list = db.Appointment.Where(pt => pt.plannedDate == fecha && pt.workshopId == workshopId && pt.deletedInd != 1).Select(pt => pt.plannedTime);
+                    var list = db.AgendamientoCitas.Where(ac => ac.planned_date == fecha 
+                                                       && ac.id_agencia == idAgencia)
+                                             .Select(ac => ac.planned_time);
                     var horariosOcupados = list.ToList();
                     //for de validacion
 
