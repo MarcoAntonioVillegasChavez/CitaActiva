@@ -13814,11 +13814,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj",
+      "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
       "projectName": "CitaActiva",
-      "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\CitaActiva.csproj",
+      "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
       "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\CitaActiva\\obj\\",
+      "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
