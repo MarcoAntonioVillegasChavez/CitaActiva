@@ -1,0 +1,273 @@
+create table Workshops(
+	id int not null,
+	address varchar(255) not null,
+	city varchar(255) not null,
+	fullName varchar(255) not null,
+	comercialName varchar(255) not null,
+	companyId int not null,
+	phoneNumber varchar(255) not null,
+	warehouseId int not null,
+	brandId NVARCHAR(10) NOT NULL,
+	name varchar(255) not null,
+	documentId varchar(255) not null,
+	workshopCode varchar(255) not null,
+	email varchar(255) not null,
+	
+	
+	FOREIGN KEY (brandId) REFERENCES Brands(brandId)
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE
+);
+
+alter table Workshops add activeInd int not null
+after email;
+
+alter table Brands add activeInd int
+after description;
+
+ALTER TABLE Workshops ADD PRIMARY KEY(id);
+
+Insert into Brands (brandId, description, activeInd) values ("BRP", "Autocom Riders", 0);
+Insert into Brands (brandId, description, activeInd) values ("OT", "Tyres", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(1, "FRANCISCO I. MADERO PTE,1613, GERTRUDIS BOCANEGRA", "MICHOACAN,MORELIA" ,"AUTOCOM ALFA SAPI DE CV",  "AUTOCOM MADERO",
+1, "443 322 18 32",1, "NI", "AUTOCOM MADERO","ACM830827CW6", "T266", "arturo.rodriguez@autocom.mx", 1);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(2, "BLVD. URIANGATO, COL. LA JOYITA","MEXICO, URIANGATO,GUANAJUATO", "AUTOCOM ALFA SAPI DE CV",  "AUTOCOM URIANGATO",
+1, "445 458 25 25", 2, "NI", "AUTOCOM URIANGATO","ACM830827CW6", "T226U", "arturo.rodriguez@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(3, "GRAL. IGNACIO ZARAGOZA,102 COL. CENTRO", "MEXICO,PATZCUARO,MICHOACAN", "AUTOCOM ALFA SAPI DE CV","AUTOCOM PATZCUARO",
+1, "443 3221832", 3, "NI", "AUTOCOM PATZCUARO", "ACM830827CW6", "T226P", "arturo.rodriguez@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(4,  "LIBRAMIENTO SUR,63 COL. JOYAS DEL CUINO", "MEXICO,TACAMBARO,MICHOACAN", "AUTOCOM ALFA SAPI DE CV","AUTOCOM TACAMBARO",
+1, "443 3221832", 4, "NI", "AUTOCOM TACAMBARO", "ACM830827CW6", "T226T", "arturo.rodriguez@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(5,  "AV. LAZARO CARDENAS,2173 CHAPULTEPEC", "MEXICO, MORELIA,MICHOACAN", "AUTOCOM ALFA SAPI DE CV", "AUTOCOM CHAPULTEPEC",
+1, "443 314 5656", 5, "NI", "AUTOCOM CHAPULTEPEC", "ACM830827CW6", "T235", "arturo.rodriguez@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(6,  "CARR MORELIA,505-A COL SAN ISIDRO", "MEXICO,ACAMBARO,GUANAJUATO","AUTOCOM ALFA SAPI DE CV",  "AUTOCOM ACAMBARO",
+1, "417 016 1762", 6, "NI", "AUTOCOM ACAMBARO", "ACM830827CW6", "T235", "arturo.rodriguez@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(7,   "CARR. TOLUCA ZITACUARO,KM 93 LOMA DE ORIENTE", "MEXICO,ZITACUARO,MICHOACAN","AUTOCOM ALFA SAPI DE CV","AUTOCOM ZITACUARO",
+1, "715 153 18 90", 7, "NI","AUTOCOM ZITACUARO",  "ACM830827CW6", "T246", "aleidy.morales@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(10,    "AV. NORTE MADERO,214 COL. CUTZEO", "MEXICO,HUETAMO,MICHIOCAN", "AUTOCOM ALFA SAPI DE CV", "AUTOCOM HUETAMO",
+1, "435 556 28 09", 10, "NI","AUTOCOM HUETAMO", "ACM830827CW6", "T246HU","aleidy.morales@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(11, "PASEO DE LA REVOLUCION,2957, COL. EMILIANO ZAPATA", "MEXICO,URUAPAN,MICHOACAN", "AUTOCOM ALFA SAPI DE CV", "AUTOCOM URUAPAN",
+1, "452 519 00 15", 11, "NI","AUTOCOM URUAPAN", "ACM830827CW6", "T249","jaime.garcia@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(12, "MORELOS,403,COLONIA CENTRO", "MEXICO,LOS REYES DE SALGADO,MICHOACAN", "AUTOCOM ALFA SAPI DE CV", "AUTOCOM LOS REYES",
+1, "443 3221832", 12, "NI","AUTOCOM LOS REYES", "ACM830827CW6", "T249R","jaime.garcia@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(13, "AV. FRANCISCO I. MADERO SUR 551,COL.JARDINADAS", "MEXICO,ZAMORA,MICHOACAN", "AUTOCOM ALFA SAPI DE CV", "AUTOCOM ZAMORA",
+1, "351 515 04 00", 13, "NI","AUTOCOM ZAMORA", "ACM830827CW6", "T229", "isaias.rodriguez@autocom.mx", 1);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(14, "BLVD. LAZARO CARDENAS,2550 COL. LA YERBABUENA", "MEXICO,SAHUAYOMICHOACAN","AUTOCOM ALFA SAPI DE CV", "AUTOCOM SAHUAYO",
+1, "353 532 77 55", 14, "NI","AUTOCOM SAHUAYO", "ACM830827CW6", "T229S", "isaias.rodriguez@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(15, "AV. CONSTITUYENTES 117 OTE,COL. CARRETAS", "QUERETARO,QUERETARO, MÉXICO","AUTOCOM NOVA SAPI DE CV",   "AUTOCOM CONSTITUYENTES",
+2, "442 368 08 10", 15, "NI","AUTOCOM CONSTITUYENTES", "ACQ980113CL5", "T322", "karla.jimenez@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(16, "ACCESO III,4A COL. PARQUE INDUSTRIAL BENITO JUAREZ", "QUERETARO,QUERETARO, MÉXICO",  "AUTOCOM NOVA SAPI DE CV", "AUTOCOM CONSTITUYENTES LAMINADO",
+2, "442 210 22 44", 16, "NI","AUTOCOM CRAA", "ACQ980113CL5", "T322H",  "ignacio.rodriguez@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(17, "IGNACIO ZARAGOZA 334, COL. CENTRO", "QUERETARO,QUERETARO, MÉXICO","AUTOCOM NOVA SAPI DE CV", "AUTOCOM ZARAGOZA",
+2, "442 242 90 90", 17, "NI","AUTOCOM ZARAGOZA", "ACQ980113CL5", "T326",  "julio.melgar@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(18, "BLVD. BERNARDO QUINTANA,334 COL. CENTRO",  "QUERETARO,QUERETARO, MÉXICO", "AUTOCOM NOVA SAPI DE CV", "AUTOCOM BERNARDO QUINTANA",
+2,  "442 309 46 00", 18, "NI","AUTOCOM BERNARDO QUINTANA", "ACQ980113CL5", "T325",   "alejandro.ramos@autocom.mx", 1);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(20, "AV. CENTRAL 26,COL. SAN CAYETANO", "SAN JUAN DEL RIO,QUERETARO, MÉXICO","AUTOCOM NOVA SAPI DE CV", "AUTOCOM SAN JUAN DEL RIO",
+2,  "427 101 91 00", 20, "NI","AUTOCOM SAN JUAN DEL RIO", "ACQ980113CL5", "T327","nancy.herrera@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(21, "CARR. PANAMERICANA KM 361,COL. LA LAJA", "CELAYA,GUANAJUATO, MÉXICO", "AUTOCOM NOVA SAPI DE CV", "AUTOCOM CELAYA",
+2,  "461 159 92 00", 21, "NI", "AUTOCOM CELAYA","ACQ980113CL5", "T324","francisco.arevalo@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(23, "LAGUNA DE MAYRAN NO.48", "COL. ANAHUAC II SEC, DEL. MIGUEL HIDALGO,CDMX, MEXICO", "AUTOCOM METRO SAPI DE CV", "AUTOCOM POLANCO",
+3,  "5552813444", 23, "IF", "AUTOCOM POLANCO", "AME110623A956", "T682","cfdi.autocom@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(23, "LAGUNA DE MAYRAN NO.48", "COL. ANAHUAC II SEC, DEL. MIGUEL HIDALGO,CDMX, MEXICO", "AUTOCOM METRO SAPI DE CV", "AUTOCOM POLANCO",
+3,  "5552813444", 23, "IF", "AUTOCOM POLANCO", "AME110623A956", "T682","cfdi.autocom@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(24, "BLVD.  MANUEL AVILA CAMACHO 810, LAS MARGARITAS", "MEXICO,TLALNEPANTLA DE BAZ,MEXICO", "AUTOCOM METRO SAPI DE CV", "AUTOCOM SATELITE",
+3,  "01 800 711 2886", 24, "IF", "AUTOCOM SATELITE", "AME110623A956", "T685","cfdi.autocom@autocom.mx", 1);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(25, "PS REPUBLICA,10620,COL. PALMARES DE QUERETARO", "PS REPUBLICA,10620,COL. PALMARES DE QUERETARO", "AUTOCOM METRO SAPI DE CV", "AUTOCOM QUERETARO",
+3,  "442 689 5100", 25, "IF", "AUTOCOM QUERETARO", "AME110623A956", "T684","cfdi.autocom@autocom.mx", 1);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(29, "BLVD. HERMANOS SERDAN, 314 COL. VILLA POSADA", "MEXICO,PUEBLA", "AUTOCOM RIDERS", "GO RIDERS",
+17,  "442 689 5100", 29, "BRP", "AUTOCOM RIDERS PUEBLA", "ARI181123KT3", "T322", "cfdi.autocom@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(36, "PASEO DE LA REPUBLICA, 10620", "MEXICO,SANTIAGO DE QUERETARO, QUERETARO", "AUTOCOM SEMINUEVOS SAPI DE CV",  "AUTOCOM SEMINUEVOS",
+18,  "442 689 5100", 36, "OT", "SEMINUEVOS QUERETARO NTE", "ASE190412AIA", "T684", "N/A", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(37, "AV. PASEO CONSTITUYENTES 903, COL, EL PUEBLITO", "MEXICO,CORREGIDORA QUERETARO", "AUTOCOM SEMINUEVOS SAPI DE CV", "AUTOCOM SEMINUEVOS",
+18,  "N/A", 37, "OT", "SEMINUEVOS MORELIA PTE", "ASE190412AIA", "N/A", "contacto@autocom.mx", 0);
+
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(38, "MEXICO 45 KM 361, COL LA LAJA", "MEXICO,CELAYA, QUERETARO","AUTOCOM SEMINUEVOS SAPI DE CV", "AUTOCOM SEMINUEVOS",
+18,  "N/A", 38, "OT", "SEMINUEVOS QUERETARO SUR", "ASE190412AIA", "N/A",  "contacto@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(39, "AV. FRANCISCO I MADERO PONIENTE 3103 COL GUADALUPE", "MEXICO,MORELIA,MICHOACAN", "AUTOCOM SEMINUEVOS SAPI DE CV", "AUTOCOM SEMINUEVOS",
+18,  "N/A", 39, "OT", "SEMINUEVOS CELAYA", "ASE190412AIA", "N/A",  "contacto@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(40, "PERIF. BLVD. MANUEL AVILA CAMACHO 810 HAB JARDINES", "MEXICO,TLALNEPANTLA", "AUTOCOM SEMINUEVOS SAPI DE CV", "AUTOCOM SEMINUEVOS",
+18,  "N/A", 40, "OT", "SEMINUEVOS PUEBLA",  "ASE190412AIA", "N/A",  "contacto@autocom.mx", 0);
+
+INSERT INTO Workshops
+(id, address, city, fullName, comercialName, 
+companyId, phoneNumber, warehouseId, brandId, name,
+documentId, workshopCode, email, activeInd) 
+VALUES 
+(41,"BLVD. HERMANDO SERDAN 314, COL. VILLA POSADA", "MEXICO,PUEBLA", "AUTOCOM SEMINUEVOS SAPI DE CV", "AUTOCOM SEMINUEVOS",
+18,  "N/A", 41, "OT", "SEMINUEVOS SATELITE", "ASE190412AIA", "N/A",  "contacto@autocom.mx", 0);

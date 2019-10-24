@@ -1,0 +1,78 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\PaquetesProtos\\PaquetesProtos.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\PaquetesProtos\\PaquetesProtos.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\PaquetesProtos\\PaquetesProtos.csproj",
+        "projectName": "PaquetesProtos",
+        "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\PaquetesProtos\\PaquetesProtos.csproj",
+        "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva-2.0\\PaquetesProtos\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marco.villegas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.6.1, )"
+            },
+            "Grpc": {
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Grpc.Core": {
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

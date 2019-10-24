@@ -1,0 +1,49 @@
+CREATE DATABASE CitaActiva;
+
+USE CitaActiva;
+
+CREATE TABLE Labours (
+	id VARCHAR(10) NOT NULL,
+	description VARCHAR(100) NOT NULL,
+	plannedHours INT,
+	operatorId VARCHAR(100),
+	teamId VARCHAR(100),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE Appointment(
+	id VARCHAR(10) NOT NULL,
+	contactName VARCHAR(100) NOT NULL,
+	contactMail VARCHAR(100) NOT NULL,
+	contactPhone VARCHAR(100) NOT NULL,
+	brandId VARCHAR(100) NOT NULL,
+	versionId VARCHAR(100) NOT NULL,
+	version VARCHAR(100) NOT NULL,
+	vehicleYear INT NOT NULL,
+	vehiclePlate VARCHAR(100) NOT NULL,
+	laboursId VARCHAR(10) NOT NULL,
+	labours TEXT NOT NULL,
+	workshopId INT NOT NULL,
+	plannedDate VARCHAR(100) NOT NULL,
+	plannedTime VARCHAR(100) NOT NULL,
+	createdAt timestamp DEFAULT CURRENT_TIMESTAMP,
+	updatedAt timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY ( id )	
+);
+
+
+INSERT INTO  Labours (id, description)
+VALUES ('1', 'Servicio de 10 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('2', 'Servicio de 20 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('3', 'Servicio de 30 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('4', 'Servicio de 40 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('5', 'Servicio de 50 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('6', 'Servicio de 60 Mil Kilometros.');
+INSERT INTO  Labours (id, description)
+VALUES ('7', 'Servicio Correspondiente.');
+

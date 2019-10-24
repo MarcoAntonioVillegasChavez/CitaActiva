@@ -1,0 +1,65 @@
+
+CREATE TABLE Brands(
+	brandId NVARCHAR(10) NOT NULL,
+	description NVARCHAR(100) NOT NULL,
+	PRIMARY KEY(brandId)
+);
+
+INSERT INTO Brands(brandId, description) VALUES ("NI", "NISSAN");
+INSERT INTO Brands(brandId, description) VALUES ("IF", "INFINITI");
+
+DROP TABLE Versions;
+CREATE TABLE Versions (
+	id NVARCHAR(100) NOT NULL,
+	description TEXT NOT NULL,
+	brandId NVARCHAR(10) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (brandId) REFERENCES Brands(brandId) 
+);
+
+INSERT INTO Versions (id, description, brandId ) VALUES ("D22","NP300 NACIONAL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("F80","NV2500","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("N18","VERSA HATCHBACK","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("L50","QX60","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("V37","Q50","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("T33","XTRAIL HEV","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("Z51","MURANO","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("H15","QX30","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("W87","ARMADA","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("R35","GT-R","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("D40","FRONTIER IMPORTADO","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("E12","NOTE","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("C11","TIIDA SEDAN","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("V35","QX50","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("F24","CABSTAR","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("Z52","MURANO HEV","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("Z34","370 Z","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("FX35","FX35 TA AWD","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("K13","MARCH NACIONAL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("ZE1","LEAF","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("B13","TSURU NACIONAL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("L33","ALTIMA","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("H79","FRONTIER NACIONAL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("S35","ROGUE","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("F15","JUKE","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("ZEO","LEAF","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("D23","NP300 ESTACAS","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("L34","ALTIMA COUPE","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("E26","URVAN","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("A36","MAXIMA","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("R52","PATHFINDER","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("S51","QX70","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("P87","TITAN","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("B17","SENTRA","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("C11S","TIIDA HATCHBACK","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("P15","KICKS","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("V36","Q60","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("Z62","QX80","IF");
+INSERT INTO Versions (id, description, brandId ) VALUES ("N17","VERSA SEDAN NACIONAL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("T32","XTRAIL","NI");
+INSERT INTO Versions (id, description, brandId ) VALUES ("Y51","Q70","IF");
+
+
+
+ALTER TABLE Appointment
+ADD COLUMN deletedInd INT NOT NULL DEFAULT 0 AFTER plannedTime;

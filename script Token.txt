@@ -1,0 +1,9 @@
+Create Table Token(
+	id int NOT NULL AUTO_INCREMENT,
+	token_type VARCHAR(100),
+	access_token VARCHAR(100),
+	expires_in VARCHAR(100),
+	createdAt TIMESTAMP,
+
+	PRIMARY KEY (id)	
+);
