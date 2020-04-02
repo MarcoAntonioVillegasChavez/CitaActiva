@@ -65,7 +65,7 @@ namespace CitaActiva.Services
                 return reader.ReadToEnd().ToString();
             }
         }
-        public async Task<string> CreateAppointment(Token token, AppointmentModel appointmentModel)
+        public async Task<string> CreateAppointment(Token token, AppointmentResult appointmentModel)
         {
             WebRequest request = (HttpWebRequest)WebRequest.Create(Constants.AppointmentUrl);
             request.ContentType = "application/json";

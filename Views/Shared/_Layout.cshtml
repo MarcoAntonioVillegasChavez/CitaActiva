@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/bootstrap.datepicker/1.8.0.1/content/Content/bootstrap-datepicker.css" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -19,19 +20,270 @@
     <link rel="stylesheet" href="~/css/site.css" />
 
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <link href="~/lib/bootstrap/dist/css/simple-sidebar.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/appointment.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W7J4KJ');</script>
+    <!-- End Google Tag Manager -->
 
 </head>
-<body>   
-    <div id="header">
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W7J4KJ"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    @*<div id="header">
+
+        </div>*@
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="border-right" style="background-color: #C10230; color:white" id="sidebar-wrapper">
+            <div class="sidebar-heading">Menu   </div>
+            <div class="list-group list-group-flush">
+                <a href="/Citas/Index" class="list-group-item list-group-item-action" style="background-color: #C10230; color:white">Agendamiento de citas</a>
+                <div id="divHistorial" style="display:none">
+                    <a href="/Citas/Historial" class="list-group-item list-group-item-action" style="background-color: #C10230; color:white">Historial de citas</a>
+                </div>
+                #C10230                <a href="/Clientes/Create" class="list-group-item list-group-item-action" style="background-color: #C10230; color:white">Usuarios</a>
+                <a href="/Clientes/Index" class="list-group-item list-group-item-action" style="background-color: #C10230; color:white" data-toggle="modal" data-target=".bootstrapmodal" id="lnkCerrarSesion">
+                    <i class="fas fa-sign-out-alt"> Cerrar Sesión </i>
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            @*<nav class="navbar navbar-expand-lg navbar-light  border-bottom justify-content-between" style="background-color: #C10230;height:65px">*@
+            <div class="normal">
+                <nav class="navbar navbar-light justify-content-between" style="background-color: #C10230;height:65px">
+
+                    <img src="~/img/LogoNuevo2.png" style="padding-left:100px" />
+
+                    <a class="mr-sm-2" href="tel: 800 711 2886" style="color:white; padding-right:100px">
+                        <h4><i class="fa fa-fw fa-phone"></i><strong> 800 711 2886</strong></h4>
+                    </a>
+
+                </nav>
+            </div>
+            <div class="movil">
+                <nav class="navbar navbar-light justify-content-between" style="background-color: #C10230;height:65px">
+                    <img src="~/img/LogoNuevoMovil.png" style="padding-left:10px" />
+                    <h3>
+                        <a href="tel:01 800 711 2886" class="mr-sm-2" style="color:white;padding-right:5px">
+                            <i class="fa fa-fw fa-phone"></i>
+                        </a>
+                    </h3>
+                </nav>
+            </div>
+
+
+            @*<div class="normal">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <img src="~/img/LogoNuevo.png" />
+
+                        <a href="tel: 800 711 2886" style="color:white">
+                            <h4><i class="fa fa-fw fa-phone"></i><strong> 800 711 2886</strong></h4>
+                        </a>
+
+                        </div>
+                </div>
+                   </div>
+
+                    <div class="movil">
+                        <table width="max">
+                            <tr>
+                                <td width="100%" align="left"> <img src="~/img/LogoNuevoMovil.png" /></td>
+                                <td width="100%" align="right">
+                                    <a href="tel:01 800 711 2886" style="color:white">
+                                        <i class="fa fa-fw fa-phone"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>*@
+
+
+            @*--------------------------------------------------------*@
+
+
+            @*<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="dropdown open">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-fw fa-user"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right" style="padding: 20px; padding-bottom: 20px;">
+                            <li>
+                                <div id="divBienvenido" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                <label> Bienvenido:</label>  <label id="nombreCliente" style="margin-bottom: 15px; margin-top: 10px;"></label>
+                                            </p>
+                                            <a class="dropdown-item" href="/Clientes/Index" data-toggle="modal" data-target=".bootstrapmodal" id="lnkCerrarSesion">
+                                                <i class="fas fa-sign-out-alt"> Cerrar Sesión </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="divRegistrarse" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <form asp-route="LoginRoute" id="LoginForm" method="post">
+                                                <label style="margin-bottom: 15px; margin-top: 10px;">Autenticacion de Usuario.</label>
+                                                <input name="email_cliente" style="margin-bottom: 15px; margin-top: 10px" size="50" placeholder="Correo electronico" id="email_clienteL">
+                                                <input type="password" name="password" style="margin-bottom: 15px; margin-top: 10px" size="50" placeholder="Contraseña" id="passwordL">
+                                                <input type="submit" value="Entrar" class="btn btn-block button" />
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <a href="#">Cambiar contraseña. </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a href="/Clientes/Create/">Registrate </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>*@
+
+            </nav>
+
+            <div class="row">
+                <div class="col-md-12 col-md-pull-12">
+                    <div class="modal fade bootstrapmodal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-title"> Cita activa </div>
+                                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    ¿Deseas abandonar el sitio?
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <input type="submit" id="btnDivReAgendar" class="btn btn-success" onclick="eliminarCoockie();" value="Ok" />
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+
+                <div class="container" style="padding-top:10px">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
 
     </div>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- /#wrapper -->
+    <!-- Menu Toggle Script -->
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $(function () {
+            // Setup drop down menu
+            $('.dropdown-toggle').dropdown();
+            // Fix input element click problem
+            $('.dropdown input, .dropdown label').click(function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        function eliminarCoockie() {
+            var name = "cliente";
+            //document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            //console.log(name);
+
+            window.location.href = "/Home/CerrarSesion/";
+
+        };
+
+        //$(document).ready(function checkCookie() {
+
+        //    console.log(document.cookie);
+        //    var cliente = readCookie("cliente");
+        //    var username = readCookie("nombreCliente");
+        //    //console.log(username);
+        //    if (cliente != null) {
+
+        //        document.getElementById('nombreCliente').innerHTML = username;
+        //        //document.getElementById('divBienvenido').style.display = 'block';
+        //        //document.getElementById('divRegistrarse').style.display = 'none';
+        //        document.getElementById('divHistorial').style.display = 'block';
+
+        //    } else {
+        //        document.getElementById('divBienvenido').style.display = 'none';
+        //        document.getElementById('divRegistrarse').style.display = 'block';
+        //        document.getElementById('divHistorial').style.display = 'none';
+        //    }
+        //});
+
+        function readCookie(name) {
+
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+
+            for (var i = 0; i < ca.length; i++) {
+
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) {
+                    return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                }
+            }
+            return null;
+
+        }
+
+    </script>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -55,6 +307,8 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+
 
     @RenderSection("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")

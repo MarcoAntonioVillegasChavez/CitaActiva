@@ -6,11 +6,6 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\AUTOCOM_APPS\CitaActiva1.0\CitaActiva1.0</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\AUTOCOM_APPS\PUBLICACIONES\citaactiva-v2</_PublishTargetUrl>
   </PropertyGroup>
-  <ItemGroup>
-    <File Include="wwwroot/img/3B8.png">
-      <publishTime>06/11/2019 09:07:27</publishTime>
-    </File>
-  </ItemGroup>
 </Project>

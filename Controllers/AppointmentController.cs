@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NToastNotify;
@@ -22,7 +23,6 @@ namespace CitaActiva.Controllers
     {
         private readonly IToastNotification _toastNotification;
         private DataContext db = new DataContext();
-
         public AppointmentController(IToastNotification toastNotification)
         {
             _toastNotification = toastNotification;
@@ -34,141 +34,165 @@ namespace CitaActiva.Controllers
         [Route("/Appointment/Index/", Name = "AppintmentGetRoute")]
         public async Task<IActionResult> Index(string id)//(AppointmentModel appointmentModel)
         {
-            Token token = new Token();
 
-            TokenController tokenController = new TokenController();
-            token = tokenController.ObtenerToken();
+            //if (Request.Cookies["cliente"] != null)
+            //{
+            //    Clientes clientes = new Clientes();
+            //    CustomerService customerService = new CustomerService();
+            //    clientes = customerService.DatosCliente(Request.Cookies["cliente"]);
+
+            //    if(clientes == null)
+            //    {
+            //        return RedirectToAction("Index", new RouteValueDictionary(
+            //       new { controller = "Clientes", action = "Index" }));
+            //    }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", new RouteValueDictionary(
+            //        new { controller = "Clientes", action = "Index" }));
+            //}
+
+            //Token token = new Token();
+
+            //TokenController tokenController = new TokenController();
+            //token = tokenController.ObtenerToken();
             
-            DateTime thisDay =DateTime.Today;
-            ViewBag.Year = thisDay.Year.ToString();
-            ViewBag.Month = thisDay.Month.ToString();
-            ViewBag.Day = thisDay.Day.ToString();
-            ViewBag.Hora = DateTime.Now.AddHours(2).ToString("HH:mm:ss"); 
+            //DateTime thisDay =DateTime.Today;
+            //ViewBag.Year = thisDay.Year.ToString();
+            //ViewBag.Month = thisDay.Month.ToString();
+            //ViewBag.Day = thisDay.Day.ToString();
+            //ViewBag.Hora = DateTime.Now.AddHours(2).ToString("HH:mm:ss");
 
-            WorkshopController workshopController = new WorkshopController();
-            var workShopResult = await workshopController.Index(token, "");
-           
-            ViewBag.WorkshopList = JsonConvert.DeserializeObject<List<Workshop>>(workShopResult); 
+            ////WorkshopController workshopController = new WorkshopController();
+            ////var workShopResult = await workshopController.Index(token, "");
 
-            List<Labours> laboursList = new List<Labours>();
-            laboursList = db.Labours.ToList();
-            ViewBag.laboursList = laboursList;
+            //AgenciasController agenciasController = new AgenciasController();
+            //var agenciasResult =  agenciasController.GetAgencias(token, "", 0);           
+            //ViewBag.agenciasList = JsonConvert.DeserializeObject<List<Agencias>>(agenciasResult);
+
+
+
+            ////List<Labours> laboursList = new List<Labours>();
+            ////laboursList = db.Labours.ToList();
+            //ViewBag.laboursList = "";//laboursList;
                         
             AppointmentModel appointmentModel = new AppointmentModel();
-            if (id != null)
-            {
-                AppointmentService appointmentService = new AppointmentService();
-                var result = await appointmentService.GetAppointment(token, id);
-                AppointmentResult appointmentResult = JsonConvert.DeserializeObject<AppointmentResult>(result);
+            //if (id != null)
+            //{
+            //    AppointmentService appointmentService = new AppointmentService();
+            //    var result = await appointmentService.GetAppointment(token, id);
+            //    AppointmentResult appointmentResult = JsonConvert.DeserializeObject<AppointmentResult>(result);
 
-                appointmentModel.contactName = appointmentResult.contactName;
-                appointmentModel.contactMail = appointmentResult.contactMail;
-                appointmentModel.contactPhone = appointmentResult.contactPhone;
-                appointmentModel.vehiclePlate = appointmentResult.vehiclePlate;
-                appointmentModel.workshopId = appointmentResult.workshopId;
-                appointmentModel.plannedData = appointmentResult.plannedData;
+            //    appointmentModel.contactName = appointmentResult.contactName;
+            //    appointmentModel.contactMail = appointmentResult.contactMail;
+            //    appointmentModel.contactPhone = appointmentResult.contactPhone;
+            //    appointmentModel.vehiclePlate = appointmentResult.vehiclePlate;
+            //    appointmentModel.workshopId = appointmentResult.workshopId;
+            //    appointmentModel.plannedData = appointmentResult.plannedData;
 
-                ViewBag.Referencia = id;
-                ViewBag.IsReadOnly = 1;
-                ViewBag.ReferenciaInd = 1;
-                ViewBag.id = id;
-                ViewBag.Footer = " * Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886";
+            //    ViewBag.Referencia = id;
+            //    ViewBag.IsReadOnly = 1;
+            //    ViewBag.ReferenciaInd = 1;
+            //    ViewBag.id = id;
+            //    ViewBag.Footer = " * Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886";
+            //    ViewBag.Footer2 = "";
 
-                Appointment appointment = new Appointment();
-                appointment = db.Appointment.Find(id);
-                if (appointment != null)
-                {
-                    Labours labours = new Labours();
-                    labours.id = appointment.laboursId;
-                    labours.description = appointment.labours;
+            //    Appointment appointment = new Appointment();
+            //    appointment = db.Appointment.Find(id);
+            //    if (appointment != null)
+            //    {
+            //        Labours labours = new Labours();
+            //        labours.id = appointment.laboursId;
+            //        labours.description = appointment.labours;
 
-                    appointmentModel.brandId = appointment.brandId;
-                    appointmentModel.versionId = appointment.versionId;
-                    appointmentModel.vehicleYear = appointment.vehicleYear.ToString();
-                    appointmentModel.labours = labours;
+            //        appointmentModel.brandId = appointment.brandId;
+            //        appointmentModel.versionId = appointment.versionId;
+            //        appointmentModel.vehicleYear = appointment.vehicleYear.ToString();
+            //        appointmentModel.labours = labours;
 
-                    DateTime today = Convert.ToDateTime( DateTime.Now.ToString("G"));
-                    DateTime planneDate = Convert.ToDateTime(appointmentModel.plannedData.plannedDate + " " + appointmentModel.plannedData.plannedTime);
-                    if(planneDate.AddHours(-24) <= today)
-                    {
+            //        DateTime today = Convert.ToDateTime( DateTime.Now.ToString("G"));
+            //        DateTime planneDate = Convert.ToDateTime(appointmentModel.plannedData.plannedDate + " " + appointmentModel.plannedData.plannedTime);
+            //        if(planneDate.AddHours(-24) <= today)
+            //        {
                        
-                        ViewBag.IsReadOnly = 2;
-                        ViewBag.DeleteInd = 2;
-                        ViewBag.Footer = " * La cita ya no se puede reagendar."; 
+            //            ViewBag.IsReadOnly = 2;
+            //            ViewBag.DeleteInd = 2;
+            //            ViewBag.Footer = " * La cita ya no se puede reagendar desde éste portal. Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886"; 
 
-                    }
+            //        }
 
-                    ViewBag.DeleteInd = appointment.deletedInd;
-                    if (appointment.deletedInd == 1)
-                    {
-                        ViewBag.Referencia = id + " - Cita Cancelada.";
-                    }
+            //        ViewBag.DeleteInd = appointment.deletedInd;
+            //        if (appointment.deletedInd == 1)
+            //        {
+            //            ViewBag.Referencia = id + " - Cita Cancelada.";
+            //        }
 
-                    _toastNotification.AddInfoToastMessage("Se cargaron los datos de la Cita Agendada con el Id. " + id);
-                }
-                else
-                {
-                    _toastNotification.AddAlertToastMessage("No de encontraron los datos con el Id. " + id);
-                }
+            //        _toastNotification.AddInfoToastMessage("Se cargaron los datos de la Cita Agendada con el Id. " + id);
+            //    }
+            //    else
+            //    {
+            //        _toastNotification.AddAlertToastMessage("No de encontraron los datos con el Id. " + id);
+            //    }
 
-                Receptionist receptionist = new Receptionist();
-                ReceptionistController receptionistController = new ReceptionistController();
-                var receptionistListResult = await receptionistController.Index(appointmentModel.workshopId.ToString(), token);
-                List<Receptionist> receptionistsList = JsonConvert.DeserializeObject<List<Receptionist>>(receptionistListResult);
-
-
-                string scheduleId = receptionistsList[0].scheduleId.ToString();
-
-                ScheduleController scheduleController = new ScheduleController();
-                var scheadule = await scheduleController.Index(scheduleId, token);
-                List<Days> scheduleList = JsonConvert.DeserializeObject<List<Days>>(scheadule);
+            //    Receptionist receptionist = new Receptionist();
+            //    ReceptionistController receptionistController = new ReceptionistController();
+            //    var receptionistListResult = await receptionistController.Index(appointmentModel.workshopId.ToString(), token);
+            //    List<Receptionist> receptionistsList = JsonConvert.DeserializeObject<List<Receptionist>>(receptionistListResult);
 
 
-                string[] fecha = appointmentModel.plannedData.plannedDate.Split("-");
+            //    string scheduleId = receptionistsList[0].scheduleId.ToString();
 
-                int dayOfWeek = Convert.ToInt32(new DateTime(Convert.ToInt32(fecha[0]), Convert.ToInt32(fecha[1]), Convert.ToInt32(fecha[2])).DayOfWeek);
+            //    ScheduleController scheduleController = new ScheduleController();
+            //    var scheadule = await scheduleController.Index(scheduleId, token);
+            //    List<Days> scheduleList = JsonConvert.DeserializeObject<List<Days>>(scheadule);
 
-                if (dayOfWeek == 0)
-                {
-                    dayOfWeek = 7;
-                }
 
-                Days days = new Days();
-                for (int i = 0; i < scheduleList.Count; i++)
-                {
-                    if (dayOfWeek == Convert.ToInt32(scheduleList[i].weekday))
-                    {
-                        days = scheduleList[i];
-                    }
-                }
+            //    string[] fecha = appointmentModel.plannedData.plannedDate.Split("-");
 
-                var horarios = JsonConvert.DeserializeObject<List<Horarios>>(scheduleController.GetAllowTimes(appointment.workshopId, days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
-                ViewBag.horarios = horarios;
+            //    int dayOfWeek = Convert.ToInt32(new DateTime(Convert.ToInt32(fecha[0]), Convert.ToInt32(fecha[1]), Convert.ToInt32(fecha[2])).DayOfWeek);
 
-                VersionsController versionsController = new VersionsController();
-                var resultVersion = JsonConvert.DeserializeObject<List<Versions>>(versionsController.Versions(appointmentModel.brandId));
+            //    if (dayOfWeek == 0)
+            //    {
+            //        dayOfWeek = 7;
+            //    }
 
-                ViewBag.versions = resultVersion;            
+            //    Days days = new Days();
+            //    for (int i = 0; i < scheduleList.Count; i++)
+            //    {
+            //        if (dayOfWeek == Convert.ToInt32(scheduleList[i].weekday))
+            //        {
+            //            days = scheduleList[i];
+            //        }
+            //    }
+
+            //    var horarios = JsonConvert.DeserializeObject<List<Horarios>>(scheduleController.GetAllowTimes(appointment.workshopId, days.beginning, days.ending, appointmentModel.plannedData.plannedDate, "1"));
+            //    ViewBag.horarios = horarios;
+
+            //    VersionsController versionsController = new VersionsController();
+            //    var resultVersion = JsonConvert.DeserializeObject<List<Versions>>(versionsController.Versions(appointmentModel.brandId));
+
+            //    ViewBag.versions = resultVersion;            
                
-            }
-            else
-            {
-                appointmentModel.id = "";
-                /*string result = "{'receptionists':[]}";
-                JObject results = JObject.Parse(result);
-                JArray arrayResults = (JArray)results["receptionists"];*/
+            //}
+            //else
+            //{
+            //    appointmentModel.id = "";
+            //    /*string result = "{'receptionists':[]}";
+            //    JObject results = JObject.Parse(result);
+            //    JArray arrayResults = (JArray)results["receptionists"];*/
 
-                ViewBag.horarios = "";
-                ViewBag.IsReadOnly = 0;
-                ViewBag.id = "";
-                ViewBag.versions = "";
-                //ViewBag.RecepcionistList = arrayResults;
-                ViewBag.DeleteInd = 0;
-                ViewBag.Referencia = "";
-                ViewBag.ReferenciaInd = 0;
-                ViewBag.Footer = " * Cualquier modificacion en los datos adicionales de tu cita o reagendamiento 24 horas previas, es necesario que te comuniques al 01800 276 2886";
+            //    ViewBag.horarios = "";
+            //    ViewBag.IsReadOnly = 0;
+            //    ViewBag.id = "";
+            //    ViewBag.versions = "";
+            //    //ViewBag.RecepcionistList = arrayResults;
+            //    ViewBag.DeleteInd = 0;
+            //    ViewBag.Referencia = "";
+            //    ViewBag.ReferenciaInd = 0;
+                
 
-            }
+            //}
 
             //ViewData["allowTimes"] = "12:15";
             return View(appointmentModel);
@@ -200,12 +224,12 @@ namespace CitaActiva.Controllers
                 AppointmentService appointmentService = new AppointmentService();
                 AppointmentResult resultado;
 
-                Labours labours = new Labours();
-                labours = db.Labours.Find(appointmentModel.labours.id);
-                labours.operatorId = "";
-                labours.plannedHours = 0;
-                labours.teamId = "";
-                appointmentModel.labours = labours; 
+                //Labours labours = new Labours();
+                //labours = db.Labours.Find(appointmentModel.labours.id);
+                //labours.operatorId = "";
+                //labours.plannedHours = 0;
+                //labours.teamId = "";
+                //appointmentModel.labours = labours; 
 
                 //Si es nuevo agendamiento.
                 if (appointmentModel.id == null)
@@ -215,9 +239,9 @@ namespace CitaActiva.Controllers
 
                     if(appointmentModel.vehiclePlate == null)
                     {
-                        appointmentModel.vehiclePlate = appointmentModel.brandId + " " + appointmentModel.versionId + " " + appointmentModel.vehicleYear;
+                        appointmentModel.vehiclePlate = "";//appointmentModel.brandId + " " + appointmentModel.versionId + " " + appointmentModel.vehicleYear;
                     }
-                    string resultCreate = await appointmentService.CreateAppointment(token, appointmentModel);
+                    string resultCreate = "";//await appointmentService.CreateAppointment(token, appointmentModel);
                     resultado = JsonConvert.DeserializeObject<AppointmentResult>(resultCreate);
 
                     
@@ -230,99 +254,98 @@ namespace CitaActiva.Controllers
 
                 if (resultado.id != null)
                 {
+                //    Appointment appointment = new Appointment();
+                //    appointment.id = resultado.id;
+                //    appointment.contactName = resultado.contactName;
+                //    appointment.contactMail = resultado.contactMail;
+                //    appointment.contactPhone = resultado.contactPhone;
+                //    appointment.brandId = appointmentModel.brandId;
+                //    appointment.versionId = appointmentModel.versionId;
 
-                    Appointment appointment = new Appointment();
-                    appointment.id = resultado.id;
-                    appointment.contactName = resultado.contactName;
-                    appointment.contactMail = resultado.contactMail;
-                    appointment.contactPhone = resultado.contactPhone;
-                    appointment.brandId = appointmentModel.brandId;
-                    appointment.versionId = appointmentModel.versionId;
+                //    Versions versions = new Versions();
+                //    //versions = db.Versions.Find(appointmentModel.versionId);
 
-                    Versions versions = new Versions();
-                    versions = db.Versions.Find(appointmentModel.versionId);
+                //    //appointment.version = versions.description;
+                //    appointment.vehicleYear = Convert.ToInt32(appointmentModel.vehicleYear);
+                //    appointment.vehiclePlate = resultado.vehiclePlate;
+                //    appointment.labours = appointmentModel.labours.description;
+                //    appointment.laboursId = appointmentModel.labours.id;
+                //    appointment.workshopId = appointmentModel.workshopId;
+                //    appointment.plannedDate = resultado.plannedData.plannedDate;
+                //    appointment.plannedTime = resultado.plannedData.plannedTime;
 
-                    appointment.version = versions.description;
-                    appointment.vehicleYear = Convert.ToInt32(appointmentModel.vehicleYear);
-                    appointment.vehiclePlate = resultado.vehiclePlate;
-                    appointment.labours = appointmentModel.labours.description;
-                    appointment.laboursId = appointmentModel.labours.id;
-                    appointment.workshopId = appointmentModel.workshopId;
-                    appointment.plannedDate = resultado.plannedData.plannedDate;
-                    appointment.plannedTime = resultado.plannedData.plannedTime;
-
-                    //se declara bandera, para verificar si es actualizacion o creacion de nueva cita.
-                    int actionInd;
-                    var appointmentVerifica = db.Appointment.Find(appointment.id);
-                    if (appointmentVerifica == null) {
-                        db.Appointment.Add(appointment);
-                        db.SaveChanges();
-                        actionInd = 0;
-                    }
-                    else {
-                        using (DataContext ctx = new DataContext())
-                        {
-                            ctx.Entry(appointment).State = EntityState.Modified;
-                            ctx.SaveChanges();
-                        }
-                        actionInd = 1;
-                    }
+                //    //se declara bandera, para verificar si es actualizacion o creacion de nueva cita.
+                //    int actionInd;
+                //    var appointmentVerifica = db.Appointment.Find(appointment.id);
+                //    if (appointmentVerifica == null) {
+                //        db.Appointment.Add(appointment);
+                //        db.SaveChanges();
+                //        actionInd = 0;
+                //    }
+                //    else {
+                //        using (DataContext ctx = new DataContext())
+                //        {
+                //            ctx.Entry(appointment).State = EntityState.Modified;
+                //            ctx.SaveChanges();
+                //        }
+                //        actionInd = 1;
+                //    }
 
                     
 
-                    Workshop workshop = new Workshop();
-                    WorkshopController workshopController = new WorkshopController();
-                    workshop = JsonConvert.DeserializeObject<Workshop>(await workshopController.GetWorkShop(token, resultado.workshopId.ToString()));
+                //    Workshop workshop = new Workshop();
+                //    WorkshopController workshopController = new WorkshopController();
+                //    workshop = JsonConvert.DeserializeObject<Workshop>(await workshopController.GetWorkShop(token, resultado.workshopId.ToString()));
 
-                    Receptionist receptionist = new Receptionist();
-                    ReceptionistController receptionistController = new ReceptionistController();
-                    receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
+                //    Receptionist receptionist = new Receptionist();
+                //    ReceptionistController receptionistController = new ReceptionistController();
+                //    receptionist = await receptionistController.GetReceptionist(token, resultado.plannedData.receptionistId.ToString());
 
-                    ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + ".";
-                    if (actionInd ==  0)
-                    {
-                        ViewData["cuerpoResultado1"] = " Se ha agendado una Cita con el Id. " + resultado.id;
-                    }
-                    else
-                    {
-                        ViewData["cuerpoResultado1"] = " Se ha re agendado la Cita: " + resultado.id;
-                    }
-                    ViewData["cuerpoResultado2"] = "En la Agencia: " ;
-                    ViewData["cuerpoResultado2-2"] = workshop.comercialName;
-                    ViewData["cuerpoResultado3"] = "Ubicación: ";
-                    ViewData["cuerpoResultado3-3"] = workshop.address + ", " + workshop.city;
-                    ViewData["cuerpoResultado4"] = "El dia: ";
-                    ViewData["cuerpoResultado4-4"] = appointmentModel.plannedData.plannedDate;
+                //    ViewData["cuerpoResultado"] = " Estimado " + appointmentModel.contactName + ".";
+                //    if (actionInd ==  0)
+                //    {
+                //        ViewData["cuerpoResultado1"] = " Se ha agendado una Cita con el Id. " + resultado.id;
+                //    }
+                //    else
+                //    {
+                //        ViewData["cuerpoResultado1"] = " Se ha re agendado la Cita: " + resultado.id;
+                //    }
+                //    ViewData["cuerpoResultado2"] = "En la Agencia: " ;
+                //    ViewData["cuerpoResultado2-2"] = workshop.comercialName;
+                //    ViewData["cuerpoResultado3"] = "Ubicación: ";
+                //    ViewData["cuerpoResultado3-3"] = workshop.address + ", " + workshop.city;
+                //    ViewData["cuerpoResultado4"] = "El dia: ";
+                //    ViewData["cuerpoResultado4-4"] = appointmentModel.plannedData.plannedDate;
 
-                    string[] hr = appointmentModel.plannedData.plannedTime.Split(':');
-                    ViewData["cuerpoResultado5"] = "A las: ";
-                    ViewData["cuerpoResultado5-5"] = hr[0] + ":" + hr[1];
+                //    string[] hr = appointmentModel.plannedData.plannedTime.Split(':');
+                //    ViewData["cuerpoResultado5"] = "A las: ";
+                //    ViewData["cuerpoResultado5-5"] = hr[0] + ":" + hr[1];
 
-                    ViewData["cuerpoResultado6"] = "Datos del Vehículo: ";
-                    ViewData["cuerpoResultado7"] = "Placa: ";
-                    ViewData["cuerpoResultado7-7"] =  appointmentModel.vehiclePlate;
+                //    ViewData["cuerpoResultado6"] = "Datos del Vehículo: ";
+                //    ViewData["cuerpoResultado7"] = "Placa: ";
+                //    ViewData["cuerpoResultado7-7"] =  appointmentModel.vehiclePlate;
 
-                    if (appointment.brandId == "NI")
-                    {
-                        ViewData["cuerpoResultado8"] = "Marca:";
-                        ViewData["cuerpoResultado8-8"] = "NISSAN";
-                    }
-                    else if(appointment.brandId == "IF")
-                    {
-                        ViewData["cuerpoResultado8"] = "Marca:";
-                        ViewData["cuerpoResultado8-8"] = "INFINITI";
-                    }
-                    ViewData["cuerpoResultado9"] = "Modelo: ";
-                    ViewData["cuerpoResultado9-9"] = appointment.version;
-                    ViewData["cuerpoResultado10"] = "Año: " ;
-                    ViewData["cuerpoResultado10-10"] =  appointment.vehicleYear;
+                //    if (appointment.brandId == "NI")
+                //    {
+                //        ViewData["cuerpoResultado8"] = "Marca:";
+                //        ViewData["cuerpoResultado8-8"] = "NISSAN";
+                //    }
+                //    else if(appointment.brandId == "IF")
+                //    {
+                //        ViewData["cuerpoResultado8"] = "Marca:";
+                //        ViewData["cuerpoResultado8-8"] = "INFINITI";
+                //    }
+                //    ViewData["cuerpoResultado9"] = "Modelo: ";
+                //    ViewData["cuerpoResultado9-9"] = appointment.version;
+                //    ViewData["cuerpoResultado10"] = "Año: " ;
+                //    ViewData["cuerpoResultado10-10"] =  appointment.vehicleYear;
 
 
 
-                    SendEmailService sendEmailService = new SendEmailService();
-                    sendEmailService.SendEmail(workshop.comercialName, workshop.address, workshop.city, appointment, actionInd);
+                //    SendEmailService sendEmailService = new SendEmailService();
+                //    sendEmailService.SendEmailCreacionCita(workshop.comercialName, workshop.address, workshop.city, appointment, actionInd);
 
-                    _toastNotification.AddSuccessToastMessage("Se enviaron los datos del Agendamiento de la Cita al correo " + resultado.contactMail);
+                //    _toastNotification.AddSuccessToastMessage("Se enviaron los datos del Agendamiento de la Cita al correo " + resultado.contactMail);
                 }
                 else
                 {
@@ -354,32 +377,32 @@ namespace CitaActiva.Controllers
         {
             if (id != null)
             {
-                Token token = new Token();
-                TokenController tokenController = new TokenController();
-                token = tokenController.ObtenerToken();
-                AppointmentService appointmentService = new AppointmentService();
-                string resultado = await appointmentService.DeleteAppointment(token, id);
+                //Token token = new Token();
+                //TokenController tokenController = new TokenController();
+                //token = tokenController.ObtenerToken();
+                //AppointmentService appointmentService = new AppointmentService();
+                //string resultado = await appointmentService.DeleteAppointment(token, id);
 
-                Appointment appointment = new Appointment() { id = id, deletedInd = 1 };
+                //Appointment appointment = new Appointment() { id = id, deletedInd = 1 };
 
-                using (DataContext ctx = new DataContext())
-                {
-                    ctx.Appointment.Attach(appointment);
+                //using (DataContext ctx = new DataContext())
+                //{
+                //    ctx.Appointment.Attach(appointment);
 
-                    ctx.Entry(appointment).Property(x => x.deletedInd).IsModified = true;
-                    ctx.SaveChanges();
-                }
+                //    ctx.Entry(appointment).Property(x => x.deletedInd).IsModified = true;
+                //    ctx.SaveChanges();
+                //}
 
-                using (DataContext db = new DataContext())
-                {
-                    appointment = db.Appointment.Find(id);
-                }
+                //using (DataContext db = new DataContext())
+                //{
+                //    appointment = db.Appointment.Find(id);
+                //}
 
-                    SendEmailService sendEmailService = new SendEmailService();
-                sendEmailService.SendEmail("","","", appointment, 0);
+                //    SendEmailService sendEmailService = new SendEmailService();
+                //sendEmailService.SendEmailCreacionCita("","","", appointment, 0);
 
 
-                _toastNotification.AddSuccessToastMessage("La cita " + id + " se ha cancelado");
+                //_toastNotification.AddSuccessToastMessage("La cita " + id + " se ha cancelado");
 
                 return RedirectToAction("Index", "Home");
             }
@@ -441,10 +464,10 @@ namespace CitaActiva.Controllers
             {
                 return false;
             }
-            if (appointmentModel.brandId == "-1")
-            {
-                return false;
-            }
+            //if (appointmentModel.brandId == "-1")
+            //{
+            //    return false;
+            //}
 
             else if (appointmentModel.plannedData.plannedDate == null)
             {

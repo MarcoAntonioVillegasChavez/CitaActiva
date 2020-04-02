@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CitaActiva.Models;
 using CitaActiva.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,13 +34,17 @@ namespace CitaActiva
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-          
+
+            services.AddOptions();
+            services.Configure<GoogleReCaptcha>(Configuration.GetSection("GoogleReCaptcha"));
+            services.Configure<Servidor>(Configuration.GetSection("Servidor"));
+            services.Configure<IsProducction>(Configuration.GetSection("IsProducction"));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
             {
-                ProgressBar = true,
-                PositionClass = ToastPositions.BottomRight            
+                PositionClass = ToastPositions.BottomRight    
             });
 
             services.AddDistributedMemoryCache();
@@ -75,7 +80,7 @@ namespace CitaActiva
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");                
+                    template: "{controller=Citas}/{action=Index}/{id?}");                
 
             });
         }

@@ -1,0 +1,703 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link href="~/css/agendamiento.css" rel="stylesheet" />
+
+
+<link href="~/lib/bootstrap/dist/css/citas.css" rel="stylesheet" />
+<link href="~/css/navbar.css" rel="stylesheet" />
+
+
+
+<div class="container">
+    <div id="divPrincipal">
+        <div class="row ">
+            @*     Agenda      *@
+            <div class="col" style="padding-left:0;padding-right:0">
+                <div id="divAgenciasNormal" class="normal" onclick="ClickAgencias()">
+                    <div id="divAgenciasIcon0" style="display: none">
+                        <img src="~/img/wizard/web/WEB-1-ON.png" />
+                    </div>
+                </div>
+                <div id="divAgenciasMovil" class="movil" onclick="ClickAgencias()">
+                    <div id="divAgenciasIconMovil0" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-1-ON.png" />
+                    </div>
+                </div>
+            </div>
+            @*     Registro      *@
+            <div class="col" style="padding-left:0;padding-right:0">
+                <div id="divVehiculoNormal" class="normal" onclick="ClickVehiculos()">
+                    <div id="divVehiculoIcon0" style="display: none">
+                        <img src="~/img/wizard/web/WEB-2-OFF.png" />
+                    </div>
+                    <div id="divVehiculoIcon1" style="display: none">
+                        <img src="~/img/wizard/web/WEB-2-ON.png" />
+                    </div>
+                </div>
+                <div id="divVehiculoMovil" class="movil" onclick="ClickVehiculos()">
+                    <div id="divVehiculoIconMovil0" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-2-OFF.png" />
+                    </div>
+                    <div id="divVehiculoIconMovil1" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-2-ON.png" />
+                    </div>
+                </div>
+            </div>
+            @*      Vehiculo     *@
+            <div class="col" style="padding-left:0;padding-right:0">
+                <div id="divCitaNormal" class="normal" onclick="ClikCitas()">
+                    <div id="divCitaIcon0" style="display: none">
+                        <img src="~/img/wizard/web/WEB-3-OFF.png" />
+                    </div>
+                    <div id="divCitaIcon1" style="display: none">
+                        <img src="~/img/wizard/web/WEB-3-ON.png" />
+                    </div>
+                </div>
+                <div id="divCitaMovil" class="movil" onclick="ClikCitas()">
+                    <div id="divCitaIconMovil0" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-3-OFF.png" />
+                    </div>
+                    <div id="divCitaIconMovil1" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-3-ON.png" />
+                    </div>
+                </div>
+            </div>
+            @*      Servicios Especificos     *@
+            <div class="col" style="padding-left:0px; padding-right:0px">
+                <div id="divEspecificoNormal" class="normal" onclick="ClickEspecificos()">
+                    <div id="divEspecificoIcon0" style="display: none">
+                        <img src="~/img/wizard/web/WEB-4-OFF.png" />
+                    </div>
+                    <div id="divEspecificoIcon1" style="display: none">
+                        <img src="~/img/wizard/web/WEB-4-ON.png" />
+                    </div>
+                </div>
+                <div id="divEspecificoMovil" class="movil" onclick="ClickEspecificos()">
+                    <div id="divEspecificoIconMovil0" style="display: none">
+                       <img src="~/img/wizard/movil/MOBILE-4-OFF.png" />
+                    </div>
+                    <div id="divEspecificoIconMovil1" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-4-ON.png" />
+                    </div>
+                </div>
+            </div>
+            @*      Confirmacion     *@
+            <div class="col" style="padding-left:0;padding-right:0">
+                <div id="divConfirmarNormal" class="normal" onclick="ClickConfirmar()">
+                    <div id="divConfirmarIcon0" style="display: none">
+                        <img src="~/img/wizard/web/WEB-5-OFF.png" />
+                    </div>
+                    <div id="divConfirmarIcon1" style="display: none">
+                        <img src="~/img/wizard/web/WEB-5-ON.png" />
+                    </div>
+                </div>
+                <div id="divConfirmarMovil" class="movil" onclick="ClickConfirmar()">
+                    <div id="divConfirmarIconMovil0" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-5-OFF.png" />
+                    </div>
+                    <div id="divConfirmarIconMovil1" style="display: none">
+                        <img src="~/img/wizard/movil/MOBILE-5-ON.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="titleMovil" class="row movil">
+
+        </div>
+    </div>
+    
+    <div class="row justify-content-center" style="padding-top:10px">
+        <div class="col-md-8 col-md-push-12">
+            <div id="divAgencias" style="display: none">
+                <div class="card">
+                    <div class="card-header"> <h6>Busca tu distribuidor Nissan.</h6>  </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-md-push-12" style="display:none">
+                                <div class="form-group">
+                                    <label>Marca: *</label>
+                                    <br />
+                                    @*<label id="lblNissan" value="5">Nissan</label>*@
+                                    <select id="marcaVehiculo" name="marcaVehiculo" class="form-control">
+                                        <option value="-1">selecciona la Marca de tu auto.</option>
+                                        <option value="1" selected="selected">Nissan</option>
+                                        @*@foreach (var marcaVehiculo in ViewBag.marcasVehiculo)
+                                        {
+                                        <option value="@marcaVehiculo.codigo_qis">@marcaVehiculo.nombre_marca</option>
+                                        }*@
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-md-push-12">
+                                <div class="form-group">
+                                    <label>Estado: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <select id="zonas" name="zonas" class="form-control">
+                                        <option value="-1">Selecciona tu estado.</option>
+                                        @foreach (var zonas in ViewBag.zonas)
+                                        {
+                                        <option value="@zonas.id_zona">@zonas.nombre_zona</option>
+                                        }
+                                    </select>
+
+                                    @*<input type="text" id="places" class="form-control" placeholder="Escribe tu ciudad o estado" />*@
+                                    <br />
+                                    <div id="map"></div>
+                                    <div id="agencias"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12  col-md-push-12">
+                                <div id="listing">
+                                    <table id="resultsTable" class="table">
+                                        <tbody id="results"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="divFechaAgendamiento" style="display:none">
+                            <div class="row">
+                                <div class="col-md-6 col-md-push-6">
+                                    <label name="Fecha">Fecha: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <div class="form-group">
+                                        <div class="start_date input-group">
+                                            @Html.TextBox("fechaAgendamiento", "", new { @class = "form-control", @readonly = true, placeholder = "Selecciona la fecha de agendamiento de tu cita" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-md-push-6">
+                                    <label name="Hora">Hora: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <select id="horaAgendamiento" name="HoraAgendamiento" class="form-control">
+                                        <option value="-1" selected="selected">Selecciona un Horario</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12 col-md-push-12">
+                                    <div id="divServicioDomicilio">
+                                        <div class="form-group">
+                                            <input type="checkbox" id="chkDomiciolio" value="Domicilio" style="padding-left:5px"> <strong><label for="chkEnvio">Servicio a Domicilio.</label></strong>
+                                        </div>
+
+                                    </div>
+                                    <div id="divServicioDomicilioAlert" style="display:none">
+                                        <strong>
+                                            <label id="lblMnsjServiDomi" style="color:#C10230">
+                                                El servicio a domicilio no se encuentra disponible en la fecha y hora seleccionada, éste deberá ser agendado un dia posterior antes de las 18 horas del dia en curso.
+                                            </label>
+                                        </strong>
+                                    </div>
+                                    <div id="divServicioDomicilioAlert2" style="display:none">
+                                        <strong>
+                                            <label id="lblMnsjServiDomi2" style="color:#C10230">
+                                                En ésta sucursal no se encuentra disponible el servicio a domicilio. Para cualquier duda comunícate al 8007112886
+                                            </label>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-md-push-12">
+                                    <input type="button" id="btnSigAgenda" style="margin: 10px" class="btn button float-md-right" onclick="SiguienteAgencias()" value="Siguiente" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="divVehiculo" style="display: none">
+                <div class="card">
+                    <div class="card-body"> <h6> Reservación de Cita </h6></div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4 col-md-push-4">
+                                <div class="form-group">
+                                    <label>Nombre(s): </label><strong><label style="color:#C10230">*</label></strong>
+                                    <input name="nombre_cliente" id="nombre_cliente" placeholder="Ingresa tu nombre" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-md-push-4">
+                                <div class="form-group">
+                                    <label>Apellido paterno: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <input name="apePat_cliente" id="apePat_cliente" placeholder="Ingresa tu apellido paterno" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-md-push-4">
+                                <div class="form-group">
+                                    <label>Apellido materno: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <input type="text" name="apeMat_cliente" id="apeMat_cliente" placeholder="Ingresa tu apellido materno" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-push-6">
+                                <label>Teléfono: </label><strong><label style="color:#C10230">*</label></strong>
+                                <input name="tel_cliente" id="tel_cliente" placeholder="Ingresa tu número telefónico" class="form-control" />
+                            </div>
+                            <div class="col-md-6 col-md-push-6">
+                                <div class="form-group">
+                                    <label>email: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <input name="email_cliente" id="email_cliente" placeholder="Ingresa tu email" class="form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+
+                        <div id="divDomicilio" style="display:none">
+                            <div class="row">
+                                <div class="col-md-9 col-md-push-9">
+                                    <div class="form-group">
+                                        <label>Calle: </label><strong><label style="color:#C10230">*</label></strong>
+                                        <input name="calleCliente" id="calleCliente" placeholder="Calle" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-md-push-9">
+                                    <div class="form-group">
+                                        <label>Colonia: </label><strong><label style="color:#C10230">*</label></strong>
+                                        <input name="colonia" id="colonia" placeholder="Colonia" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-push-6">
+                                    <div class="form-group">
+                                        <label>Número ext: </label><strong><label style="color:#C10230">*</label></strong>
+                                        <input name="num_ext" id="num_ext" placeholder="Número exterior" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-md-push-6">
+                                    <div class="form-group">
+                                        <label>Número Int: </label>
+                                        <input name="num_int" id="num_int" placeholder="Número interior" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-push-6">
+                                    <div class="form-group">
+                                        <label>Ciudad: </label><strong><label style="color:#C10230">*</label></strong>
+                                        <input name="ciudad" id="ciudad" placeholder="Ciudad" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-md-push-6">
+                                    <div class="form-group">
+                                        <label>Código postal: </label><strong><label style="color:#C10230">*</label></strong>
+                                        <input type="number" name="cp" id="cp" placeholder="Código Ppstal" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-md-push-12">
+                        <input type="button" id="btnSigVehiculos" style="margin: 10px" class="btn button float-md-right" onclick="SiguienteVehiculo()" value="Siguiente" />
+                        <input type="button" id="btnAtrasVehiculos" style="margin: 10px" class="btn btn-light float-md-right" onclick="AtrasVehiculo()" value="Atrás" />
+                    </div>
+                </div>
+            </div>
+            <div id="divCita" style="display: none">
+                <div class="card">
+                    <div class="card-body"> <h6> Informacion del vehículo </h6></div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-5 col-md-pull-4">
+                                <div class="form-group">
+                                    <label>Modelo: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <select id="id_familiavehiculo" name="id_familiavehiculo" class="form-control">
+                                        <option value="-1" selected="selected">Selecciona el modelo de tu auto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-md-pull-4">
+                                <div class="form-group">
+                                    <label>Año: </label><strong><label style="color:#C10230">*</label></strong>
+                                    <input type="number" id="anho_vehiculo" name="anho_vehiculo" placeholder="Escribe el año de tu auto." class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-md-pull-4">
+                                <label name="tipo_combustible">Combustible: </label><strong><label style="color:#C10230">*</label></strong>
+                                <select id="tipo_combustible" name="tipo_combustible" class="form-control">
+                                    <option value="-1" selected="selected">Selecciona el combustible.</option>
+                                    @foreach (var tipoCombustible in ViewBag.tipoCombustibleList)
+                                    {
+                                    <option value="@tipoCombustible.id_combustible">@tipoCombustible.descripcion</option>
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-pull-6">
+                                <div class="form-group">
+                                    <label name="servicios">Kilometraje: </label><strong><label style="color:#C10230">*</label></strong>
+
+                                    <input type="number" name="kilometrajeVehiculo" id="kilometrajeVehiculo" placeholder="Ingresa el kilometraje de tu vehículo" class="form-control" />
+                                  
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-md-push-6">
+                                <div class="row">
+                                    <div class="col-md-12 col-md-push-12">
+                                        <div class="form-group">
+                                            <label name="Paca">Placa / VIN</label>
+                                            <input name="PlacaVehiculo" id="PlacaVehiculo" placeholder="Ingresa la placa/VIN de tu auto" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-md-push-12">
+                                        <div class="form-group">
+                                            Agiliza tu recepción, ingresa de número de placa o VIN
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-md-push-12">
+                        @*<input type="button" id="btnSigCita" style="margin: 10px" class="btn button float-md-right" value="Confirmar" />*@
+                        <input type="button" id="btnSigServicios" style="margin: 10px" class="btn button  float-md-right" onclick="SiguienteServicio()" value="Siguiente" />
+                        <input type="button" id="btnAtrasCita" style="margin: 10px" class="btn btn-light float-md-right" onclick="AtrasServicio()" value="Atrás" />
+                    </div>
+                </div>
+            </div>
+            <div id="divEspecifico" style="display: none">
+                <div class="row">
+                    <div class="col-md-12 col-md-push-12">
+                        <div class="row">
+                            <div class="col-md-12 col-md-push-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <input type="checkbox" id="chkSerMan" value="Mantenimiento" style="padding-right:5px"> Servicio de mantenimiento
+                                    </div>
+                                    <div class="card-body" id="divChkSerMan">
+                                        <select id="servicios" name="servicios" class="form-control">
+                                            <option value="-1" selected="selected">Selecciona un Servicio.</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-md-push-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <input type="checkbox" id="chkFallas" value="Fallas" style="padding-right:5px"> Fallas 
+                                    </div>
+                                    <div class="card-body" id="divChkFallas">
+                                        <textarea name="fallas_mec" id="fallas_mec" placeholder="Escribe el problema de tu vehículo" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-md-push-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <input type="checkbox" id="chkEspecificos" value="Especificos" style="padding-right:5px"> Servicios específicos 
+                                    </div>
+                                    <div class="card-body" id="divChkEspecificos">
+                                        <div id="divServicioEspecificohtml">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-push-12">
+                            <input type="button" id="btnSigCita" style="margin: 10px" class="btn button float-md-right" value="Confirmar" />
+
+                            <input type="button" id="btnAtrasEspecificos" style="margin: 10px" class="btn btn-light  float-md-right" onclick="AtrasEspecificos()" value="Atrás" />
+                        </div>
+                    </div>
+                </div>
+            <div id="divConfirmar" style="display: none;">
+                <br />
+                <div class="row">
+                    <div class="col-md-12 col-md-push-12">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><b>No. Cita:  </b><label id="lblNoCita"></label></td>
+                                    <td> <strong><a href="https://autocom.mx/aviso-de-privacidad/" target="_blank" style="color:#C10230">Consulta aquí el aviso de privacidad</a></strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><label id="lblMnsg"></label></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-push-6 text-left">
+
+                        <div class="card" style="width:100%">
+                            <div class="card" style="width: 100%;">
+                                <div class="card-header">Distribuidor</div>
+                                <div class="card-body">
+                                    <label id="lblPreConfrAgencia"></label>
+                                </div>
+                            </div>
+                            <div class="card" style="width: 100%;">
+                                <div class="card-header">Vehículo</div>
+                                <div class="card-body">
+                                    <label id="lblPreConfrVehi"></label>
+                                    <hr align="right" size="1" style="color:gray" width="100%" />
+                                </div>
+                            </div>
+                            <div class="card" style="width: 100%;">
+                                <div class="card-header">Servicio</div>
+                                <div class="card-body">
+                                    <label id="lblPreConfrServ"></label>
+                                    <hr align="right" size="1" style="color:gray" width="100%" />
+                                    <label id="lblPreConfFalla"></label>
+                                    <hr align="right" size="1" style="color:gray" width="100%" />
+                                    <div id="PreConfServEspecif"></div>
+                                    <hr align="right" size="1" style="color:gray" width="100%" />
+                                </div>
+                            </div>
+                            <div class="card" style="width:100%;">
+                                <div class="card-header">Agenda</div>
+                                <div class="card-body">
+                                    <label id="lblConfirmNomDia"></label> <label id="lblConfirmDia"></label> de <label id="lblConfirmMes"></label> A las: <label id="lblPreConfrHr"></label>
+                                    <label id="lblConfirmNombre"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-push-6 text-left normal">
+                        <img src="~/img/promociones.png" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-md-push-12">
+                        <a href="/Citas/Gracias" class="btn button float-md-right">Finalizar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-md-push-0" id="previ">
+            <div id="preVisializacion" class="normal" style="text-align:left">
+                <div class="card" style="width: 28rem;">
+                    <div class="card-header">Detalles de la cita</div>
+                    <div class="card text-center" style="width: 28rem;">
+                        <div class="card-header">Distribuidor</div>
+                        <div class="card-body">
+                            <label id="lblAgenciaSeleccionada"></label>
+                            <label id="lblServDomi"></label>
+
+                        </div>
+                    </div>
+                    <div class="card text-center" style="width: 28rem;">
+                        <div class="card-header">Vehículo</div>
+                        <div class="card-body">
+                            <label id="FamiliavehiculoSeleccionado"></label>
+                            <hr align="right" size="1" style="color:gray" width="100%" />
+                            <label id="CombustibleSeleccionado"></label>
+                            <hr align="right" size="1" style="color:gray" width="100%" />
+                            <label id="VinRecibido"></label>
+                        </div>
+                    </div>
+                    <div class="card text-center" style="width: 28rem;">
+                        <div class="card-header">Servicio</div>
+                        <div class="card-body">
+                            <label id="lblServicioSeleccionado"></label>
+                            <label id="lblKmSeleccionado"></label>
+                            <hr align="right" size="1" style="color:gray" width="100%" />
+                            <div id="AdicionalesSeleccionado"></div>
+                            <label id="lblAdicionalesSeleccionado"></label>
+                            @*<div id="PreCotizacion" style="background-color:black; color: white">
+                                Costo: $ <label id="lblCostoTotal"></label>
+                            </div>*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="modalDetalles">
+        <div class="modal fade" id="ModalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="modalHeader">
+                        <div id="modalHeader" class="modal-header">
+                            <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="modalSubHeader">
+
+                    </div>
+                    <div id="modalBody" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalAdicionales">
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Adicionales Seleccionados</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalBodyAdicionales" class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalNecesidadesEspeciales">
+        <div class="modal fade" id="modalNecesidades" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Necesidades Especiales</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalBodyNecEspeciales" class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="idAgencia" name="id_agencia" />
+    @*</form>*@
+
+    @*<div id='imagenFlotante' class="movil">
+        <a href='#' data-toggle="modal" data-target="#ModalDetalle">
+
+        </a>
+    </div>*@
+</div>
+<input type="checkbox" class="checkbox" id="checkbox" />
+<label class="menu movil bg-light" for="checkbox"> <img src="~/img/flotante.JPG" /></label>
+<div class="right-panel bg-light movil">
+    <div class="card" style="width: 100%;">
+        <div class="card-header">Detalles de la cita</div>
+        <div class="card text-center" style="width: 100%;">
+            <div class="card-header">Distribuidor</div>
+            <div class="card-body">
+                <label id="lblAgenciaSeleccionadaMovil"></label>
+                <label id="lblServDomiMovil"></label>
+            </div>
+        </div>
+        <div class="card text-center" style="width: 100%;">
+            <div class="card-header">Vehículo</div>
+            <div class="card-body">
+                <label id="FamiliavehiculoSeleccionadoMovil"></label>
+                <hr align="right" size="1" style="color:gray" width="100%" />
+                <label id="CombustibleSeleccionadoMovil"></label>
+                <hr align="right" size="1" style="color:gray" width="100%" />
+                <label id="VinRecibidoMovil"></label>
+            </div>
+        </div>
+        <div class="card text-center" style="width: 100%;">
+            <div class="card-header">Servicio</div>
+            <div class="card-body">
+                <label id="lblServicioSeleccionadoMovil"></label>
+                <label id="lblKmSeleccionadoMovil"></label>
+                <hr align="right" size="1" style="color:gray" width="100%" />
+                <div id="AdicionalesSeleccionado"></div>
+                <label id="lblAdicionalesSeleccionado"></label>
+                @*<div id="PreCotizacion" style="background-color:black; color: white">
+                    Costo: $ <label id="lblCostoTotal"></label>
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+<script src="~/js/site.js"></script>
+<script src="~/js/jquery.blockUI.js"></script>
+<script src="~/js/citas.js"></script>
+<script src="~/lib/moment/Scripts/moment-with-locales.js"></script>
+
+<script src="~/js/knockout.js"></script>
+<script>
+    var viewBagYear = @(ViewBag.Year);
+    var viewBagMonth = @(ViewBag.Month);
+    var viewBagDay = @(ViewBag.Day);
+    var viewBagHora = '@(ViewBag.Hora)';
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="~/js/agendamiento.js"></script>
+
+@*
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDpiR1qDLtWRG3NVz3jmzl4tAHmCImQx7c&libraries=places&callback=ActivarPlacesSearch"
+        async defer></script>*@
+<script type="text/javascript">
+
+        //function changeColor(x) {
+        //    if (x.style.background == "rgb(197, 34, 34)")
+        //    {
+        //        x.style.background = "#fff";
+        //        x.style.color = "#000000";
+        //    } else {
+        //        x.style.background = "#C52222";
+        //        x.style.color = "#fff";
+        //    }
+        //    return false;
+        //}
+</script>

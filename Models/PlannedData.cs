@@ -8,6 +8,7 @@ namespace CitaActiva.Models
 {
     public class PlannedData
     {
+        public int id { get; set; }
         public string plannedDate { get; set; } //"2019-04-15"
         public string plannedTime { get; set; } //"11:40:00"
         public int receptionistId { get; set; } // 110

@@ -1,0 +1,282 @@
+﻿@model CitaActiva.Models.Clientes
+<script src="~/js/site.js"></script>
+<link href="~/lib/bootstrap/dist/css/appointment.css" rel="stylesheet" />
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+@*<script src="https://rawgit.com/tempusdominus/bootstrap-3/master/build/js/tempusdominus-bootstrap-3.js"></script>
+    <link href="https://rawgit.com/tempusdominus/bootstrap-3/master/build/css/tempusdominus-bootstrap-3.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+<script src="~/js/knockout.js"></script>
+<script src="~/lib/moment/Scripts/moment-with-locales.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+
+@*<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>*@
+@*<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />*@
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+
+<script src="~/js/pass.js"></script>
+<link href="~/css/pass.css" rel="stylesheet" />
+<script>
+
+jQuery(function ($) {
+        $(function () {
+            $('#fecha_nacimiento').datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'dd-mm-yyyy'
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        var actualizacionInd = @ViewBag.actualizacionInd;
+       
+
+        if (actualizacionInd == 0) {
+            document.getElementById('divBtnRegistrar').style.display = 'block';
+            document.getElementById('divBtnModificar').style.display = 'none';
+        } else if (actualizacionInd == 1) {
+            document.getElementById('divBtnRegistrar').style.display = 'none';
+            document.getElementById('divBtnModificar').style.display = 'block';
+        }
+    });
+</script>
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeaR6wUAAAAAOjdsjTGU_9Mv_9pyziAz6FmqSmi"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LeaR6wUAAAAAOjdsjTGU_9Mv_9pyziAz6FmqSmi', { action: 'homepage' }).then(function (token) {
+                document.getElementById('gRecaptchaResponse').value = token;
+            });
+        });
+    </script>
+}
+<script src="~/js/pass.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#password").keyup(function () {
+            passwordStrength(jQuery(this).val());
+        });
+    });
+</script>
+<script src="~/js/rfc.js"></script>
+
+<h4>Alta de usuarios.</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12 col-md-pull-12">
+        <form asp-action="Create" onsubmit="return ValidarCreateCliente('nombre_cliente','apellido_paterno', 'apellido_materno', 'email_cliente', 'telefono', 'fecha_nacimiento', 'rfc', 'password', 'passwordConfirm')" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Cuenta Personal: </label>
+                        <div class="col-md-6 col-md-pull-6">
+                            <input asp-for="cuenta_personal" class="form-control" disabled="disabled" />
+                            <input asp-for="id_cliente" type="hidden" class="control-label" />
+                            <input asp-for="cliente_activo" type="hidden" class="control-label" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Nombre: *</label>
+                        <div class="col-md-12 col-md-pull-12">
+
+                            <input asp-for="nombre_cliente" id="nombre_cliente" onchange="calculaRFC();" class="form-control" />
+                            <span asp-validation-for="nombre_cliente" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Apellido paterno: *</label>
+                        <div class="col-md-12 col-md-pull-12">
+                            <input asp-for="apellido_paterno" id="apellido_paterno" onchange="calculaRFC();" class="form-control" />
+                            <span asp-validation-for="apellido_paterno" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Apellido materno: *</label>
+                        <div class="col-md-12 col-md-pull-12">
+                            <input asp-for="apellido_materno" id="apellido_materno" onchange="calculaRFC();" class="form-control" />
+                            <span asp-validation-for="apellido_materno" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-md-pull-6">
+                    <label class="control-label">Fecha de nacimiento: *</label>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+
+                            <div class="start_date input-group mb-4">
+                                @Html.TextBoxFor(model => model.fecha_nacimiento, "{0:dd-MM-yyyy}", new { @class = "form-control", @readonly = true, @onchange = "calculaRFC();" })
+                                @*<input asp-for="fecha_nacimiento" class="form-control start_date" onchange="calculaRFC();" type="text" autocomplete="off" id="fecha_nacimiento">*@
+
+
+                            </div>
+
+                            @*<div class="input-group date" id="control-fecha-nacimiento" data-target-input="nearest">
+
+                                <input asp-for="fecha_nacimiento" type="text" onchange="calculaRFC();" class="form-control datetimepicker-input" id="fecha_nacimiento" data-target="#control-fecha-nacimiento" />
+                                <span class="input-group-addon" data-target="#control-fecha-nacimiento" data-toggle="datetimepicker">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>*@
+                            @*
+                                </div>
+                            *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">RFC: *</label>
+                        <div class="col-md-6 col-md-pull-6">
+                            <input asp-for="rfc" class="form-control" readonly />
+                            <span asp-validation-for="rfc" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Homo Clave: </label>
+                        <div class="col-md-3 col-md-pull-3">
+                            <input asp-for="homo_clave" id="homo_clave" class="form-control" />
+                            <span asp-validation-for="homo_clave" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Email: *</label>
+                        <div class="col-md-12 col-md-pull-12">
+                            <input asp-for="email_cliente" id="email_cliente" class="form-control" />
+                            <span asp-validation-for="email_cliente" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Móvil: *</label>
+                        <div class="col-md-12 col-md-pull-12">
+                            <input asp-for="telefono" id="telefono" class="form-control" />
+                            <span asp-validation-for="telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+
+                        <label class="control-label">Contraseña: *</label>
+                        <div class="col-md-6 col-md-pull-6">
+                            <input asp-for="password" type="password" id="password" class="form-control" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated jak_pstrength" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p id="jak_pstrength_text" class="text-center"></p>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-pull-6">
+                    <div class="form-group">
+                        <label class="control-label">Confirmar Contraseña: </label>
+                        <div class="col-md-6 col-md-pull-6">
+                            <input type="password" id="passwordConfirm" class="form-control" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12 col-md-pull-12">
+                    <div class="modal fade bootstrapmodal1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-title"> Cita Activa </div>
+                                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    ¿Desea actualizar sus datos?
+
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" id="btnDivReAgendar" onclick="DeshabilitarControles();" class="btn btn-success" value="Ok" />
+                                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancelar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-pull-12">
+                    <input type="hidden" name="gRecaptchaResponse" id="gRecaptchaResponse" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-pull-4">
+                    <div class="form-group">
+                        <div id="divBtnRegresar">
+                            <a href="/Home/Index" class="btn button btn-block mt-2">Regresar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-pull-4">
+                    <div class="form-group">
+                        <div id="divBtnRegistrar" style="display: none">
+                            <input type="submit" value="Registrar" class="btn button btn-block mt-2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-pull-4">
+                    <div class="form-group">
+                        <div id="divBtnModificar" style="display: none">
+                            <input type="button" value="Modificar Datos" class="btn button btn-block mt-2" data-toggle="modal" data-target=".bootstrapmodal1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+
+</div>
+

@@ -26,10 +26,11 @@ namespace CitaActiva.Controllers
             //WorkshopService workshopService = new WorkshopService();
             //return await workshopService.GetWorkshops(token, postalCode);
 
-            var list = db.Workshops.Where(w => w.activeInd == 1).OrderBy(w => w.id);
-            string sorkshops = JsonConvert.SerializeObject(list.ToArray());
-            
-            return sorkshops;
+            //var list = db.Workshops.Where(w => w.activeInd == 1).OrderBy(w => w.id);
+            //string workshops = 
+
+            //return JsonConvert.SerializeObject(list.ToArray());
+            return null;
         }
 
         [HttpGet("{id}")]

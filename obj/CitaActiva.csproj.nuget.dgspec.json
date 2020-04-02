@@ -1,17 +1,134 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {}
+    "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\CitaActiva\\CitaActiva.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj": {
+    "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\CitaActiva\\CitaActiva.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectUniqueName": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\CitaActiva\\CitaActiva.csproj",
         "projectName": "CitaActiva",
-        "projectPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\CitaActiva.csproj",
+        "projectPath": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\CitaActiva\\CitaActiva.csproj",
         "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco.villegas\\source\\repos\\CitaActiva\\CitaActiva\\obj\\",
+        "outputPath": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\CitaActiva\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marco.villegas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\PaquetesProtos.csproj": {
+                "projectPath": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\PaquetesProtos.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Bootstrap.Datepicker": {
+              "target": "Package",
+              "version": "[1.8.0.1, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.6.1, )"
+            },
+            "Grpc": {
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Grpc.Auth": {
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.1.5.1, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "NToastNotify": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "jQuery.UI.Combined": {
+              "target": "Package",
+              "version": "[1.12.1, )"
+            },
+            "jQuery.Validation": {
+              "target": "Package",
+              "version": "[1.17.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\PaquetesProtos.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\PaquetesProtos.csproj",
+        "projectName": "PaquetesProtos",
+        "projectPath": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\PaquetesProtos.csproj",
+        "packagesPath": "C:\\Users\\marco.villegas\\.nuget\\packages\\",
+        "outputPath": "C:\\AUTOCOM_APPS\\REPOSITORIOS\\CitaActiva-1.0\\PaquetesProtos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,54 +158,29 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
-            "Bootstrap.Datepicker": {
+            "Google.Protobuf": {
               "target": "Package",
-              "version": "[1.8.0.1, )"
+              "version": "[3.6.1, )"
             },
-            "MailKit": {
+            "Grpc": {
               "target": "Package",
-              "version": "[2.1.5.1, )"
+              "version": "[1.18.0, )"
             },
-            "Microsoft.AspNetCore.App": {
+            "Grpc.Core": {
+              "target": "Package",
+              "version": "[1.18.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.2.0, )",
-              "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Session": {
-              "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[1.18.0, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[2.2.3, )"
-            },
-            "NToastNotify": {
-              "target": "Package",
-              "version": "[5.0.10, )"
-            },
-            "Pomelo.EntityFrameworkCore.MySql": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "jQuery.UI.Combined": {
-              "target": "Package",
-              "version": "[1.12.1, )"
-            },
-            "jQuery.Validation": {
-              "target": "Package",
-              "version": "[1.17.0, )"
             }
           },
           "imports": [

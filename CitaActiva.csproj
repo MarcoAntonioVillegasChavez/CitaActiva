@@ -5,6 +5,29 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\img\imgInterfazMovil\**" />
+    <Compile Remove="wwwroot\img\imgInterfaz\**" />
+    <Compile Remove="wwwroot\img\impPaquetes\**" />
+    <Compile Remove="wwwroot\img\wizard\NewFolder\**" />
+    <Content Remove="wwwroot\img\imgInterfazMovil\**" />
+    <Content Remove="wwwroot\img\imgInterfaz\**" />
+    <Content Remove="wwwroot\img\impPaquetes\**" />
+    <Content Remove="wwwroot\img\wizard\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\img\imgInterfazMovil\**" />
+    <EmbeddedResource Remove="wwwroot\img\imgInterfaz\**" />
+    <EmbeddedResource Remove="wwwroot\img\impPaquetes\**" />
+    <EmbeddedResource Remove="wwwroot\img\wizard\NewFolder\**" />
+    <None Remove="wwwroot\img\imgInterfazMovil\**" />
+    <None Remove="wwwroot\img\imgInterfaz\**" />
+    <None Remove="wwwroot\img\impPaquetes\**" />
+    <None Remove="wwwroot\img\wizard\NewFolder\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Services\Clientes.cs" />
   </ItemGroup>
@@ -12,15 +35,22 @@
 
   <ItemGroup>
     <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.6.1" />
+    <PackageReference Include="Grpc" Version="1.18.0" />
+    <PackageReference Include="Grpc.Auth" Version="1.18.0" />
+    <PackageReference Include="Grpc.Tools" Version="1.18.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="jQuery.Validation" Version="1.17.0" />
     <PackageReference Include="MailKit" Version="2.1.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
     <PackageReference Include="NToastNotify" Version="5.0.10" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
 
@@ -28,6 +58,17 @@
     <Content Update="wwwroot\img\3B8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\img\promociones.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaquetesProtos\PaquetesProtos.csproj" />
+  </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4lib_4bootstrap_4dist_4js_4bootstrap_1bundle_1min_1js_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

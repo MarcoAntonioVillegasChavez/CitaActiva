@@ -1,0 +1,70 @@
+﻿body {
+}
+
+.normal {
+    display: block;
+}
+.movil {
+    display: none;
+}
+.box {
+    position: absolute;
+    left: 33%;
+    
+}
+
+/*
+@media only screen and (max-width: 380px) {
+*/
+    @media only screen and (max-width: 813px) {
+        .normal {
+            display: none;
+        }
+
+        .movil {
+            display: block;
+        }
+    }
+
+
+@media only screen and (max-width: 2000px) {
+    .normalGracias {
+        display: block;
+    }
+
+    .movilGracias {
+        display: none;
+    }
+
+    .verticalGracias {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 813px) {
+    .normalGracias {
+        display: none;
+    }
+
+    .movilGracias {
+        display: block;
+    }
+    .verticalGracias {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 376px) {
+    .normalGracias {
+        display: none;
+    }
+
+    .movilGracias {
+        display: none;
+    }
+
+    .verticalGracias {
+        display: block;
+    }
+}
+
