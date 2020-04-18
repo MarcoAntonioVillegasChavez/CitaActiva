@@ -9,8 +9,8 @@ namespace CitaActiva.Models
     {
         public string url { get; set; }
     }
-    public class IsProducction
+    public class Ambiente
     {
-        public bool isProducction { get; set; }
+        public string environment { get; set; }
     }
 }

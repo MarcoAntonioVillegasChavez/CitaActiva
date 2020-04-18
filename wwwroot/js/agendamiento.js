@@ -160,11 +160,15 @@
             data: { scheduleId },
             complete: function () {
 
-                //console.log(localStorage.getItem("Min"))
-                //console.log(localStorage.getItem("Max"))
+             //   console.log(localStorage.getItem("Min"));
+             //   console.log(localStorage.getItem("Max"));
 
-                if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
-
+				if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
+					if (localStorage.getItem("Min") == "00:00:00" && localStorage.getItem("Max") == "00:01:00") {
+						toastr.warning("No se encontró un horario en este dia, para esta agencia.");
+						var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
+						$('#horaAgendamiento').html(s);
+					}else{
                     var fecha = $("#fechaAgendamiento").val();
 
                     var agencia = JSON.parse(localStorage.getItem("AgenciaInfo"));
@@ -188,8 +192,9 @@
                             } $('#horaAgendamiento').html(s);
 
                         }
-                    });
-                } else {
+				});
+				}
+				}else {
                     toastr.warning("Ya no se puede elegir un horario de servicio en el dia seleccionado");
                     var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
                     $('#horaAgendamiento').html(s);
@@ -200,6 +205,9 @@
             },
             success: function (resultS) {
                 var resultSchedule = JSON.parse(resultS);
+                console.log(resultSchedule);
+				 if (resultSchedule != null) {
+					
                 var parts = $("#fechaAgendamiento").val().split('-');
                 var fecha = new Date(parts[0], parts[1] - 1, parts[2]);
 
@@ -272,6 +280,11 @@
                         }
                     }
                 });
+			} else {
+                    toastr.warning("No se encontráron horarios disponibles para esta fecha");
+                    var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
+			$('#horaAgendamiento').html(s);
+			}
             }
         });
     }
@@ -420,7 +433,8 @@
                         var a = '  <label id="lblNoCita" style="color:#C10230"> <strong> ' + result + '</strong></label>';
                         $('#lblNoCita').html(a);
 
-                        var s = '<h6> <label id="lblNoCita" style="color:#C10230"> <strong> En breve se pondrá en contacto un asesor de la agencia contigo, para dar seguimiento a tu cita. </strong></label></h6>';
+                        var s = '<h6> <label id="lblNoCita" style="color:#C10230"> <strong> En breve se pondrá en contacto un asesor de la agencia contigo, para dar seguimiento a tu cita. </strong></label></h6> <br />';
+                        s += ' <b><label style="color:#C10230">Para cualquier cambio o cancelación en su cita, favor de contactar al tel: 800 711 2886<label></b>';
                         $('#lblMnsg').html(s);
 
                         $('#divAgenciasNormal').removeAttr('onclick');

@@ -38,7 +38,7 @@ namespace CitaActiva
             services.AddOptions();
             services.Configure<GoogleReCaptcha>(Configuration.GetSection("GoogleReCaptcha"));
             services.Configure<Servidor>(Configuration.GetSection("Servidor"));
-            services.Configure<IsProducction>(Configuration.GetSection("IsProducction"));
+            services.Configure<Ambiente>(Configuration.GetSection("Ambiente"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

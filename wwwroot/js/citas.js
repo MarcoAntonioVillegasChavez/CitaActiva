@@ -358,10 +358,12 @@ function PreConfirmacion() {
     lblPreConfrVehi += marcaVehiculoText + ' ' + id_familiavehiculoText + ' ' + anho_vehiculo;
     lblPreConfrVehi += ' </label >';
 
+  if (servicios.selectedIndex != 0) {
     var lblPreConfrServ = '<label id="lblPreConfrServ" > ';
     lblPreConfrServ += 'Servicio de ' + serviciosText + ' km ';
     lblPreConfrServ += ' </label >';
-
+  }
+  
     var lblPreConfrHr = '<label id="lblPreConfrHr" > ';
     lblPreConfrHr += horaAgendamientoText;
     lblPreConfrHr += ' </label >';
@@ -371,6 +373,8 @@ function PreConfirmacion() {
 
     var PreConfServEspecif = '<div>';
     if (document.getElementById('chkEspecificos').checked) {
+		PreConfServEspecif += '<b>Servicios Especificos:</b>';
+		PreConfServEspecif += '<br />';
         var checksVal = $('[name="checks[]"]:checked').map(function () {
             return this.value;
         }).get();

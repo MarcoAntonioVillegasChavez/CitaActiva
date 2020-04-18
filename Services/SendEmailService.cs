@@ -101,7 +101,11 @@ namespace CitaActiva.Services
                              + "     <td align='left' colspan='2' width='50 %'>" + cita.labours[i].description + " </td>"
                              + "</tr>";
                         }
+                        eMailBody += "<tr  valign = 'center'>"
+                        + "     <td cospan='2' ><b>Para cualquier cambio o cancelación en su cita, favor de contactar al tel: 800 711 2886.</b></td>"
+                        + "</tr>";
 
+                        // '';
                         eMailBody += "</table>";
 
                         //eMailBody

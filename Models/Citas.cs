@@ -31,7 +31,7 @@ namespace CitaActiva.Models
     {
         public int id_cita { get; set; }
         public string id { get; set; }
-        public string id_agencia { get; set; }
+        public int id_agencia { get; set; }
         public string necesita_carro_reemplazo { get; set; }
         public string placa_vehiculo { get; set; }
         public string nombre_contacto { get; set; }

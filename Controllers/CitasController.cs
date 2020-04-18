@@ -19,13 +19,13 @@ namespace CitaActiva.Controllers
         private readonly IToastNotification _toastNotification;
         GoogleReCaptcha _googleReCaptcha;
         Servidor _servidor;
-        IsProducction _isProducction;
-        public CitasController(IToastNotification toastNotification, IOptions<GoogleReCaptcha> GoogleReCaptcha, IOptions<Servidor> servidor, IOptions<IsProducction> isProducction)
+        Ambiente _ambiente;
+        public CitasController(IToastNotification toastNotification, IOptions<GoogleReCaptcha> GoogleReCaptcha, IOptions<Servidor> servidor, IOptions<Ambiente> evironment)
         {
             _toastNotification = toastNotification;
             _googleReCaptcha = GoogleReCaptcha.Value;
             _servidor = servidor.Value;
-            _isProducction = isProducction.Value;
+            _ambiente = evironment.Value;
         }
         public async Task <IActionResult> Index()
         {
@@ -89,11 +89,11 @@ namespace CitaActiva.Controllers
                  GrpcCitas grpc = new GrpcCitas();
 
                 string result = "";
-                if (_isProducction.isProducction)
+                if (_ambiente.environment == "Produccion")
                 {
                     result = await grpc.CrearCita(appointmentModel);
                 }
-                else
+                else if (_ambiente.environment == "Pruebas" ||  _ambiente.environment == "Desarrollo")
                 {
                     result = "No se ha generado la cita en quiter, porque es un sistema de pruebas";//await grpc.CrearCita(appointmentModel);
 

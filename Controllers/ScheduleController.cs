@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CitaActiva.gRPC;
 using CitaActiva.Models;
 using CitaActiva.ModelsViews;
 using CitaActiva.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,18 +16,20 @@ namespace CitaActiva.Controllers
 {
     public class ScheduleController : Controller
     {
+        Ambiente _ambiente;
+        public ScheduleController(IOptions<Ambiente> environment)
+        {
+            _ambiente = environment.Value;
+        }
+
         const string SessionKeyName = "token";
        
         [HttpGet("{id}")]
         [Route("/Appointment/Schedule/{scheduleId}", Name = "ScheduleRoute")]
-        public async Task<string> Index(string scheduleId, Token token)
+        public async Task<string> Index(string scheduleId)
         {
-            //Token token = new Token();
-            if (token.access_token == null)
-            {
-                TokenController tokenController = new TokenController();
-                token = tokenController.ObtenerToken();
-            }
+            GrpcTokenQis grpc = new GrpcTokenQis();
+            Token token = await grpc.GetTokenQis(_ambiente.environment);
 
             ScheduleService scheduleService = new ScheduleService();
             var scheduleResult = await scheduleService.GetScheduleById(token, scheduleId);
@@ -46,7 +50,7 @@ namespace CitaActiva.Controllers
             string[] hrMinSplit = hrMin.Split(':');
             string[] hrMaxSplit = hrMax.Split(':');
 
-            if(hrMin == null || hrMax == null)
+            if(hrMin == "null" || hrMax == "null")
             {
                 return null;
             }
@@ -113,7 +117,7 @@ namespace CitaActiva.Controllers
                     //           select (agc.planned_time);
 
                     var list = from c in db.cita
-                               where c.fecha == DateTime.Parse(fecha) && c.id_agencia == (idAgencia).ToString()
+                               where c.fecha == DateTime.Parse(fecha) && c.id_agencia == (idAgencia)
                                select (c.hora);
 
                     var horariosOcupados = list.ToList();
