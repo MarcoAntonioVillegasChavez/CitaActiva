@@ -160,9 +160,6 @@
             data: { scheduleId },
             complete: function () {
 
-             //   console.log(localStorage.getItem("Min"));
-             //   console.log(localStorage.getItem("Max"));
-
 				if (localStorage.getItem("Min") != "" && localStorage.getItem("Max") != "") {
 					if (localStorage.getItem("Min") == "00:00:00" && localStorage.getItem("Max") == "00:01:00") {
 						toastr.warning("No se encontró un horario en este dia, para esta agencia.");
@@ -199,7 +196,6 @@
                     var s = '<option value="-1" selected="selected">Selecciona un horario.</option>';
                     $('#horaAgendamiento').html(s);
                 }
-
 
                 $.unblockUI();
             },
@@ -311,10 +307,9 @@
 
                 var nombreCompleto = $("#nombre_cliente").val() + ' ' + $("#apePat_cliente").val() + ' ' + $("#apeMat_cliente").val();
 
-                //            Se declara el arrayLabours
+                //Se declara el arrayLabours
                 var arrayLabours = [];
-                /*
-             */
+            
                 var comments = " ";
                 if (document.getElementById('chkDomiciolio').checked == true) {
 
@@ -808,6 +803,8 @@
                                                 if (agenciaInfo[0].activa) {
                                                     document.getElementById('divServicioDomicilioAlert').style.display = 'block';
                                                     document.getElementById('divServicioDomicilioAlert2').style.display = 'none';
+
+
                                                 } else {
                                                     document.getElementById('divServicioDomicilioAlert').style.display = 'none';
                                                     document.getElementById('divServicioDomicilioAlert2').style.display = 'block';
@@ -833,20 +830,23 @@
                                             document.getElementById('divServicioDomicilioAlert2').style.display = 'block';
                                         }
 
-                                        //console.log(fAR.getTime());
+                                        if (document.getElementById('chkDomiciolio').checked) {
+                                            document.getElementById('divDomicilio').style.display = 'block';
 
-                                        //console.log(fA.getTime()); 
+                                            var s = ' <label id="ServDomiLbl" style="color:#C10230">';
+                                            s += '<strong> En el horario seleccionado en su cita el asesor acudirá a su domicilio </strong>';
+                                            s += '</label>';
+                                            $('#ServDomiLbl').html(s);
 
-                                        //console.log(new Date().getHours());
+                                        } else {
+                                            document.getElementById('divDomicilio').style.display = 'none';
 
-                                        //console.log("fecha de hoy");
-                                        //console.log(f);
-                                        
-                                        //console.log("fecha agendamiento");
-                                        //console.log(fA);
+                                            var s = ' <label id="ServDomiLbl">';
+                                            s += '';
+                                            s += '</label>';
+                                            $('#ServDomiLbl').html(s);
+                                        }
 
-                                        //console.log("fecha siguiente");
-                                        //console.log(fAR);
                                         
                                     });
                                 },
