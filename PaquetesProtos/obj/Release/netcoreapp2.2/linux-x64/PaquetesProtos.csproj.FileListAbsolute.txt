@@ -1,0 +1,8 @@
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Release\netcoreapp2.2\linux-x64\PaquetesProtos.deps.json
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Release\netcoreapp2.2\linux-x64\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Release\netcoreapp2.2\linux-x64\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Release\netcoreapp2.2\linux-x64\PaquetesProtos.csproj.CoreCompileInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Release\netcoreapp2.2\linux-x64\PaquetesProtos.AssemblyInfoInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Release\netcoreapp2.2\linux-x64\PaquetesProtos.AssemblyInfo.cs
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Release\netcoreapp2.2\linux-x64\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Release\netcoreapp2.2\linux-x64\PaquetesProtos.pdb

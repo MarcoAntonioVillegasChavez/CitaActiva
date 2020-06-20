@@ -1,0 +1,573 @@
+﻿syntax = "proto3";
+
+option csharp_namespace="mx.autocom.servicio.paquetes.service";
+option go_package = "proto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+
+message Zona
+{
+	int32 id_zona = 1;
+	string nombre_zona = 2;
+	
+}
+
+message ZonaRequest
+{
+	google.protobuf.Int32Value id_zona = 1;
+	google.protobuf.StringValue nombre_zona = 2;
+	google.protobuf.Int32Value from = 3;
+	google.protobuf.Int32Value limit = 4;
+	google.protobuf.StringValue order_by = 5;
+	google.protobuf.BoolValue asc = 6;	
+}
+
+message Zonas
+{
+	repeated Zona zonas=1;
+}
+
+message TipoAdicional
+{
+	int32 id_tipo_adicional = 1;
+	string descripcion =2;
+	Adicional adicionales=3;
+}
+
+message TipoAdicionales
+{
+	repeated TipoAdicional tipoAdicionales = 1;	
+}
+
+message TipoAdicionalRequest
+{
+	google.protobuf.Int32Value id_tipo_adicional = 1;
+	google.protobuf.StringValue descripcion = 2;
+	google.protobuf.Int32Value from = 3;
+	google.protobuf.Int32Value limit = 4;
+	google.protobuf.StringValue order_by = 5;
+	google.protobuf.BoolValue asc = 6;	
+}
+message Adicional
+{
+	int32 id_adicional = 1;
+	string codigo_qis = 2;
+	string descripcion = 3;
+	double costo = 4;	
+	TipoAdicional tiposAdicionales = 5;
+}
+message AdicionalRequest
+{
+	google.protobuf.Int32Value id_adicional = 1;
+	google.protobuf.StringValue codigo_qis = 2;
+	google.protobuf.StringValue descripcion = 3;
+	google.protobuf.Int32Value from = 4;
+	google.protobuf.Int32Value limit = 5;
+	google.protobuf.StringValue order_by = 6;
+	google.protobuf.BoolValue asc = 7;	
+}
+message Adicionales
+{
+	repeated Adicional adicionales=1;
+}
+
+message Agencia
+{
+	int32 id_agencia = 1;
+	string nombre_agencia = 2;
+	google.protobuf.StringValue google_place = 3;
+	bool activa = 4;
+	google.protobuf.StringValue codigo_qis=5;
+	Zona zona = 6;
+	string place_id = 7;
+}
+
+message AgenciaRequest
+{
+	google.protobuf.Int32Value id_agencia = 1;
+	google.protobuf.StringValue nombre_agencia = 2;
+	google.protobuf.Int32Value  id_zona = 3;
+	google.protobuf.StringValue  zona = 4;
+	google.protobuf.Int32Value from= 5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc =8;	
+	google.protobuf.StringValue place_id=9;
+}
+
+message Agencias
+{
+	repeated Agencia agencias=1;
+}
+
+message Labours
+{
+	google.protobuf.StringValue descripcion=1;
+}
+
+message CitaResponse
+{
+	google.protobuf.StringValue id=1;
+}
+message CitaRequest
+{
+	google.protobuf.StringValue idAgencia = 1;
+	bool necesitaCarroReemplazo=2;
+	google.protobuf.StringValue placaVehiculo=3;
+	google.protobuf.StringValue nombreContacto=4;
+	bool reciveCliente=5;
+	google.protobuf.StringValue email=6;
+	google.protobuf.Int32Value kilometraje=7;
+	bool vehiculoPickup=8;
+	google.protobuf.StringValue telefono=9;
+	google.protobuf.StringValue fecha=10;
+	google.protobuf.StringValue hora=11;
+	google.protobuf.Int32Value idRecepcionista=12;
+	repeated google.protobuf.StringValue laboursList=13;
+	google.protobuf.StringValue comments=14;
+
+	 google.protobuf.StringValue pickupDate=15;
+     google.protobuf.StringValue pickupTime=16;
+     google.protobuf.StringValue pickupLocation=17;
+     google.protobuf.StringValue pickupName=18;
+     google.protobuf.StringValue pickupTelephone=19;
+     bool requestDelivey=20;
+     google.protobuf.StringValue deliveryDate=21;
+     google.protobuf.StringValue deliveryTime=22;
+     google.protobuf.StringValue deliveryLocation=23;
+     google.protobuf.StringValue deliveryName=24;
+     google.protobuf.StringValue telephoneDelivery=25;
+        
+     google.protobuf.StringValue appoimentType=26;
+	 bool requestPickup=27;
+}
+
+message Marca
+{
+	int32 id_marca = 1;
+	string nombre_marca = 2;
+	string codigo_qis = 3;
+}
+
+message Marcas
+{
+	repeated Marca marcas=1;
+}
+
+message MarcaRequest
+{
+	google.protobuf.Int32Value id_marca = 1;
+	google.protobuf.StringValue nombre_marca = 2;
+	google.protobuf.StringValue codigo_qis = 3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc =7;	
+}
+
+message Familia
+{
+	int32 id_familia = 1;
+	string nombre_familia = 2;
+	string codigo_qis = 3;
+	Marca marca = 4;
+}
+
+message Familias
+{
+	repeated Familia familias=1;
+}
+
+message FamiliaRequest
+{
+	google.protobuf.Int32Value id_familia = 1;
+	google.protobuf.StringValue nombre_familia = 2;
+	google.protobuf.StringValue codigo_qis = 3;
+	google.protobuf.StringValue nombre_marca = 4;
+	google.protobuf.Int32Value from=5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc =8;	
+}
+
+message Combustible
+{
+	int32 id_combustible= 1;
+	string clave = 2;
+	string descripcion = 3;
+}
+
+message Combustibles
+{
+	repeated Combustible combustibles=1;
+}
+
+message CombustibleRequest
+{
+	google.protobuf.Int32Value id_combustible = 1;
+	google.protobuf.StringValue descripcion = 2;
+	google.protobuf.StringValue clave = 3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc =7;	
+}
+
+message Articulo
+{
+	int32 id_articulo =1;
+	google.protobuf.StringValue codigo_qis=2;
+	string descripcion=3;
+	double precio=4;
+}
+
+message ArticuloKit
+{
+	int32 id_articulo = 1;
+	string descripcion=2;
+	double precio = 3;
+	double descuento = 4;
+}
+
+message Articulos
+{
+	repeated Articulo articulos=1;
+}
+
+message ArticuloRequest
+{
+	google.protobuf.Int32Value id_articulo = 1;
+	google.protobuf.StringValue descripcion = 2;
+	google.protobuf.StringValue codigo_qis = 3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc =7;	
+}
+
+message Servicio
+{
+	int32 id_servicio =1;
+	int32 kilometraje_maximo=2;
+	int32 anho=3;
+	int32 id_familia=4;
+	double precio=5;
+	int32 id_combustible=6;
+	string codigo_qis=7;
+	string nombre_marca=8;
+	string nombre_familia=9;
+	string combustible=10;
+}
+
+message ServicioRequest
+{
+	google.protobuf.Int32Value id_servicio =1;
+	google.protobuf.StringValue codigo_qis=2;
+	google.protobuf.StringValue nombre_marca=3;
+	google.protobuf.StringValue nombre_familia=4;
+	google.protobuf.Int32Value anho=5;
+	google.protobuf.StringValue combustible=6;
+	google.protobuf.Int32Value kilometraje_maximo=7;
+	google.protobuf.Int32Value from=8;
+	google.protobuf.Int32Value limit=9;
+	google.protobuf.StringValue order_by=10;
+	google.protobuf.BoolValue asc =11;	
+}
+
+message Servicios
+{
+	repeated Servicio servicios=1;
+}
+
+message ServicioEspecificoRequest
+{
+	google.protobuf.Int32Value id_servicio_especifico=1;
+	google.protobuf.Int32Value from=2;
+	google.protobuf.Int32Value limit=3;
+	google.protobuf.StringValue order_by=4;
+	google.protobuf.BoolValue asc=5;	
+}
+message ServicioEspecificoResponse
+{
+	repeated ServicioEspecifico servicioEspecifico=1;
+}
+message ServicioEspecifico
+{
+	google.protobuf.Int32Value id_servicio_especifico=1;
+	google.protobuf.StringValue codigo_qis=2;
+	google.protobuf.StringValue descripcion=3;
+	double costo=4;
+}
+
+message ManoObra
+{
+	int32 id_mano_obra=1;
+	string codigo_qis=2;
+	string descripcion=3;
+}
+
+message KitManoObra
+{
+	int32 id_mano_obra = 1;
+	string descripcion=2;
+	double precio = 3;
+	double descuento = 4;
+}
+
+message ManoObraRequest
+{
+	google.protobuf.Int32Value id_mano_obra=1;
+	google.protobuf.StringValue codigo_qis=2;
+	google.protobuf.StringValue descripcion=3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc =7;	
+}
+
+// Para seguir la convención de nombres se hace esta burrada
+message ManosObra
+{
+	repeated ManoObra manos_obra=1;
+}
+
+message Date
+{
+	int32 year=1;
+	int32 month=2;
+	int32 day=3;
+}
+message Hour
+{
+	string hr=1;
+	string min=2;
+}
+message Promocion
+{
+	int32 id_promocion=1;
+	string codigo_promocion=2;
+	string descripcion=3;
+	Date fecha_inicio=4;
+	Date fecha_fin=5;
+	bool vigente=6;
+}
+
+message PromocionRequest
+{
+	google.protobuf.Int32Value id_promocion=1;
+	google.protobuf.StringValue codigo_promocion=2;
+	google.protobuf.StringValue descripcion=3;
+	google.protobuf.BoolValue vigentes=4;
+	google.protobuf.Int32Value from=5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc =8;	
+}
+
+message Promociones
+{
+	repeated Promocion promociones=1;
+}
+
+message Kit
+{
+	int32 id_kit=1;
+	string codigo_qis=2;
+	string descripcion=3;
+	string uri_foto=4;
+	google.protobuf.StringValue color=5;
+	repeated ArticuloKit articulos=6;
+	repeated KitManoObra mano_obra=7;
+	repeated Zona zonas=8;
+	repeated KitServicio servicios=9;
+	repeated KitConcepto concepto=10;
+	repeated Especifico especifico=11;
+}
+
+message Actividad
+{
+	int32 id_actividad=1;
+	string actividad=2;
+	string descripcion=3;
+}
+message KitConceptoActividad
+{
+	int32 id_kit_concepto_actividad=1;
+	int32 id_kit_concepto=2;
+	int32 id_actividad=3;
+	int32 activo=4;
+	string actividad=5;
+	
+}
+message Actividades
+{
+	repeated Actividad actividades=1;
+}
+message ActividadRequest
+{
+	google.protobuf.Int32Value id_actividad=1;
+	google.protobuf.StringValue actividades=2;
+	google.protobuf.StringValue descripcion=3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc =7;	
+}
+
+message Concepto
+{
+	int32 id_concepto=1;
+	string concepto=2;
+	string descripcion=3;
+}
+message KitConcepto
+{
+	int32 id_kit_concepto=1;
+	int32 id_kit=2;
+	int32 id_concepto=3;
+	string Descripcion=4;
+	int32 tipo=5;
+	
+	repeated KitConceptoActividad actividad=6;
+}
+message Conceptos
+{
+	repeated Concepto conceptos=1;
+}
+message ConceptoRequest
+{
+	google.protobuf.Int32Value id_concepto=1;
+	google.protobuf.StringValue concepto=2;
+	google.protobuf.StringValue descripcion=3;
+	google.protobuf.Int32Value tipo=4;
+	google.protobuf.Int32Value from=5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc=8;	
+}
+
+message KitServicioManoObra
+{
+	int32 id_mano_obra=1;
+	string codigo_qis=2;
+	string descripcion=3;
+}
+
+message KitServicioArticulo
+{
+	int32 id_articulo=1;
+	google.protobuf.StringValue codigo_qis=2;
+	string descripcion=3;
+}
+
+message KitServicio
+{
+	int32 id_kit=1;
+	int32 id_kit_servicio=2;
+	string descripcion=3;
+	string uri_imagen_1=4;
+	string uri_imagen_2=5;
+	repeated KitServicioManoObra kit_servicio_mano_obra=6;
+	repeated KitServicioArticulo kit_servicio_refaccion=7;
+}
+
+message KitServicios
+{
+	repeated KitServicio kitServicios=1;
+}
+message KitConceptos
+{
+	repeated KitConcepto kitConceptos=1;
+}
+message KitRequest
+{
+	google.protobuf.Int32Value id_kit= 1;
+	google.protobuf.StringValue descripcion = 2;
+	google.protobuf.StringValue codigo_qis = 3;
+	google.protobuf.StringValue id_zona = 4;
+	google.protobuf.Int32Value from=5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc =8;	
+}
+
+message KitServicioRequest
+{
+	google.protobuf.Int32Value id_kit_servicio=1;
+	google.protobuf.Int32Value from=5;
+	google.protobuf.Int32Value limit=6;
+	google.protobuf.StringValue order_by=7;
+	google.protobuf.BoolValue asc =8;	
+}
+message KitConceptoRequest
+{
+	google.protobuf.Int32Value id_kit_concepto=1;
+	google.protobuf.Int32Value from=2;
+	google.protobuf.Int32Value limit=3;
+	google.protobuf.StringValue order_by=4;
+	google.protobuf.BoolValue asc =5;	
+}
+
+message Kits
+{
+	repeated Kit kits=1;
+}
+
+message Especifico
+{
+	int32 id_especifico=1;
+	string codigo_qis=2;
+	string descripcion=3;	
+	double costo=4;	
+}
+message EspecificoRequest
+{
+	google.protobuf.Int32Value id_especifico=1;
+	google.protobuf.StringValue codigo_qis=2;
+	google.protobuf.StringValue descripcion=3;
+	google.protobuf.Int32Value from=4;
+	google.protobuf.Int32Value limit=5;
+	google.protobuf.StringValue order_by=6;
+	google.protobuf.BoolValue asc=7;	
+}
+message Especificos
+{
+	repeated Especifico especificos=1;
+}
+message TokenQis
+{
+	  google.protobuf.Int32Value id =1;
+      google.protobuf.StringValue token_type =2;
+      google.protobuf.StringValue access_token=3;
+      google.protobuf.StringValue expires_in=4;
+      google.protobuf.StringValue created_at=5;
+}
+message TokenQisRequest
+{
+	google.protobuf.StringValue environment=1;	
+}
+
+service PaquetesGrpcService{
+	rpc GetAllZonas(ZonaRequest) returns (Zonas) {}
+	rpc GetAllAgencias(AgenciaRequest) returns (Agencias) {}
+	rpc GetAllMarcas(MarcaRequest) returns (Marcas) {}
+	rpc GetAllFamilias(FamiliaRequest) returns (Familias) {}
+	rpc GetAllCombustibles(CombustibleRequest) returns (Combustibles) {}
+	rpc GetAllArticulos(ArticuloRequest) returns (Articulos) {}
+	rpc GetAllServicios(ServicioRequest) returns (Servicios) {}
+	rpc GetAllManoObra(ManoObraRequest) returns (ManosObra) {}
+	rpc GetAllPromociones(PromocionRequest) returns (Promociones) {}
+	rpc GetAllKits(KitRequest) returns (Kits) {}
+	rpc GetAllKitsServicios(KitServicioRequest) returns (KitServicios) {}
+	rpc GetAllKitsConceptos(KitConceptoRequest) returns (KitConceptos) {}
+	
+	rpc GetAllAdicionales(AdicionalRequest) returns (Adicionales){}
+	rpc GetAllTipoAdicionales(TipoAdicionalRequest) returns (TipoAdicionales){}
+	rpc GetAllServiciosEspecificos(ServicioEspecificoRequest) returns (ServicioEspecificoResponse) {}
+	rpc GetTokenQis(TokenQisRequest) returns (TokenQis){}
+
+	rpc CreateCitaQis(CitaRequest) returns (CitaResponse){}
+	
+}

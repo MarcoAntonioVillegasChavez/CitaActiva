@@ -1,0 +1,4 @@
+obj\Release\netcoreapp2.2\linux-x64/Paquetes.cs \
+obj\Release\netcoreapp2.2\linux-x64/PaquetesGrpc.cs: C:/Users/marco.villegas/.nuget/packages/grpc.tools/1.18.0/build/native/include/google/protobuf/empty.proto\
+ C:/Users/marco.villegas/.nuget/packages/grpc.tools/1.18.0/build/native/include/google/protobuf/wrappers.proto\
+ Protos/paquetes.proto

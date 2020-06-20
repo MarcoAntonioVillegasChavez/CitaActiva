@@ -1,0 +1,36 @@
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.deps.json
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csproj.CoreCompileInputs.cache
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfoInputs.cache
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfo.cs
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\Users\marco.villegas\source\repos\paquetes\paquetes-de-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csprojAssemblyReference.cache
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.deps.json
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csprojAssemblyReference.cache
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csproj.CoreCompileInputs.cache
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfoInputs.cache
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfo.cs
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\r e p o s i t o r i o s\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.deps.json
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csproj.CoreCompileInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfoInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfo.cs
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\REPOSITORIOS\paquetes-servicio\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csprojAssemblyReference.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.deps.json
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\bin\Debug\netcoreapp2.2\PaquetesProtos.pdb
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csprojAssemblyReference.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.csproj.CoreCompileInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfoInputs.cache
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.AssemblyInfo.cs
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.dll
+C:\AUTOCOM_APPS\REPOSITORIOS\CitaActiva-1.0\PaquetesProtos\obj\Debug\netcoreapp2.2\PaquetesProtos.pdb

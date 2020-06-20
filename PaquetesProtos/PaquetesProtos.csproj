@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>mx.autocom.servicio.paquetes.protos</RootNamespace>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="Protos\paquetes.proto" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.6.1" />
+    <PackageReference Include="Grpc" Version="1.18.0" />
+    <PackageReference Include="Grpc.Core" Version="1.18.0" />
+    <PackageReference Include="Grpc.Tools" Version="1.18.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <Folder Include="Build\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProtoBuf Include="Protos\paquetes.proto">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ProtoBuf>
+  </ItemGroup>
+</Project>
